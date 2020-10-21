@@ -1,0 +1,63 @@
+/**********
+Debug
+**********/
+$debugColor: #ff1493;
+
+/**********
+Mediaquery Breakpoint
+**********/
+$mediaXL: 1200px;
+$mediaL: 992px;
+$mediaM: 768px;
+
+/**********
+Layout Base
+**********/
+$bodyColor: lightgrey;
+$containerColor: white;
+$mainColor: lightgrey;
+$headerColor: black;
+$footerColor: black;
+$paddingMacroXs: 20px;
+
+/**********
+Form
+**********/
+$inputBg: white;
+$inputBgFocus: transparentize(lightblue, 0.5);
+$inputBorderColor: lightgrey;
+$inputBgSize: 1px;
+$inputColorLabel: grey;
+$inputColorInput: black;
+$inputFontSize: 1em;
+$inputLH: 2em;
+
+/**********
+Palettes
+**********/
+$paletteFontSize: 1em;
+$paletteFontColor: black;
+$palettePadding: 14;
+$palettePaddingM: $palettePadding*2; //px
+$palettePaddingL: $palettePadding*2; //px
+$palettePaddingXL: $palettePadding*4; //px
+$paletteFontWeight: bold;
+$colorWidth: 15px;
+$colorHeight: $colorWidth;
+
+/**********
+Animation
+**********/
+$animationDelayBase: 0.7;
+
+
+/**********
+Links
+**********/
+$colorLinkHover: white;
+
+/**********
+Fonts
+**********/
+$baseFont: 16px;
+$baseLineHeight: $baseFont * 1.5;

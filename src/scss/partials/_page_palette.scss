@@ -1,0 +1,248 @@
+#page-palette{
+  main{
+    flex-direction: row;
+    position: relative;
+  }
+  .palette__description{
+    //width: 0;
+    overflow: hidden;
+    width: 40%;
+    margin-left: -40%;
+    //margin-right: 40%;
+    animation-name: descPalette;
+    animation-delay: 5.8s;
+    animation-duration: #{$animationDelayBase}s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+
+    &__info{
+      padding: 4%;
+    }
+    h2{
+      margin-bottom: 10px;
+    }
+    p{
+      margin-bottom: 10px;
+    }
+    .row{
+      width: 80%;
+      margin: 20px auto;
+    }
+    &__list-colors{
+      position: relative;
+      width: 90%;
+      margin-left: -90%;
+      padding-left: 2%;
+      background: $mainColor;
+      &--active {
+        animation-name: listColorsActive;
+        animation-delay: 6s;
+        animation-duration: #{$animationDelayBase}s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
+    }
+    .colors-square{
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      height: 100px;
+      list-style-type: none;
+      &__item{
+        width: 60px;
+        height: 60px;
+        margin-right: 5px;
+        border: 1px solid white;
+      }
+    }
+  }
+  .palette__detail{
+    position: absolute;
+    opacity: 0;
+    left: 40%;
+    width: 30%;
+    animation-name: popDoughnut;
+    animation-delay: 6.8s;
+    animation-duration: #{$animationDelayBase}s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    /*fake wheel*/
+    .ratio{
+      width: 100%;
+      position: relative;
+      padding-top: 100%;
+    }
+    #doughnut__canvas-split{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background: gray;
+      border-radius: 100%;
+    }
+    /*/fake wheel*/
+  }
+  .palettes {
+    animation-name: moveRight;
+    animation-delay: 5s;
+    animation-duration: #{$animationDelayBase}s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+  .palettes{
+    width: 100%;
+    .palette{
+      animation-name: changeWidth;
+      animation-delay: 5s;
+      animation-duration: #{$animationDelayBase}s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+      &__content{
+        background: $bodyColor;
+        h2{
+          display: none;
+        }
+        /* .color */
+        .palette__number-color .color{
+          @for $i from 1 through 180 {
+            &.deg#{$i} {
+              transform: rotate(#{$i}deg);
+            }
+          }
+
+          @for $i from 1 through 180 {
+            &.deg#{$i}m {
+              transform: rotate(-#{$i}deg);
+            }
+          }
+          .circle {
+            animation-name: circleSize;
+            animation-delay: 5s;
+            animation-duration: #{$animationDelayBase}s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+          }
+        }
+      }
+      &.active {
+        .palette__content {
+          background: $debugColor;
+        }
+      }
+    }
+    .row{
+      animation-name: changeWrap;
+      animation-delay: 5s;
+      animation-duration: #{$animationDelayBase}s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+  }
+  header{
+    .arrow,
+    .arrow:after{
+      display: none;
+    }
+  }
+}
+
+@keyframes moveRight {
+  to {
+    margin-right: 0;
+    width: 20%;
+  }
+}
+
+@keyframes changeWidth {
+  to {
+    width: calc((100%/2) - #{$palettePaddingM}px);
+    padding: #{$palettePadding}px;
+    margin: 2% 3%;
+  }
+}
+
+@media screen and (max-width: 1090px){
+  @keyframes changeWidth {
+    to {
+      width: calc((100%/2) - #{$palettePadding}px);
+      padding: #{$palettePadding}px;
+      margin: 2% 3%;
+    }
+  }
+}
+
+@media screen and (min-width: 1091px){
+  @keyframes changeWidth {
+    to {
+      width: calc((100%/2) - #{$palettePaddingL}px);
+      padding: #{$palettePadding}px;
+      margin: 2% 3%;
+    }
+  }
+}
+@media screen and (min-width: 1500px) and (max-width: 1770px){
+  @keyframes changeWidth {
+    to {
+      width: calc((100%/2) - #{$palettePaddingXL}px);
+      padding: #{$palettePadding}px;
+      margin: 2% 3%;
+    }
+  }
+}
+
+@keyframes changeWrap {
+  to {
+    flex-wrap: wrap;
+    padding: 0;
+  }
+}
+
+@keyframes circleSize {
+  to {
+    top: ($colorWidth * 0.55) / - 2;
+    width: $colorWidth * 0.55;
+    height: $colorHeight * 0.55;
+  }
+}
+
+@media screen and (max-width: $mediaM) {
+  @keyframes circleSize {
+    to {
+      top: ($colorWidth * 0.30) / - 2;
+      width: $colorWidth * 0.30;
+      height: $colorHeight * 0.30;
+    }
+  }
+}
+
+@media screen and (min-width: $mediaXL) {
+  @keyframes circleSize {
+    to {
+      top: ($colorWidth * 0.8) / - 2;
+      width: $colorWidth * 0.8;
+      height: $colorHeight * 0.8;
+    }
+  }
+}
+
+@keyframes popDoughnut {
+  to {
+    position: static;
+    opacity: 100%;
+  }
+}
+
+@keyframes descPalette {
+  to {
+    margin-left: 0;
+  }
+}
+
+@keyframes listColorsActive {
+  to {
+    margin-left: 0;
+  }
+}
