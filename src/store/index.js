@@ -15,6 +15,11 @@ export default new Vuex.Store({
     brightness: 50,
     color: undefined,
     cssColor: '',
+    error: {
+      brightness: '',
+      saturation: '',
+      degree: '',
+    }
   },
   mutations,
   actions,

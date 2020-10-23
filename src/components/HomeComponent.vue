@@ -40,7 +40,7 @@
                 </div>
               </div>
               <h2 class="main__form__insert__title">Insert Your Base Color</h2>
-
+              <span>{{ error.degree }} {{ error.saturation }} {{ error.brightness }}</span>
               <div class="main__form__insert__form__inline-block input-group">
                 <input id="degree" max="360" min="0" name="degree" placeholder="Insert a number 0-360" type="number" tabindex="1"  @keyup="setDegree" v-model="degree">
                 <label for="degree">Degree: </label>
@@ -77,13 +77,11 @@
 
 <script>
 import { types } from '../store/mutations';
-// import ChartDoug from './ChartDoug.js';
 import Wheel from './WheelComponent';
 
 export default {
   name: "HomeComponent",
   components: {
-    // ChartDoug,
     Wheel
   },
   data() {
@@ -93,14 +91,35 @@ export default {
       saturation: this.$store.state.saturation,
       brightness: this.$store.state.brightness,
       cssColor: this.$store.state.cssColor,
+      error: this.$store.state.error
     }
   },
   computed: {
     rotate() {
-      return { transform: 'rotate(-' + this.degree + 'deg)'}
+      return { transform: 'rotate(-' + this.degree + 'deg)'};
     },
     setColor() {
-      return { backgroundColor: this.$store.state.ColorPalettesRange.HslConvert(this.degree, this.saturation, this.brightness).getRgb().printRgb() };
+      const type = 'getError';
+      const mutation = types.ERROR_COLOR;
+
+      let degree = this.degree;
+      let saturation = this.saturation;
+      let brightness = this.brightness;
+      if(this.degree < 0 || this.degree > 360) {
+        degree = 360;
+        this.$store.dispatch({type, errorMessage: 'degree is out of range', mutation, typeError: 'degree'});
+      }
+      if (this.saturation < 0 || this.saturation > 100) {
+        saturation = 50;
+        this.$store.dispatch({type, errorMessage: 'saturation is out of range', mutation, typeError: 'saturation'});
+      }
+      if (this.brightness < 0 || this.brightness > 100) {
+        brightness = 50;
+        this.$store.dispatch({type, errorMessage: 'brightness is out of range', mutation, typeError: 'brightness'});
+      }
+
+      let color = this.$store.state.ColorPalettesRange.HslConvert(degree, saturation, brightness).getRgb().printRgb();
+      return { backgroundColor: color };
     }
   },
   methods: {
@@ -111,30 +130,67 @@ export default {
       }
     },
     setBrightness() {
-      const type = 'updateValue';
-      const mutation = types.UPDATE_BRIGHTNESS;
       const number = parseFloat(this.brightness);
-      this.$store.dispatch({type, number, mutation}).then(() => {
-        this.setGenerated();
-      });
+
+      const type = 'getError';
+      const mutation = types.ERROR_COLOR;
+
+      if (number < 0 || number > 100) {
+        this.$store.dispatch({type, errorMessage: 'brightness is out of range', mutation, typeError: 'brightness'});
+        this.error.brightness = this.$store.state.error.brightness;
+      } else {
+        const type = 'updateValue';
+        const mutation = types.UPDATE_BRIGHTNESS;
+
+        this.$store.dispatch({type, number, mutation}).then(() => {
+          this.setGenerated();
+          this.$store.dispatch({type: 'getError', mutation: types.ERROR_COLOR, errorMessage: '',  typeError: 'brightness'});
+          this.error.degree = this.$store.state.error.brightness;
+        });
+      }
+
     },
     setSaturation() {
-      const type = 'updateValue';
-      const mutation = types.UPDATE_SATURATION;
+      console.log('setSaturation')
       const number = parseFloat(this.saturation);
-      this.$store.dispatch({type, number, mutation}).then(() => {
-        this.setGenerated();
-      });
+      const type = 'getError';
+      const mutation = types.ERROR_COLOR;
+
+      if (number < 0 || number > 100) {
+        this.$store.dispatch({type, errorMessage: 'saturation is out of range', mutation, typeError: 'saturation'});
+        this.error.saturation = this.$store.state.error.saturation;
+      } else {
+        const type = 'updateValue';
+        const mutation = types.UPDATE_SATURATION;
+
+        this.$store.dispatch({type, number, mutation}).then(() => {
+          this.setGenerated();
+          this.$store.dispatch({type: 'getError', mutation: types.ERROR_COLOR, errorMessage: '',  typeError: 'saturation'});
+          this.error.degree = this.$store.state.error.saturation;
+        });
+      }
     },
     setDegree() {
-      const type = 'updateValue';
-      const mutation = types.UPDATE_DEGREE;
       const number = parseFloat(this.degree);
-      this.$store.dispatch({type, number, mutation}).then(() => {
-        this.setGenerated();
-      });
-    },
-  }
+      const type = 'getError';
+      const mutation = types.ERROR_COLOR;
+
+      if (number < 0 || number > 360) {
+        this.$store.dispatch({type, mutation, errorMessage: 'degree is out of range',  typeError: 'degree'});
+        this.error.degree = this.$store.state.error.degree;
+      } else {
+        const type = 'updateValue';
+        const mutation = types.UPDATE_DEGREE;
+
+        this.$store.dispatch({type, number, mutation}).then(() => {
+          this.setGenerated();
+          this.$store.dispatch({type: 'getError', mutation: types.ERROR_COLOR, errorMessage: '',  typeError: 'degree'});
+          this.error.degree = this.$store.state.error.degree;
+        });
+      }
+    }
+  },
+
 };
 </script>
 
