@@ -17,7 +17,7 @@
         <form action="" class="main__form">
           <section class="main__form__generate" >
 <!--            <section :class="['main__form__generate', isGenerated ? 'generated' : '']"  :style="{backgroundColor: cssColor}">-->
-            <button :style="setColor" :class="['button', isGenerated ? 'generated' : ''] " tabindex="4">Generate Color Palette</button>
+            <button :style="setColor" :disabled="!isGenerated" i :class="['button', isGenerated ? 'generated' : ''] " tabindex="4">Generate Color Palette</button>
             <div class="chart">
 <!--              devo passare le props per schiarire i colori-->
               <wheel :style="rotate"></wheel>
@@ -190,6 +190,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .chart {
   display: flex;
   justify-content: center;
@@ -202,6 +203,7 @@ export default {
   height: 100%;
   min-height: 200px;
   min-width: 200px;
+
   @media screen and (max-width: 1090px) {
     width: 55%;
     height: 100%;
@@ -212,20 +214,24 @@ export default {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 1;
-  transition: all 0.2s;
+  transform: translate(-50%, -50%);
   opacity: 0;
   filter: drop-shadow(2px 5px 4px rgba(0,0,0, 0.5));
+  //cursor: none;
+  transition: all 0.2s;
   &.generated {
     opacity: 1;
+    cursor: pointer;
+
+    &:hover,
+    &:active,
+    &:focus {
+      opacity: 0.9;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
+    }
   }
-  &:hover,
-  &:active,
-  &:focus {
-    opacity: 0.9;
-    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
-  }
+
 }
 .main__form__generate {
   position: relative;
