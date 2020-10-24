@@ -35,20 +35,19 @@
                 </div>
               </div>
               <h2 class="main__form__insert__title">Insert Your Base Color</h2>
-              <span>{{ error.degree }} {{ error.saturation }} {{ error.brightness }}</span>
               <div class="main__form__insert__form__inline-block input-group">
-                <input id="degree" max="360" min="0" name="degree" placeholder="Insert a number 0-360" type="number" tabindex="1"  @keyup="setDegree" v-model="degree">
-                <label for="degree">Degree: </label>
+                <input id="degree" max="360" min="0" name="degree" placeholder="Insert a number 0-360" type="number" tabindex="1"  @keyup="setDegree" v-model="degree" :class="(!!error.degree.length) ? 'error' : ''">
+                <label for="degree">Degree: <span class="error">{{ error.degree }}</span></label>
               </div>
 
               <div class="main__form__insert__form__inline-block input-group">
-                <input id="saturation" max="100" min="0" name="saturation" placeholder="Insert a number 0-100" type="number" tabindex="2" @keyup="setSaturation" v-model="saturation">
-                <label for="saturation">Saturation: </label>
+                <input id="saturation" max="100" min="0" name="saturation" placeholder="Insert a number 0-100" type="number" tabindex="2" @keyup="setSaturation" v-model="saturation" :class="(!!error.saturation.length) ? 'error' : ''">
+                <label for="saturation" >Saturation:  <span class="error">{{ error.saturation }}</span></label>
               </div>
 
               <div class="main__form__insert__form__inline-block input-group">
-                <input id="brightness" max="100" min="0" name="brightness" placeholder="Insert a number 0-100" type="number" tabindex="3" @keyup="setBrightness" v-model="brightness">
-                <label for="brightness">Brightness: </label>
+                <input id="brightness" max="100" min="0" name="brightness" placeholder="Insert a number 0-100" type="number" tabindex="3" @keyup="setBrightness" v-model="brightness" :class="(!!error.brightness.length) ? 'error' : ''">
+                <label for="brightness">Brightness:  <span class="error">{{ error.brightness }}</span></label>
               </div>
 
             </div>
@@ -71,6 +70,7 @@
 </template>
 
 <script>
+//todo errors in labels
 import { types } from '../store/mutations';
 import Wheel from './WheelComponent';
 
@@ -102,15 +102,15 @@ export default {
       let brightness = this.brightness;
       if(this.degree < 0 || this.degree > 360) {
         degree = 360;
-        this.$store.dispatch({type, errorMessage: 'degree is out of range', mutation, typeError: 'degree'});
+        this.$store.dispatch({type, errorMessage: 'is out of range', mutation, typeError: 'degree'});
       }
       if (this.saturation < 0 || this.saturation > 100) {
         saturation = 50;
-        this.$store.dispatch({type, errorMessage: 'saturation is out of range', mutation, typeError: 'saturation'});
+        this.$store.dispatch({type, errorMessage: 'is out of range', mutation, typeError: 'saturation'});
       }
       if (this.brightness < 0 || this.brightness > 100) {
         brightness = 50;
-        this.$store.dispatch({type, errorMessage: 'brightness is out of range', mutation, typeError: 'brightness'});
+        this.$store.dispatch({type, errorMessage: 'is out of range', mutation, typeError: 'brightness'});
       }
 
       let color = this.$store.state.ColorPalettesRange.HslConvert(degree, saturation, brightness).getRgb().printRgb();
@@ -131,7 +131,7 @@ export default {
       const mutation = types.ERROR_COLOR;
 
       if (number < 0 || number > 100) {
-        this.$store.dispatch({type, errorMessage: 'brightness is out of range', mutation, typeError: 'brightness'});
+        this.$store.dispatch({type, errorMessage: 'is out of range', mutation, typeError: 'brightness'});
         this.error.brightness = this.$store.state.error.brightness;
       } else {
         const type = 'updateValue';
@@ -140,7 +140,7 @@ export default {
         this.$store.dispatch({type, number, mutation}).then(() => {
           this.setGenerated();
           this.$store.dispatch({type: 'getError', mutation: types.ERROR_COLOR, errorMessage: '',  typeError: 'brightness'});
-          this.error.degree = this.$store.state.error.brightness;
+          this.error.brightness = this.$store.state.error.brightness;
         });
       }
 
@@ -152,7 +152,7 @@ export default {
       const mutation = types.ERROR_COLOR;
 
       if (number < 0 || number > 100) {
-        this.$store.dispatch({type, errorMessage: 'saturation is out of range', mutation, typeError: 'saturation'});
+        this.$store.dispatch({type, errorMessage: 'is out of range', mutation, typeError: 'saturation'});
         this.error.saturation = this.$store.state.error.saturation;
       } else {
         const type = 'updateValue';
@@ -161,7 +161,7 @@ export default {
         this.$store.dispatch({type, number, mutation}).then(() => {
           this.setGenerated();
           this.$store.dispatch({type: 'getError', mutation: types.ERROR_COLOR, errorMessage: '',  typeError: 'saturation'});
-          this.error.degree = this.$store.state.error.saturation;
+          this.error.saturation = this.$store.state.error.saturation;
         });
       }
     },
@@ -171,7 +171,7 @@ export default {
       const mutation = types.ERROR_COLOR;
 
       if (number < 0 || number > 360) {
-        this.$store.dispatch({type, mutation, errorMessage: 'degree is out of range',  typeError: 'degree'});
+        this.$store.dispatch({type, mutation, errorMessage: 'is out of range',  typeError: 'degree'});
         this.error.degree = this.$store.state.error.degree;
       } else {
         const type = 'updateValue';
@@ -190,7 +190,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.error {
+  color: red;
+}
 .chart {
   display: flex;
   justify-content: center;
@@ -231,7 +233,6 @@ export default {
       box-shadow: inset 1px 1px 2px rgba(0,0,0,0.5);
     }
   }
-
 }
 .main__form__generate {
   position: relative;

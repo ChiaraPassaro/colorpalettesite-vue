@@ -26,12 +26,10 @@ body{
     clear: both;
   }
   label{
-    display: inline-block;
-    width: 40%;
+    width: 70%;
     margin-left: 3%;
     text-align: left;
     font-size: $inputFontSize;
-    //inserire mediaquery per dimensioni carattere
     line-height: $inputLH;
     color: $inputColorLabel;
     @media screen and (max-width: 1090px) {
@@ -61,7 +59,7 @@ body{
     &:focus{
       border: 0;
       outline: 0;
-      background: $inputBgFocus;
+      border: 2px solid $inputBgFocus;
     }
     &:focus ~ label{
       color: darken($inputColorLabel, 40);
@@ -190,7 +188,7 @@ body{
     min-width: 1090px;
     &--index {
       @media screen and (max-width: 1090px){
-        overflow-x: auto;
+        overflow-x: hidden;
         min-height: 650px;
         flex-direction: row;
       }
