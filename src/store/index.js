@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     ColorPalettesRange,
     degree: 360,
-    saturation: 50,
+    saturation: 80,
     brightness: 50,
     color: undefined,
     cssColor: '',

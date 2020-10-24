@@ -3,11 +3,6 @@
     <div class="inner inner--index content">
       <!--header-->
       <header class="header header--index">
-        <div class="arrow-rotate">
-          <div aria-hidden="true" class="arrow  arrow--header">
-            <div class="arrow__inner"></div>
-          </div>
-        </div>
         <section>
           <h1 class="header__title">Color <span>Palettes Range</span></h1>
           <h2 class="header__sub-title">A Javascript library for generate palette schemes on a base color.</h2>
@@ -197,14 +192,20 @@ export default {
 <style scoped lang="scss">
 .chart {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   transform: rotate(180deg);
   transform-origin: 50% 50%;
   margin: auto;
   width: 45%;
   height: 100%;
-  > div {
-    margin: auto;
+  min-height: 200px;
+  min-width: 200px;
+  @media screen and (max-width: 1090px) {
+    width: 55%;
+    height: 100%;
+    transform: rotate(270deg) scale(1.5);
   }
 }
 .button {
@@ -215,6 +216,7 @@ export default {
   z-index: 1;
   transition: all 0.2s;
   opacity: 0;
+  filter: drop-shadow(2px 5px 4px rgba(0,0,0, 0.5));
   &.generated {
     opacity: 1;
   }
