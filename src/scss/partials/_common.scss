@@ -44,14 +44,14 @@ body{
       position: static;
       order: 2;
       text-align: left;
-      margin-left: 3%;
-      width: 90%;
+      padding-left: 3%;
+      width: 100%;
     }
     display: block;
     width: 100%;
     height: 100%;
     background: none;
-    border: 0;
+    border: 2px solid transparent;
     text-align: right;
     font-size: $inputFontSize;
     line-height: $inputLH;

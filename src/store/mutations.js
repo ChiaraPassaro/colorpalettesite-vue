@@ -28,7 +28,6 @@ export const mutations = {
         state.cssColor = color.printHsl();
     },
     [types.ERROR_COLOR](state, payload) {
-        console.log( payload.errorMessage)
-        state.error[payload.typeError] = payload.errorMessage;
+        state.error[payload.typeError] = payload.messageError;
     },
 };
