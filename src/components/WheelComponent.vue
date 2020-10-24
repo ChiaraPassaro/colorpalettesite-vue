@@ -6,10 +6,11 @@
 
 export default {
   name: "Wheel",
+  props: ['saturation', 'brightness'],
   computed: {
     wheel() {
-      console.log(this.$store.state);
-      return {background: `conic-gradient(${this.$store.state.ColorPalettesRange.HslConvert(360, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(60, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(120, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(180, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(240, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(300, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(360, this.$store.state.saturation, this.$store.state.brightness).getRgb().printRgb()})`}
+      console.log(this.saturation, this.brightness);
+      return {background: `conic-gradient(${this.$store.state.ColorPalettesRange.HslConvert(360, this.saturation, this.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(60, this.saturation, this.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(120, this.saturation, this.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(180, this.saturation, this.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(240, this.saturation, this.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(300, this.saturation, this.brightness).getRgb().printRgb()}, ${this.$store.state.ColorPalettesRange.HslConvert(360, this.saturation, this.brightness).getRgb().printRgb()})`}
     }
   }
 }

@@ -5,7 +5,7 @@
               tabindex="4">Generate Color Palette
       </button>
       <div class="chart">
-        <wheel :style="rotate"></wheel>
+        <wheel :style="rotate" :brightness="brightness" :saturation="saturation" ></wheel>
       </div>
 
     </section>
