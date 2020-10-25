@@ -4,7 +4,8 @@ export const types = {
     UPDATE_DEGREE: 'UPDATE_DEGREE',
     GENERATE_COLOR: 'GENERATE_COLOR',
     ERROR_COLOR: 'ERROR_COLOR',
-    INIT_STORE: 'INIT_STORE'
+    INIT_STORE: 'INIT_STORE',
+    GENERATE_PALETTES: 'GENERATE'
 };
 
 export const mutations = {
@@ -26,6 +27,8 @@ export const mutations = {
         state.color = color;
         state.cssColor = color.printHsl();
         localStorage.setItem('cssColor', state.cssColor);
+        localStorage.setItem('generated', state.generated);
+        localStorage.setItem('color', state.color);
     },
     [types.ERROR_COLOR](state, payload) {
         state.error[payload.typeError] = payload.messageError;
@@ -35,6 +38,10 @@ export const mutations = {
         state.saturation = parseFloat(localStorage.getItem('saturation')) || state.saturation;
         state.brightness = parseFloat(localStorage.getItem('brightness')) || state.brightness;
         state.cssColor = localStorage.getItem('cssColor') || state.cssColor;
-
+        state.generated = localStorage.getItem('generated') || state.generated;
+        state.color = new state.ColorPalettesRange.Hsl(state.degree, state.saturation, state.brightness);
     },
+    [types.GENERATE_PALETTES](state, palettes) {
+        state.palettes = palettes;
+    }
 };

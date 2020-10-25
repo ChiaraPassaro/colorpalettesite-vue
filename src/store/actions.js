@@ -21,5 +21,14 @@ export default {
         commit
     }, payload) {
         commit(payload.mutation, payload);
+    },
+    generatePalettes({commit, state}, payload) {
+        commit(payload.mutation, payload.palettes);
+        return new Promise((resolve, reject) => {
+            if (state.palettes) {
+                resolve(state);
+            }
+            reject(new Error("No palettes"));
+        });
     }
 }
