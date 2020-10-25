@@ -28,9 +28,21 @@
       float: left;
       display: block;
     }
-    &__color{
+    &__color,
+    &__picker{
       float: right;
       display: block;
+      a {
+        color: #FFFFFF;
+        &:hover,
+        &:active,
+        &:focus {
+          color: #000;
+        }
+      }
+    }
+    &__picker {
+      padding-left: 2%;
     }
   }
 }
@@ -54,6 +66,7 @@
   .row{
     display: flex;
     justify-content: space-between;
+
     align-items: center;
     height: 50%;
     position: relative;

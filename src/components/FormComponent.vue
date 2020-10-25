@@ -1,5 +1,5 @@
 <template>
-  <form action="" class="main__form">
+  <form action="/palettes" class="main__form">
     <section class="main__form__generate">
       <button :style="setColor" :disabled="!isGenerated" i :class="['button', isGenerated ? 'generated' : ''] "
               tabindex="4">Generate Color Palette
@@ -62,7 +62,7 @@ export default {
       saturation: this.$store.state.saturation,
       brightness: this.$store.state.brightness,
       cssColor: this.$store.state.cssColor,
-      error: this.$store.state.error
+      error: this.$store.state.error,
     }
   },
   computed: {

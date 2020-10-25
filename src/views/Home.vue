@@ -1,17 +1,41 @@
 <template>
-  <div class="home">
-    <HomeComponent/>
+  <div class="container">
+    <div class="inner inner--index content">
+      <!--header-->
+      <HeaderComponent/>
+      <!--/header-->
+
+      <!--main-->
+      <main class="main main--index">
+        <!--form-->
+        <Form></Form>
+        <!--/form-->
+      </main>
+      <!--/main-->
+
+      <!--footer-->
+      <Footer :footerClass="'--index'"/>
+      <!--/footer-->
+
+    </div>
   </div>
+
 </template>
 
 <script>
-// @ is an alias to /src
-import HomeComponent from "@/components/HomeComponent.vue";
+//todo errors in labels
+import Footer from '../components/FooterComponent';
+import Form from '../components/FormComponent';
+import HeaderComponent from '../components/HeaderComponent';
 
 export default {
   name: "Home",
   components: {
-    HomeComponent
-  }
+    Footer,
+    Form,
+    HeaderComponent
+  },
+
 };
 </script>
+
