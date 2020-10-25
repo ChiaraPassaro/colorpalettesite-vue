@@ -8,22 +8,17 @@ export const types = {
 
 export const mutations = {
     [types.UPDATE_BRIGHTNESS](state, number) {
-        if(number <= 100 && number >= 0) {
-            state.brightness =  parseFloat(number);
-        }
+        state.brightness = number;
     },
     [types.UPDATE_SATURATION](state, number) {
-        if(number <= 100 && number >= 0) {
-            state.saturation = parseFloat(number);
-        }
+        state.saturation = number;
     },
     [types.UPDATE_DEGREE](state, number) {
-        if(number <= 360 && number >= 0) {
-            state.degree = parseFloat(number);
-        }
+        state.degree = number;
     },
     [types.GENERATE_COLOR](state) {
         const color = new state.ColorPalettesRange.Hsl(state.degree, state.saturation, state.brightness);
+        state.generated = true;
         state.color = color;
         state.cssColor = color.printHsl();
     },

@@ -1,12 +1,20 @@
 <template>
   <div :id="id" :class="'palette palette--not-active del-' + (index + 1)">
-    <div class="palette__content">
-      <h2><span>{{name}}</span></h2>
+    <div class="palette__content" :style="setBackground">
+      <h2>
+        <span>{{ name }}</span>
+      </h2>
       <ul class="palette__number-color">
-        <li v-for="(color, index) in colors" :key="index" :class="'color ' + color.degree"><span class="circle" title="color"></span></li>
-<!--        <li class="color first"><span class="circle" title="color"></span></li>-->
-<!--        <li class="color deg120m"><span class="circle" title="color"></span></li>-->
-<!--        <li class="color deg120"><span class="circle" title="color"></span></li>-->
+        <li
+          v-for="(color, index) in colors"
+          :key="index"
+          :class="'color ' + color.degree"
+        >
+          <span class="circle" title="color"></span>
+        </li>
+        <!--        <li class="color first"><span class="circle" title="color"></span></li>-->
+        <!--        <li class="color deg120m"><span class="circle" title="color"></span></li>-->
+        <!--        <li class="color deg120"><span class="circle" title="color"></span></li>-->
       </ul>
     </div>
   </div>
@@ -15,8 +23,13 @@
 <script>
 export default {
   name: "PaletteComponent",
-  props: ['colors', 'index', 'id', 'name'],
-}
+  props: ["colors", "index", "id", "name"],
+  computed: {
+    setBackground() {
+      return {backgroundColor: this.$store.state.cssColor}
+    }
+  }
+};
 </script>
 
 <style scoped>

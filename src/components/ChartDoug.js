@@ -1,4 +1,6 @@
-import { Doughnut } from 'vue-chartjs';
+import {
+  Doughnut
+} from 'vue-chartjs';
 
 const degrees = [];
 const colorsLabel = [];
@@ -12,13 +14,11 @@ export default {
   extends: Doughnut,
   data: () => ({
     chartdata: {
-      datasets: [
-        {
-          data: degrees,
-          backgroundColor: colorsLabel,
-          borderWidth: 0,
-        }
-      ],
+      datasets: [{
+        data: degrees,
+        backgroundColor: colorsLabel,
+        borderWidth: 0,
+      }],
       labels: colorsLabel
     },
     options: {

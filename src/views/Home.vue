@@ -2,7 +2,7 @@
   <div class="container">
     <div class="inner inner--index content">
       <!--header-->
-      <HeaderComponent/>
+      <HeaderComponent />
       <!--/header-->
 
       <!--main-->
@@ -14,19 +14,17 @@
       <!--/main-->
 
       <!--footer-->
-      <Footer :footerClass="'--index'"/>
+      <Footer :footerClass="'--index'" />
       <!--/footer-->
-
     </div>
   </div>
-
 </template>
 
 <script>
 //todo errors in labels
-import Footer from '../components/FooterComponent';
-import Form from '../components/FormComponent';
-import HeaderComponent from '../components/HeaderComponent';
+import Footer from "../components/FooterComponent";
+import Form from "../components/FormComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 export default {
   name: "Home",
@@ -34,8 +32,7 @@ export default {
     Footer,
     Form,
     HeaderComponent
-  },
-
+  }
 };
 </script>
 

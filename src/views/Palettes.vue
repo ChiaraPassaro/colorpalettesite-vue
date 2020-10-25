@@ -2,7 +2,7 @@
   <div class="container" id="page-palette-list">
     <div class="inner content">
       <!--header-->
-      <HeaderPalettesComponent/>
+      <HeaderPalettesComponent />
       <!--/header-->
 
       <!--main-->
@@ -12,19 +12,17 @@
       <!--/main-->
 
       <!--footer-->
-      <Footer :footerClass="'--palettes'"/>
+      <Footer :footerClass="'--palettes'" />
       <!--/footer-->
-
     </div>
   </div>
-
 </template>
 
 <script>
 //todo errors in labels
-import Footer from '../components/FooterComponent';
-import HeaderPalettesComponent from '../components/HeaderPalettesComponent';
-import PalettesComponent from '../components/PalettesComponent';
+import Footer from "../components/FooterComponent";
+import HeaderPalettesComponent from "../components/HeaderPalettesComponent";
+import PalettesComponent from "../components/PalettesComponent";
 
 export default {
   name: "Palettes",
@@ -32,8 +30,7 @@ export default {
     Footer,
     HeaderPalettesComponent,
     PalettesComponent
-  },
-
+  }
 };
 </script>
 

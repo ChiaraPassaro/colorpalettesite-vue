@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import actions from "@/store/actions";
-import {mutations} from "@/store/mutations";
+import {
+  mutations
+} from "@/store/mutations";
 
 const ColorPalettesRange = require("@chiarapassaro/color-palettes-range/src/js");
 
@@ -15,6 +17,7 @@ export default new Vuex.Store({
     brightness: 50,
     color: undefined,
     cssColor: '',
+    generated: false,
     error: {
       brightness: '',
       saturation: '',
