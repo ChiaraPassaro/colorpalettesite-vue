@@ -2,9 +2,7 @@
   <div :id="id" :class="'palette palette--not-active del-' + (index + 1)">
     <div class="palette__content" :style="setBackground">
       <h2>
-        <span
-            @click="generatePalette(id)"
-        >{{ name }}</span>
+        <span @click="generatePalette(id)">{{ name }}</span>
       </h2>
       <ul class="palette__number-color">
         <li
@@ -20,7 +18,7 @@
 </template>
 
 <script>
-import {types} from "@/store/mutations";
+import { types } from "@/store/mutations";
 
 export default {
   name: "PaletteComponent",
@@ -29,7 +27,7 @@ export default {
     setBackground() {
       return {
         backgroundColor: this.$store.state.cssColor
-      }
+      };
     }
   },
   methods: {
@@ -38,25 +36,23 @@ export default {
         this.$store.state.color
       );
 
-      this.$store.dispatch({
-        type: 'generatePalettes',
-        mutation: types.GENERATE_PALETTES,
-        palettes
-      }).then(() => {
-        this.$router.push(
-            {
-              name: 'Palette',
-              params: {
-                type: id
-              }
+      this.$store
+        .dispatch({
+          type: "generatePalettes",
+          mutation: types.GENERATE_PALETTES,
+          palettes
+        })
+        .then(() => {
+          this.$router.push({
+            name: "Palette",
+            params: {
+              type: id
             }
-        );
-      });
+          });
+        });
     }
   }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

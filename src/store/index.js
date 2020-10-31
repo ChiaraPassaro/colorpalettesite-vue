@@ -18,6 +18,10 @@ export default new Vuex.Store({
     color: undefined,
     cssColor: '',
     generated: false,
+    random: {
+      number: false,
+      step: false
+    },
     error: {
       brightness: '',
       saturation: '',

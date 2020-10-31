@@ -19,7 +19,6 @@
 </template>
 
 <script>
-//todo errors in labels
 import Footer from "../components/FooterComponent";
 import HeaderPalettesComponent from "../components/HeaderPalettesComponent";
 import PalettesComponent from "../components/PalettesComponent";
