@@ -35,20 +35,20 @@
           <div class="row">
             <div class="input-group">
               <input
-                id="stepDegree"
+                id="percDominant"
                 max="100"
                 min="0"
-                name="stepDegree"
+                name="percDominant"
                 placeholder="Insert a number 0-100"
                 tabindex="2"
                 type="number"
-                v-model="stepDegree"
-                :class="!!error.stepDegree.length ? 'error' : ''"
+                v-model="percDominant"
+                :class="!!error.percDominant.length ? 'error' : ''"
                 @keyup="checkValue"
               />
-              <label for="stepDegree">Step Degree: </label>
-              <span class="error" v-if="error.stepDegree">{{
-                error.stepDegree
+              <label for="percDominant">Dominant percentage: </label>
+              <span class="error" v-if="error.percDominant">{{
+                error.percDominant
               }}</span>
             </div>
           </div>
@@ -100,205 +100,53 @@
     <section class="palette__detail">
       <!--TODO inserire chartjs-->
       <div class="ratio">
-        <canvas id="doughnut__canvas-split"></canvas>
+        <Chart v-bind:options="options" v-bind:chart-data="datacollection"></Chart>
       </div>
     </section>
     <!--/palette detail-->
 
     <!--palettes list-->
     <!--TODO sostituire le palette-->
-    <section class="palettes">
-      <div class="row row-1">
-        <div id="triad" class="palette palette--not-active del-1">
-          <div class="palette__content">
-            <h2><span>Triad</span></h2>
-            <ul class="palette__number-color">
-              <li class="color first">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg120m">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg120">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="split-complementary" class="palette palette--not-active del-2">
-          <div class="palette__content">
-            <h2><span>Split Complementary</span></h2>
-            <ul class="palette__number-color">
-              <li class="color first">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg160">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg160m">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="complementary" class="palette del-3 active">
-          <div class="palette__content">
-            <h2><span>Complementary </span></h2>
-            <ul class="palette__number-color">
-              <li class="color first">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg180">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg140">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg140m">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg160">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg160m">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="mono" class="palette palette--not-active del-4">
-          <div class="palette__content">
-            <h2><span>Monochrome</span></h2>
-            <ul class="palette__number-color">
-              <li class="color first">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg25">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg45">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg65">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg85">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="row row-2">
-        <div id="analogous" class="palette palette--not-active del-5">
-          <div class="palette__content">
-            <h2><span>Analogous</span></h2>
-            <ul class="palette__number-color">
-              <li class="color first">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg25">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg45">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg65">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg85">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="tetradic" class="palette palette--not-active del-6">
-          <div class="palette__content">
-            <h2><span>Tetradic</span></h2>
-            <ul class="palette__number-color">
-              <li class="color deg30m">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg150">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg30">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg150m">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="square" class="palette palette--not-active del-7">
-          <div class="palette__content">
-            <h2><span>Square</span></h2>
-            <ul class="palette__number-color">
-              <li class="color deg45">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg45m">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg130">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg130m">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="random" class="palette palette--not-active del-8">
-          <div class="palette__content">
-            <h2><span>Random Dominant</span></h2>
-            <ul class="palette__number-color">
-              <li class="color first">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg45">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg90">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg135">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg180">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg135m">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg90m">
-                <span class="circle" title="color"></span>
-              </li>
-              <li class="color deg45m">
-                <span class="circle" title="color"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PalettesComponent></PalettesComponent>
     <!--/palettes list-->
   </main>
 </template>
 
 <script>
 import { types } from "@/store/mutations";
+import PalettesComponent from "@/components/PalettesComponent";
+import Chart from "@/components/Chart";
+
 
 export default {
   name: "Random",
+  components: {
+    PalettesComponent,
+    Chart
+  },
   data() {
     return {
-      number: this.$store.state.random.number,
-      stepDegree: this.$store.state.random.step,
+      type: 'random',
+      colorsGenerated: undefined,
+      step: 360,
+      stepGenerated: undefined,
+      number: this.$store.state.palettes.random.number,
+      percDominant: this.$store.state.palettes.random.percDominant,
       error: {
-        stepDegree: false,
+        percDominant: false,
         number: false
+      },
+      palette: this.$store.state.palettes.palette,
+      datacollection: null,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        tooltips: {
+          enabled: false
+        },
+        legend: {
+          display: false
+        }
       }
     };
   },
@@ -306,39 +154,84 @@ export default {
     checkError() {
       return (
         !!this.error.number.length ||
-        !!this.error.stepDegree.length ||
-        !this.stepDegree ||
+        !!this.error.percDominant.length ||
+        !this.percDominant ||
         !this.number
       );
     }
   },
   methods: {
     setValues() {
-      const stepDegree = parseInt(this.stepDegree);
+      const percDominant = parseInt(this.percDominant);
       const number = parseInt(this.number);
       const isInRangeDegree =
-        !isNaN(stepDegree) && stepDegree > 0 && stepDegree <= 100;
+        !isNaN(percDominant) && percDominant > 0 && percDominant <= 100;
       const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
-      this.error.number = !isInRangeNumber ? "Out of range" : false;
-      this.error.stepDegree = !isInRangeDegree ? "Out of range" : false;
 
       if (isInRangeNumber && isInRangeDegree) {
         this.$store.dispatch({
-          type: "setRandom",
-          mutation: types.SET_RANDOM,
-          stepDegree,
+          type: "setRandomData",
+          mutation: types.SET_RANDOM_DATA,
+          percDominant,
           number
         });
+        this.generatePalette();
       }
     },
     checkValue() {
-      const stepDegree = parseInt(this.stepDegree);
+      const percDominant = parseInt(this.percDominant);
       const number = parseInt(this.number);
-      const isInRangeDegree =
-        !isNaN(stepDegree) && stepDegree > 0 && stepDegree <= 100;
+      const isInRangeDegree = !isNaN(percDominant) && percDominant > 0 && percDominant <= 100;
       const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
-      this.error.number = !isInRangeNumber ? "Out of range" : false;
-      this.error.stepDegree = !isInRangeDegree ? "Out of range" : false;
+      this.error.number = !isInRangeNumber ? "is out of range" : false;
+      this.error.percDominant = !isInRangeDegree ? "is out of range" : false;
+    },
+    generatePalette() {
+      // inserire chartjs
+      const randomDominant = this.palette.randomDominant(
+        this.number,
+        this.percDominant
+      );
+      this.colorsGenerated = randomDominant;
+      this.stepGenerated = this.step / randomDominant.length;
+
+      this.$store.dispatch({
+        type: "setRandomPalette",
+        mutation: types.SET_RANDOM_PALETTE,
+        colors: this.colorsGenerated,
+        step: this.stepGenerated
+      });
+
+      this.fillChart();
+    },
+    fillChart() {
+      console.log('fill');
+      const degrees = [];
+      const colorsLabel = [];
+
+      for (let i = 0; i < 360; i++) {
+        //tutti i gradi hanno valore 1 per comparire nella chart
+        degrees.push(1);
+        //tutti i gradi hanno il colore di background ad opacità 0.2
+        colorsLabel.push('hsl('+ i + ', 50%, 50%, 0.2)');
+      }
+
+      //inserisco i gradi della palette con dato uguale allo step usato per generare la palette
+      for (let i = 0; i < this.$store.state.palettes.random.colors.length; i++) {
+        const degree = this.$store.state.palettes.random.colors[i].getHue();
+        console.log(degree)
+        degrees[degree] = this.step;
+        colorsLabel[degree] = this.$store.state.palettes.random.colors[i].printHsl();
+      }
+
+      this.datacollection = {
+          datasets: [{
+            data: degrees,
+            backgroundColor: colorsLabel,
+            borderWidth: 0
+          }],
+        labels: colorsLabel
+      };
     }
   }
 };

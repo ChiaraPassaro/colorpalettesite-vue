@@ -6,7 +6,8 @@ export const types = {
   ERROR_COLOR: "ERROR_COLOR",
   INIT_STORE: "INIT_STORE",
   GENERATE_PALETTES: "GENERATE",
-  SET_RANDOM: "SET_RANDOM"
+  SET_RANDOM_DATA: "SET_RANDOM",
+  SET_RANDOM_PALETTE: 'SET_RANDOM_PALETTE'
 };
 
 export const mutations = {
@@ -51,13 +52,24 @@ export const mutations = {
       state.saturation,
       state.brightness
     );
+    state.palettes.random.number = localStorage.getItem("random.number") || state.palettes.random.number;
+    state.palettes.random.percDominant = localStorage.getItem("random.percDominant") || state.palettes.random.percDominant;
+    state.palettes.random.step = localStorage.getItem("random.step") || state.palettes.random.step;
+    state.palettes.palette = (state.color) ? new state.ColorPalettesRange.SetColorPalette(state.color) : undefined;
   },
   [types.GENERATE_PALETTES](state, palettes) {
-    state.palettes = palettes;
+    state.palettes.palette = palettes;
   },
-  [types.SET_RANDOM](state, payload) {
-    state.random.number = payload.number;
-    state.random.step = payload.stepDegree;
-    console.log(state.random.number, state.random.step);
+  [types.SET_RANDOM_DATA](state, payload) {
+    state.palettes.random.number = payload.number;
+    state.palettes.random.percDominant = payload.percDominant;
+    localStorage.setItem("random.number", state.palettes.random.number);
+    localStorage.setItem("random.percDominant", state.palettes.random.percDominant);
+  },
+  [types.SET_RANDOM_PALETTE](state, payload) {
+    state.palettes.random.colors = payload.colors;
+    state.palettes.random.step = payload.step;
+    localStorage.setItem("random.colors", state.palettes.random.colors);
+    localStorage.setItem("random.step", state.palettes.random.step);
   }
 };

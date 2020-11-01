@@ -10,7 +10,7 @@
     margin-left: -40%;
     //margin-right: 40%;
     animation-name: descPalette;
-    animation-delay: 5.8s;
+    animation-delay: 1.8s;
     animation-duration: #{$animationDelayBase}s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -36,7 +36,7 @@
       background: $mainColor;
       &--active {
         animation-name: listColorsActive;
-        animation-delay: 6s;
+        animation-delay: 2s;
         animation-duration: #{$animationDelayBase}s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
@@ -62,7 +62,7 @@
     left: 40%;
     width: 30%;
     animation-name: popDoughnut;
-    animation-delay: 6.8s;
+    animation-delay: 2.8s;
     animation-duration: #{$animationDelayBase}s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -87,23 +87,28 @@
   }
   .palettes {
     animation-name: moveRight;
-    animation-delay: 5s;
+    animation-delay: 1s;
     animation-duration: #{$animationDelayBase}s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
   .palettes{
-    width: 100%;
+    //width: 100%;
     .palette{
       animation-name: changeWidth;
-      animation-delay: 5s;
+      animation-delay: 1s;
       animation-duration: #{$animationDelayBase}s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
       &__content{
         background: $bodyColor;
         h2{
-          display: none;
+          opacity: 1;
+          animation-name: changeOpacity;
+          animation-delay: 1s;
+          animation-duration: #{$animationDelayBase}s;
+          animation-iteration-count: 1;
+          animation-fill-mode: forwards;
         }
         /* .color */
         .palette__number-color .color{
@@ -120,7 +125,7 @@
           }
           .circle {
             animation-name: circleSize;
-            animation-delay: 5s;
+            animation-delay: 1s;
             animation-duration: #{$animationDelayBase}s;
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
@@ -135,7 +140,7 @@
     }
     .row{
       animation-name: changeWrap;
-      animation-delay: 5s;
+      animation-delay: 1s;
       animation-duration: #{$animationDelayBase}s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
@@ -244,5 +249,11 @@
 @keyframes listColorsActive {
   to {
     margin-left: 0;
+  }
+}
+
+@keyframes changeOpacity {
+  to {
+    opacity: 0;
   }
 }

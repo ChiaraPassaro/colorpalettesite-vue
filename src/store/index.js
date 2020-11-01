@@ -18,14 +18,19 @@ export default new Vuex.Store({
     color: undefined,
     cssColor: '',
     generated: false,
-    random: {
-      number: false,
-      step: false
-    },
     error: {
       brightness: '',
       saturation: '',
       degree: '',
+    },
+    palettes: {
+      palette: undefined,
+      random: {
+        number: 3,
+        percDominant: 50,
+        colors: undefined,
+        step: undefined
+      },
     }
   },
   mutations,

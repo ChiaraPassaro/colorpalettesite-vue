@@ -24,7 +24,10 @@ export default {
       reject(new Error("No palettes"));
     });
   },
-  setRandom({ commit }, payload) {
+  setRandomData({ commit }, payload) {
     commit(payload.mutation, payload);
-  }
+  },
+  setRandomPalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
 };
