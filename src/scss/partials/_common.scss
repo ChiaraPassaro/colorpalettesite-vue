@@ -141,7 +141,7 @@ body{
   }
   &--list-colors{
     transform: translateY(-50%) rotate(90deg);
-    left: calc(100% - 20px);
+    left: calc(100% - 22px);
     top: 50%;
     .arrow__inner {
       &:before {
@@ -150,6 +150,22 @@ body{
     }
     &:after{
       background: $mainColor;
+      height: 28px;
+    }
+  }
+  &--list-colors-left{
+    z-index: -1;
+    transform: translateY(-50%) rotate(270deg);
+    left: -5%;
+    top: 50%;
+    .arrow__inner {
+      &:before {
+        background: $mainColor;
+      }
+    }
+    &:after{
+      background: $mainColor;
+      height: 28px;
     }
   }
 }

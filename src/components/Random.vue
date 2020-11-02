@@ -65,34 +65,7 @@
       </div>
 
       <!--TODO generare colori-->
-      <div
-        class="palette__description__list-colors palette__description__list-colors--active"
-      >
-        <div aria-hidden="true" class="arrow arrow--list-colors">
-          <div class="arrow__inner"></div>
-        </div>
-
-        <ul class="colors-square">
-          <li class="colors-square__item">
-            <span>code</span>
-          </li>
-          <li class="colors-square__item">
-            <span>code</span>
-          </li>
-          <li class="colors-square__item">
-            <span>code</span>
-          </li>
-          <li class="colors-square__item">
-            <span>code</span>
-          </li>
-          <li class="colors-square__item">
-            <span>code</span>
-          </li>
-          <li class="colors-square__item">
-            <span>code</span>
-          </li>
-        </ul>
-      </div>
+      <SlideColors v-bind:type="type"></SlideColors>
     </section>
     <!--/palette description-->
 
@@ -116,18 +89,20 @@
 import { types } from "@/store/mutations";
 import PalettesComponent from "@/components/PalettesComponent";
 import Chart from "@/components/Chart";
+import SlideColors from "@/components/SlideColors";
 
 
 export default {
   name: "Random",
   components: {
     PalettesComponent,
-    Chart
+    Chart,
+    SlideColors
   },
   data() {
     return {
       type: 'random',
-      colorsGenerated: undefined,
+      colors: (this.$store.state.palettes[this.type]) ? this.$store.state.palettes[this.type].colors : [],
       step: 360,
       stepGenerated: undefined,
       number: this.$store.state.palettes.random.number,
@@ -142,7 +117,7 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         tooltips: {
-          enabled: false
+          enabled: true
         },
         legend: {
           display: false
@@ -192,20 +167,19 @@ export default {
         this.number,
         this.percDominant
       );
-      this.colorsGenerated = randomDominant;
+      const colors = randomDominant;
       this.stepGenerated = this.step / randomDominant.length;
 
       this.$store.dispatch({
         type: "setRandomPalette",
         mutation: types.SET_RANDOM_PALETTE,
-        colors: this.colorsGenerated,
+        colors: colors,
         step: this.stepGenerated
       });
 
       this.fillChart();
     },
     fillChart() {
-      console.log('fill');
       const degrees = [];
       const colorsLabel = [];
 
@@ -219,8 +193,7 @@ export default {
       //inserisco i gradi della palette con dato uguale allo step usato per generare la palette
       for (let i = 0; i < this.$store.state.palettes.random.colors.length; i++) {
         const degree = this.$store.state.palettes.random.colors[i].getHue();
-        console.log(degree)
-        degrees[degree] = this.step;
+        degrees[degree] = this.stepGenerated;
         colorsLabel[degree] = this.$store.state.palettes.random.colors[i].printHsl();
       }
 
