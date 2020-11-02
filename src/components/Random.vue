@@ -178,6 +178,11 @@ export default {
       });
 
       this.fillChart();
+      this.$store.dispatch({
+        type: "setOpenPalette",
+        mutation: types.SET_OPEN_PALETTE,
+        open: true,
+      });
     },
     fillChart() {
       const degrees = [];

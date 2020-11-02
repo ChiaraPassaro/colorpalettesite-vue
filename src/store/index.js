@@ -24,6 +24,7 @@ export default new Vuex.Store({
       degree: '',
     },
     palettes: {
+      open: false,
       palette: undefined,
       random: {
         number: 3,

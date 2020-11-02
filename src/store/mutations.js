@@ -7,7 +7,8 @@ export const types = {
   INIT_STORE: "INIT_STORE",
   GENERATE_PALETTES: "GENERATE",
   SET_RANDOM_DATA: "SET_RANDOM",
-  SET_RANDOM_PALETTE: 'SET_RANDOM_PALETTE'
+  SET_RANDOM_PALETTE: 'SET_RANDOM_PALETTE',
+  SET_OPEN_PALETTE: 'SET_OPEN_PALETTE'
 };
 
 export const mutations = {
@@ -71,5 +72,8 @@ export const mutations = {
     state.palettes.random.step = payload.step;
     localStorage.setItem("random.colors", state.palettes.random.colors);
     localStorage.setItem("random.step", state.palettes.random.step);
+  },
+  [types.SET_OPEN_PALETTE](state, payload) {
+    this.state.palettes.open = payload.open;
   }
 };

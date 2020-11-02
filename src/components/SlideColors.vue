@@ -1,7 +1,7 @@
 <template>
 
   <div
-      :class="['palette__description__list-colors', isPaletteGenerated, isPaletteOpen]"
+      :class="['palette__description__list-colors', isPaletteOpen, isPaletteTotalOpen]"
   >
     <div aria-hidden="true" class="arrow arrow--list-colors" @click="setOpen">
       <div class="arrow__inner"></div>
@@ -38,10 +38,12 @@ export default {
     generatedColors() {
       return this.$store.state.palettes[this.type].colors;
     },
-    isPaletteGenerated() {
-      return (this.$store.state.palettes[this.type].colors && this.$store.state.palettes[this.type].colors.length > 0) ?  'palette__description__list-colors--active' : ''
-    },
     isPaletteOpen() {
+      return this.$store.state.palettes.open
+        ? "palette__description__list-colors--active"
+        : "";
+    },
+    isPaletteTotalOpen() {
       return (this.open) ?  'palette__description__list-colors--open' : ''
     }
   },

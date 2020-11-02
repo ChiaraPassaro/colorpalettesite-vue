@@ -30,4 +30,7 @@ export default {
   setRandomPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
+  setOpenPalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
 };

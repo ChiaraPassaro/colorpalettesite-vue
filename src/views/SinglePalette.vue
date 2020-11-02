@@ -20,6 +20,7 @@
 import random from "@/components/Random";
 import HeaderPalettesComponent from "@/components/HeaderPalettesComponent";
 import Footer from "@/components/FooterComponent";
+import {types} from "@/store/mutations";
 
 export default {
   name: "SinglePalette.vue",
@@ -33,6 +34,13 @@ export default {
       component: this.$route.params.type,
     }
   },
+  beforeMount() {
+    this.$store.dispatch({
+      type: "setOpenPalette",
+      mutation: types.SET_OPEN_PALETTE,
+      open: false,
+    });
+  }
 
 }
 </script>
