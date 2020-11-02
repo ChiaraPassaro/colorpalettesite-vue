@@ -6,13 +6,19 @@
     <div aria-hidden="true" class="arrow arrow--list-colors" @click="setOpen">
       <div class="arrow__inner"></div>
     </div>
+    <div class="palette__description__list-colors__actions">
+      <p>Click on square and copy hsl code <br>
+        or <br>
+        <button>Get your list colors</button>
+      </p>
+    </div>
     <!--TODO devono rimanere quadrati, aggiungere slide e si deve aprire solo quando sono generati i colori-->
     <ul class="colors-square">
       <li class="colors-square__item" v-for="(color, index) in generatedColors" v-bind:key="color+index" :style="{ backgroundColor: color.printHsl() }">
         <span @click="copyColor(color)">{{ color.printHsl() }}</span>
       </li>
     </ul>
-    <div aria-hidden="true" class="arrow arrow--list-colors-left">
+    <div aria-hidden="true" class="arrow arrow--list-colors-left" @click="setClose">
       <div class="arrow__inner"></div>
     </div>
   </div>
@@ -25,7 +31,8 @@ export default {
   props: ['type'],
   data() {
     return {
-      open: false
+      open: false,
+      close: false
     }
   },
   computed: {
@@ -37,6 +44,9 @@ export default {
     },
     isPaletteOpen() {
       return (this.open) ?  'palette__description__list-colors--open' : ''
+    },
+    isPaletteClose() {
+      return (this.close) ?  'palette__description__list-colors--close' : ''
     }
   },
   methods: {
@@ -46,6 +56,11 @@ export default {
     },
     setOpen() {
       this.open = true;
+      this.close = false;
+    },
+    setClose() {
+      this.open = false;
+      this.close = true;
     }
   }
 }

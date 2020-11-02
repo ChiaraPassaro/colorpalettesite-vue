@@ -29,10 +29,14 @@
       margin: 20px auto;
     }
     &__list-colors{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       position: absolute;
       left: 0;
       z-index: 1;
       width: 40%;
+      height: 110px;
       margin-left: -40%;
       background: $mainColor;
       &--active {
@@ -42,6 +46,10 @@
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
       }
+      &__actions {
+        opacity: 0;
+        width: 30%;
+      }
       &--open {
         margin-left: 0;
         animation-name: listColorsOpen;
@@ -49,6 +57,14 @@
         animation-duration: #{$animationDelayBase}s;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
+        .palette__description__list-colors__actions {
+          opacity: 0;
+          animation-name: openColors;
+          animation-delay: 1s;
+          animation-duration: #{$animationDelayBase}s;
+          animation-iteration-count: 1;
+          animation-fill-mode: forwards;
+        }
         .arrow--list-colors-left {
           animation-name: z-indexChange;
           animation-delay: 1s;
@@ -56,8 +72,16 @@
           animation-iteration-count: 1;
           animation-fill-mode: forwards;
         }
-      }
 
+      }
+      &--close {
+        margin-left: 0;
+        animation-name: listColorsClose;
+        animation-delay: 1s;
+        animation-duration: #{$animationDelayBase}s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
     }
     .colors-square{
       overflow: hidden;
@@ -268,9 +292,23 @@
 }
 
 @keyframes listColorsOpen {
+  from {
+    width: 40%;
+    margin-left: 0;
+  }
   to {
     width: 90%;
     left: 10%;
+  }
+}
+@keyframes listColorsClose {
+  from {
+    width: 90%;
+    left: 10%;
+  }
+  to {
+    width: 40%;
+    margin-left: 0;
   }
 }
 
@@ -283,6 +321,17 @@
 @keyframes z-indexChange {
   to {
     z-index: 1;
+  }
+}
+
+@keyframes openColors {
+  to {
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    margin: 5px 0;
   }
 }
 
