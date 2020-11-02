@@ -18,7 +18,7 @@
         <span @click="copyColor(color)">{{ color.printHsl() }}</span>
       </li>
     </ul>
-    <div aria-hidden="true" class="arrow arrow--list-colors-left" @click="setClose">
+    <div aria-hidden="true" class="arrow arrow--list-colors-left" @click="setOpen">
       <div class="arrow__inner"></div>
     </div>
   </div>
@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       open: false,
-      close: false
     }
   },
   computed: {
@@ -44,9 +43,6 @@ export default {
     },
     isPaletteOpen() {
       return (this.open) ?  'palette__description__list-colors--open' : ''
-    },
-    isPaletteClose() {
-      return (this.close) ?  'palette__description__list-colors--close' : ''
     }
   },
   methods: {
@@ -55,12 +51,7 @@ export default {
       console.log(color.printHsl());
     },
     setOpen() {
-      this.open = true;
-      this.close = false;
-    },
-    setClose() {
-      this.open = false;
-      this.close = true;
+      this.open = !this.open;
     }
   }
 }

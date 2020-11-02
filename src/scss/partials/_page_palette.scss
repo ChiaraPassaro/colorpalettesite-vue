@@ -36,34 +36,36 @@
       left: 0;
       z-index: 1;
       width: 40%;
-      height: 110px;
+      height: 130px;
       margin-left: -40%;
       background: $mainColor;
+      transition: all 1s;
       &--active {
-        animation-name: listColorsActive;
-        animation-delay: 1s;
-        animation-duration: #{$animationDelayBase}s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        width: 40%;
+        margin-left: 0;
+        padding-left: 2%;
       }
       &__actions {
         opacity: 0;
         width: 30%;
+        font-size: 0;
+        transition: all 0.5s;
       }
       &--open {
-        margin-left: 0;
-        animation-name: listColorsOpen;
-        animation-delay: 1s;
-        animation-duration: #{$animationDelayBase}s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
+        width: 90%;
+        left: 10%;
+
         .palette__description__list-colors__actions {
-          opacity: 0;
-          animation-name: openColors;
-          animation-delay: 1s;
-          animation-duration: #{$animationDelayBase}s;
-          animation-iteration-count: 1;
-          animation-fill-mode: forwards;
+          opacity: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 110px;
+          margin: 5px 0;
+          font-size: 100%;
         }
         .arrow--list-colors-left {
           animation-name: z-indexChange;
@@ -76,11 +78,12 @@
       }
       &--close {
         margin-left: 0;
-        animation-name: listColorsClose;
+        animation-name: listColorsOpen;
         animation-delay: 1s;
         animation-duration: #{$animationDelayBase}s;
         animation-iteration-count: 1;
-        animation-fill-mode: forwards;
+        animation-fill-mode: backwards;
+        animation-direction: reverse;
       }
     }
     .colors-square{
@@ -299,16 +302,6 @@
   to {
     width: 90%;
     left: 10%;
-  }
-}
-@keyframes listColorsClose {
-  from {
-    width: 90%;
-    left: 10%;
-  }
-  to {
-    width: 40%;
-    margin-left: 0;
   }
 }
 
