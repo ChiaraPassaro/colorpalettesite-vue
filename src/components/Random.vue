@@ -56,7 +56,7 @@
             <button
               :class="['button', checkError ? '' : 'active']"
               type="submit"
-              :disabled="checkError"
+              :disabled="checkError" :style="buttonColor"
             >
               Genera
             </button>
@@ -133,6 +133,9 @@ export default {
         !this.percDominant ||
         !this.number
       );
+    },
+    buttonColor() {
+      return { backgroundColor: this.$store.state.color.printHsl() }
     }
   },
   methods: {
@@ -216,16 +219,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../scss/partials/_variables";
 .button {
   margin: auto;
   padding: 10px;
   border-radius: 5px;
-  border: none;
+  border: 0;
+  outline: none;
+  color: white;
   font-size: 2em;
   font-weight: bold;
   text-transform: uppercase;
   &.active {
     cursor: pointer;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+    transition: all 0.2s;
+    text-shadow: $textShadow;
+    &:hover,
+    &:active,
+    &:focus {
+      filter: none;
+    }
   }
 }
 .error {

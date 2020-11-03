@@ -1,8 +1,12 @@
 #page-palette{
   main{
     flex-direction: row;
-    align-items: flex-start;
     position: relative;
+    animation-name: changeAlignFlex;
+    animation-delay: 1s;
+    animation-duration: #{$animationDelayBase}s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
   }
   .palette__description{
     //width: 0;
@@ -135,7 +139,7 @@
     //width: 100%;
     .palette{
       animation-name: changeWidth;
-      animation-delay: 1s;
+      animation-delay: 0.8s;
       animation-duration: #{$animationDelayBase}s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
@@ -144,7 +148,7 @@
         h2{
           opacity: 1;
           animation-name: changeOpacity;
-          animation-delay: 1s;
+          animation-delay: 0.8s;
           animation-duration: #{$animationDelayBase}s;
           animation-iteration-count: 1;
           animation-fill-mode: forwards;
@@ -227,7 +231,7 @@
     }
   }
 }
-@media screen and (min-width: 1500px) and (max-width: 1770px){
+@media screen and (min-width: 1500px) and (max-width: 2300px){
   @keyframes changeWidth {
     to {
       width: calc((100%/2) - #{$palettePaddingXL}px);
@@ -327,6 +331,12 @@
     align-items: center;
     height: 90px;
     margin: 5px 0;
+  }
+}
+
+@keyframes changeAlignFlex {
+  to {
+    align-items: flex-start;
   }
 }
 

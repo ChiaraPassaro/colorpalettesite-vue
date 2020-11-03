@@ -225,6 +225,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../scss/partials/_variables";
 .error {
   color: red;
 }
@@ -263,7 +264,7 @@ export default {
   &.generated {
     opacity: 1;
     cursor: pointer;
-
+    text-shadow: $textShadow;
     &:hover,
     &:active,
     &:focus {
