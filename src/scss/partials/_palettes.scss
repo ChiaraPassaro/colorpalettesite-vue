@@ -13,11 +13,6 @@
     @include animationFromTo(fromTo#{u}, 150vh, 0);
     animation-delay: #{$animationDelayBase}s;
   }
-  /*
-  .arrow--header .arrow__inner:before,
-  .arrow--header:after{
-    background: $debugColor;
-  }*/
   .arrow{
     display: none;
   }
