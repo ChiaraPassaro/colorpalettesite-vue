@@ -71,7 +71,6 @@
 
     <!--palette detail-->
     <section class="palette__detail">
-      <!--TODO inserire chartjs-->
       <div class="ratio">
         <Chart v-bind:options="options" v-bind:chart-data="datacollection"></Chart>
       </div>
@@ -79,7 +78,6 @@
     <!--/palette detail-->
 
     <!--palettes list-->
-    <!--TODO sostituire le palette-->
     <PalettesComponent></PalettesComponent>
     <!--/palettes list-->
   </main>
@@ -102,7 +100,9 @@ export default {
   data() {
     return {
       type: 'random',
-      colors: (this.$store.state.palettes[this.type]) ? this.$store.state.palettes[this.type].colors : [],
+      colors: this.$store.state.palettes[this.type]
+        ? this.$store.state.palettes[this.type].colors
+        : [],
       step: 360,
       stepGenerated: undefined,
       number: this.$store.state.palettes.random.number,
@@ -170,7 +170,14 @@ export default {
         this.number,
         this.percDominant
       );
-      const colors = randomDominant;
+      let colors = randomDominant;
+      colors = colors.map((element, index) => {
+        return {
+          ...element,
+          position: index + 1
+        }
+      });
+
       this.stepGenerated = this.step / randomDominant.length;
 
       this.$store.dispatch({
@@ -214,6 +221,8 @@ export default {
         labels: colorsLabel
       };
     }
+  },
+  mounted() {
   }
 };
 </script>

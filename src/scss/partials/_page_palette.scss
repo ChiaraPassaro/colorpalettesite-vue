@@ -9,11 +9,9 @@
     animation-fill-mode: forwards;
   }
   .palette__description{
-    //width: 0;
     overflow: hidden;
     width: 40%;
     margin-left: -40%;
-    //margin-right: 40%;
     animation-name: descPalette;
     animation-delay: 1.8s;
     animation-duration: #{$animationDelayBase}s;
@@ -58,7 +56,7 @@
         opacity: 0;
         width: 30%;
         font-size: 0;
-        transition: all 0.5s;
+        transition: all 1s;
       }
       &--open {
         width: 90%;
@@ -80,7 +78,9 @@
           animation-iteration-count: 1;
           animation-fill-mode: forwards;
         }
-
+        .colors-square{
+          width: 80%;
+        }
       }
       &--close {
         margin-left: 0;
@@ -98,22 +98,30 @@
       justify-content: flex-start;
       flex-direction: row-reverse;
       align-items: center;
-      width: 70%;
+      width: 100%;
       height: 100px;
-      padding: 10px;
+      padding: 10px 10px 10px 15px;
+      margin-left: 10px;
       list-style-type: none;
+      color: white;
       &__item{
+        display: flex;
+        justify-content: center;
+        align-items: center;
         flex-shrink: 0;
         width: 60px;
         height: 60px;
         margin-right: 5px;
-        border: 1px solid white;
+        border: 2px solid white;
+        opacity: 0;
+        transition: all 1s;
+        &.change-opacity {
+          opacity: 1;
+        }
         span {
-          display: block;
+          display: none;
           width: 100%;
           height: 100%;
-          visibility: hidden;
-          font-size: 1px;
         }
       }
     }

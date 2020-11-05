@@ -6,7 +6,7 @@
       isPaletteTotalOpen
     ]"
   >
-    <div aria-hidden="true" class="arrow arrow--list-colors" @click="setOpen">
+    <div class="arrow arrow--list-colors" @click="setOpen">
       <div class="arrow__inner"></div>
     </div>
     <div class="palette__description__list-colors__actions">
@@ -16,19 +16,33 @@
         <button>Get your list colors</button>
       </p>
     </div>
-    <!--TODO devono rimanere quadrati, aggiungere slide e si deve aprire solo quando sono generati i colori-->
-   <i class="fas fa-angle-left palette__description__list__arrow-left" @click="moveNext" v-if="checkNextColors"></i>
+    <i
+      :class="[
+        'fas fa-angle-left palette__description__list__arrow-left',
+        checkNextColors ? 'button-active' : ''
+      ]"
+      @click="moveNext"
+      v-if="checkNextColors && open"
+    ></i>
     <ul class="colors-square" ref="colorsSlider">
       <li
-        class="colors-square__item"
+        class="colors-square__item change-opacity"
         v-for="(color, index) in generatedColors"
         v-bind:key="color + index"
         :style="{ backgroundColor: color.printHsl() }"
       >
+        {{ color.position }}
         <span @click="copyColor(color)">{{ color.printHsl() }}</span>
       </li>
     </ul>
-    <i class="fas fa-angle-right palette__description__list__arrow-left" @click="movePrev" v-if="checkPrevColors"></i>
+    <i
+      :class="[
+        'fas fa-angle-right palette__description__list__arrow-left',
+        checkPrevColors ? 'button-active' : ''
+      ]"
+      @click="movePrev"
+      v-if="open"
+    ></i>
     <div
       aria-hidden="true"
       class="arrow arrow--list-colors-left"
@@ -48,23 +62,25 @@ export default {
       open: false,
       widthColorsSlider: 0,
       colors: this.$store.state.palettes[this.type].colors,
-      numberVisible: 5,
+      numberVisible: 0,
       numberStart: 0
     };
   },
   computed: {
     generatedColors() {
-      const numberOfElement =
-          this.$store.state.palettes[this.type] &&
-          this.$store.state.palettes[this.type].colors.length > this.numberVisible
-              ? this.numberVisible
-              : this.$store.state.palettes[this.type].colors.length;
+      const lengthColors = this.$store.state.palettes[this.type].colors ? this.$store.state.palettes[this.type].colors.length : 0;
+      const numberOfElement = lengthColors > this.numberVisible ? this.numberVisible : lengthColors;
 
-      const colors = (this.$store.state.palettes[this.type]) ? this.$store.state.palettes[this.type].colors.slice(this.numberStart, this.numberStart + numberOfElement) : [];
+      if(lengthColors > 0) {
+        const colors = (this.$store.state.palettes[this.type]) ? this.$store.state.palettes[this.type].colors.slice(this.numberStart, this.numberStart + numberOfElement) : [];
+        this.getWidthColorsSlider();
+        return colors;
+      }
 
-      return colors;
+      return false;
     },
     isPaletteOpen() {
+      console.log(this.$store.state.palettes.open);
       return this.$store.state.palettes.open
         ? "palette__description__list-colors--active"
         : "";
@@ -73,7 +89,8 @@ export default {
       return this.open ? "palette__description__list-colors--open" : "";
     },
     checkNextColors() {
-      return this.numberStart + this.numberVisible <= this.$store.state.palettes[this.type].colors.length;
+      const lengthColors = (this.$store.state.palettes[this.type].colors) ? this.$store.state.palettes[this.type].colors.length : 0;
+      return this.numberStart + this.numberVisible <= lengthColors;
     },
     checkPrevColors() {
       return this.numberStart - 1 >= 0;
@@ -90,14 +107,16 @@ export default {
     getWidthColorsSlider() {
       setTimeout(() => {
         this.widthColorsSlider = this.$refs.colorsSlider.clientWidth;
-        this.numberVisible = parseInt(this.widthColorsSlider / 60);
+        this.numberVisible = Math.ceil(this.widthColorsSlider / 65);
       }, 1000);
     },
     moveNext() {
       this.numberStart = this.numberStart + 1;
     },
     movePrev() {
-      this.numberStart = this.numberStart - 1;
+      if(this.numberStart - 1 >= 0) {
+        this.numberStart = this.numberStart - 1;
+      }
     }
   }
 };
@@ -109,6 +128,10 @@ export default {
 
 .palette__description__list__arrow-left {
   font-size: 60px;
+  color: $lightGrey;
+}
+.button-active {
+  cursor: pointer;
   color: $grey;
 }
 </style>
