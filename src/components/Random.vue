@@ -58,7 +58,7 @@
               type="submit"
               :disabled="checkError" :style="buttonColor"
             >
-              Genera
+              Generate
             </button>
           </div>
         </form>

@@ -10,11 +10,9 @@
       <div class="arrow__inner"></div>
     </div>
     <div class="palette__description__list-colors__actions">
-      <p>
-        Click on square and copy hsl code <br />
-        or <br />
-        <button>Get your list colors</button>
-      </p>
+      <button class="btn" :style="{borderColor: baseColor, color: baseColor}">
+            Get your list colors
+      </button>
     </div>
     <i
       :class="[
@@ -63,7 +61,8 @@ export default {
       widthColorsSlider: 0,
       colors: this.$store.state.palettes[this.type].colors,
       numberVisible: 0,
-      numberStart: 0
+      numberStart: 0,
+      baseColor: this.$store.state.cssColor
     };
   },
   computed: {
