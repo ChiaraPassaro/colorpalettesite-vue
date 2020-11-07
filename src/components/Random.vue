@@ -164,13 +164,13 @@ export default {
     checkValue() {
       const percDominant = parseInt(this.percDominant);
       const number = parseInt(this.number);
-      const isInRangeDegree = !isNaN(percDominant) && percDominant > 0 && percDominant <= 100;
+      const isInRangeDegree =
+        !isNaN(percDominant) && percDominant > 0 && percDominant <= 100;
       const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
       this.error.number = !isInRangeNumber ? "is out of range" : false;
       this.error.percDominant = !isInRangeDegree ? "is out of range" : false;
     },
     generatePalette() {
-      // inserire chartjs
       const randomDominant = this.palette.randomDominant(
         this.number,
         this.percDominant
@@ -180,7 +180,7 @@ export default {
         return {
           ...element,
           position: index + 1
-        }
+        };
       });
 
       this.stepGenerated = this.step / randomDominant.length;
@@ -196,7 +196,7 @@ export default {
       this.$store.dispatch({
         type: "setOpenPalette",
         mutation: types.SET_OPEN_PALETTE,
-        open: true,
+        open: true
       });
     },
     fillChart() {
@@ -204,13 +204,10 @@ export default {
       const colorsLabel = [];
 
       for (let i = 0; i < 360; i++) {
-        //tutti i gradi hanno valore 1 per comparire nella chart
         degrees.push(1);
-        //tutti i gradi hanno il colore di background ad opacità 0.2
-        colorsLabel.push('hsl('+ i + ', 50%, 50%, 0.2)');
+        colorsLabel.push("hsl(" + i + ", 50%, 50%, 0.2)");
       }
 
-      //inserisco i gradi della palette con dato uguale allo step usato per generare la palette
       for (let i = 0; i < this.$store.state.palettes.random.colors.length; i++) {
         const degree = this.$store.state.palettes.random.colors[i].getHue();
         degrees[degree] = this.stepGenerated;
@@ -218,11 +215,13 @@ export default {
       }
 
       this.datacollection = {
-          datasets: [{
+        datasets: [
+          {
             data: degrees,
             backgroundColor: colorsLabel,
             borderWidth: 0
-          }],
+          }
+        ],
         labels: colorsLabel
       };
     }
@@ -234,4 +233,3 @@ export default {
   }
 };
 </script>
-

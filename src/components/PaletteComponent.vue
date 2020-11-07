@@ -33,7 +33,7 @@ export default {
   computed: {
     setBackground() {
       return { backgroundColor: this.$store.state.cssColor };
-    },
+    }
   },
   methods: {
     generatePalette(id) {
