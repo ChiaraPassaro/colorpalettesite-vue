@@ -2,7 +2,14 @@
   main{
     flex-direction: row;
     position: relative;
+    &.page-palette-active .palette:not(.not-transform):hover {
+      h2 {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1 !important;
+      }
+    }
   }
+
   .palette__description{
     overflow: hidden;
     width: 40%;
@@ -13,7 +20,37 @@
     animation-duration: #{$animationDelayBase}s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-
+    @media screen and (max-width: 1090px) {
+      font-size: 0.8em;
+    }
+    .button {
+      margin: auto;
+      padding: 10px;
+      border-radius: 5px;
+      border: 0;
+      outline: none;
+      color: white;
+      font-size: 1.4em;
+      font-weight: bold;
+      text-transform: uppercase;
+      @media screen and (min-width: 1090px) {
+        font-size: 1.8em;
+      }
+        &.active {
+        cursor: pointer;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
+        transition: all 0.2s;
+        text-shadow: $textShadow;
+        &:hover,
+        &:active,
+        &:focus {
+          filter: none;
+        }
+      }
+    }
+    .error {
+      color: red;
+    }
     &__info{
       padding: 4%;
     }
@@ -160,14 +197,6 @@
     animation-fill-mode: forwards;
   }
   .palettes{
-    //width: 100%;
-    //da attivare con setTimeOut
-    .page-palette-active &:not(.not-transform):hover {
-      h2 {
-        transform: translate(-50%, -50%) scale(0.5);
-        opacity: 1!important;
-      }
-    }
     .palette{
       animation-name: changeWidth;
       animation-delay: 0.8s;

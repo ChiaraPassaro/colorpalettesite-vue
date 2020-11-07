@@ -127,10 +127,7 @@ export default {
   },
   methods: {
     isActiveSchema(element) {
-      if (element.id === this.activeId) {
-        return true;
-      }
-      return false;
+      return element.id === this.activeId;
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <main class="main main--palettes">
+  <main :class="['main main--palettes', isActive ? 'page-palette-active' : '']">
     <!--palette description-->
     <section class="palette__description">
       <div class="palette__description__info">
@@ -104,6 +104,7 @@ export default {
   data() {
     return {
       type: 'random',
+      isActive: false,
       colors: this.$store.state.palettes[this.type]
         ? this.$store.state.palettes[this.type].colors
         : [],
@@ -227,35 +228,10 @@ export default {
     }
   },
   mounted() {
+    setTimeout(() => {
+      this.isActive = true;
+    }, 2000);
   }
 };
 </script>
 
-<style scoped lang="scss">
-@import "../scss/partials/_variables";
-.button {
-  margin: auto;
-  padding: 10px;
-  border-radius: 5px;
-  border: 0;
-  outline: none;
-  color: white;
-  font-size: 2em;
-  font-weight: bold;
-  text-transform: uppercase;
-  &.active {
-    cursor: pointer;
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.5));
-    transition: all 0.2s;
-    text-shadow: $textShadow;
-    &:hover,
-    &:active,
-    &:focus {
-      filter: none;
-    }
-  }
-}
-.error {
-  color: red;
-}
-</style>
