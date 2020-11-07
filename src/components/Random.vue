@@ -56,7 +56,8 @@
             <button
               :class="['button', checkError ? '' : 'active']"
               type="submit"
-              :disabled="checkError" :style="buttonColor"
+              :disabled="checkError"
+              :style="buttonColor"
             >
               Generate
             </button>
@@ -71,14 +72,17 @@
 
     <!--palette detail-->
     <section class="palette__detail">
-      <div class="ratio">
-        <Chart v-bind:options="options" v-bind:chart-data="datacollection"></Chart>
+      <div>
+        <Chart
+          v-bind:options="options"
+          v-bind:chart-data="datacollection"
+        ></Chart>
       </div>
     </section>
     <!--/palette detail-->
 
     <!--palettes list-->
-    <PalettesComponent></PalettesComponent>
+    <PalettesComponent :activeId="type"></PalettesComponent>
     <!--/palettes list-->
   </main>
 </template>
@@ -115,7 +119,7 @@ export default {
       datacollection: null,
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         tooltips: {
           enabled: true
         },

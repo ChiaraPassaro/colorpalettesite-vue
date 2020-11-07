@@ -1,8 +1,12 @@
 <template>
-  <div :id="id" :class="'palette palette--not-active del-' + (index + 1)">
+  <div
+    :id="id"
+    :class="['palette palette--not-active del-' + (index + 1), active ? 'not-transform' : '']"
+    @click="!active ? generatePalette(id) : false"
+  >
     <div class="palette__content" :style="setBackground">
       <h2>
-        <span @click="generatePalette(id)">{{ name }}</span>
+        <span>{{ name }}</span>
       </h2>
       <ul class="palette__number-color">
         <li
@@ -22,13 +26,11 @@ import { types } from "@/store/mutations";
 
 export default {
   name: "PaletteComponent",
-  props: ["colors", "index", "id", "name"],
+  props: ["colors", "index", "id", "name", "active"],
   computed: {
     setBackground() {
-      return {
-        backgroundColor: this.$store.state.cssColor
-      };
-    }
+      return { backgroundColor: this.$store.state.cssColor };
+    },
   },
   methods: {
     generatePalette(id) {

@@ -12,6 +12,7 @@
         :colors="schema.colors"
         :index="index"
         :name="schema.name"
+        :active="isActiveSchema(schema)"
       ></PaletteComponent>
     </div>
   </section>
@@ -25,6 +26,7 @@ export default {
   components: {
     PaletteComponent
   },
+  props: ["activeId"],
   data() {
     return {
       schemas: [
@@ -122,6 +124,14 @@ export default {
         ]
       ]
     };
+  },
+  methods: {
+    isActiveSchema(element) {
+      if (element.id === this.activeId) {
+        return true;
+      }
+      return false;
+    }
   }
 };
 </script>

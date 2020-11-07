@@ -100,13 +100,19 @@
     width: calc((100%/4) - #{$palettePaddingL}px);
     padding: #{$palettePadding}px;
     margin: 2% 3%;
-    &--not-active:hover{
+    transition: all 0.5s;
+    &.not-transform .palette__content {
+      animation-name: changeColorBackground;
+      animation-duration: #{$animationDelayBase}s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+    &--not-active:not(.not-transform):hover{
       cursor: pointer;
       transform: scale(1.1);
-      transition: transform 0.5s;
       .palette__content{
         filter: drop-shadow(2px 6px 5px rgba(0,0,0,0.3));
-        transition: 0.5s;
+        transition: all 0.5s;
         &:before{
           content: '';
           display: block;
@@ -260,6 +266,12 @@
     $in: ($in + 0.3);
   }
 
+}
+
+@keyframes changeColorBackground {
+  to {
+    background-color: grey;
+  }
 }
 
 

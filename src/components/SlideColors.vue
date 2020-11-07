@@ -10,13 +10,13 @@
       <div class="arrow__inner"></div>
     </div>
     <div class="palette__description__list-colors__actions">
-      <button class="btn" :style="{borderColor: baseColor, color: baseColor}">
+      <button class="btn" :style="{ borderColor: baseColor, color: baseColor }">
             Get your list colors
       </button>
     </div>
     <i
       :class="[
-        'fas fa-angle-left palette__description__list__arrow-left',
+        'fas fa-angle-left palette__description__list__arrow',
         checkNextColors ? 'button-active' : ''
       ]"
       @click="moveNext"
@@ -35,7 +35,7 @@
     </ul>
     <i
       :class="[
-        'fas fa-angle-right palette__description__list__arrow-left',
+        'fas fa-angle-right palette__description__list__arrow',
         checkPrevColors ? 'button-active' : ''
       ]"
       @click="movePrev"
@@ -120,17 +120,3 @@ export default {
   }
 };
 </script>
-
-
-<style scoped lang="scss">
-@import "../scss/partials/_variables.scss";
-
-.palette__description__list__arrow-left {
-  font-size: 60px;
-  color: $lightGrey;
-}
-.button-active {
-  cursor: pointer;
-  color: $grey;
-}
-</style>

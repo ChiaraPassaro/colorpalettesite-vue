@@ -2,16 +2,12 @@
   main{
     flex-direction: row;
     position: relative;
-    animation-name: changeAlignFlex;
-    animation-delay: 1s;
-    animation-duration: #{$animationDelayBase}s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
   }
   .palette__description{
     overflow: hidden;
     width: 40%;
     margin-left: -40%;
+    margin-bottom: 10%;
     animation-name: descPalette;
     animation-delay: 1.8s;
     animation-duration: #{$animationDelayBase}s;
@@ -32,15 +28,16 @@
       margin: 20px auto;
     }
     &__list-colors{
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
       position: absolute;
       bottom: 10%;
       left: 0;
       z-index: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       width: 40%;
       height: 110px;
+      padding-right: 20px;
       margin-left: calc(-40% - 75px);
       background: $mainColor;
       transition: all 1s;
@@ -125,12 +122,29 @@
         }
       }
     }
+    &__list__arrow {
+      font-size: 60px;
+      color: $lightGrey;
+    }
+    .button-active {
+      cursor: pointer;
+      color: $grey;
+      text-shadow: $textShadow;
+      &:hover,
+      &:active,
+      &:focus {
+        text-shadow: $textShadowHover;
+      }
+    }
   }
   .palette__detail{
     position: absolute;
-    opacity: 0;
     left: 40%;
-    width: 30%;
+    display: flex;
+    justify-content: center;
+    width: 35%;
+    height: 80%;
+    opacity: 0;
     animation-name: popDoughnut;
     animation-delay: 2.8s;
     animation-duration: #{$animationDelayBase}s;
@@ -344,9 +358,4 @@
   }
 }
 
-@keyframes changeAlignFlex {
-  to {
-    align-items: flex-start;
-  }
-}
 
