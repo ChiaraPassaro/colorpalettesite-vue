@@ -1,7 +1,10 @@
 <template>
   <div
     :id="id"
-    :class="['palette palette--not-active del-' + (index + 1), active ? 'not-transform' : '']"
+    :class="[
+      'palette palette--not-active del-' + (index + 1),
+      active ? 'not-transform' : ''
+    ]"
     @click="!active ? generatePalette(id) : false"
   >
     <div class="palette__content" :style="setBackground">

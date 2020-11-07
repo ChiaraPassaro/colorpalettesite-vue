@@ -161,19 +161,40 @@
   }
   .palettes{
     //width: 100%;
+    //da attivare con setTimeOut
+    .page-palette-active &:not(.not-transform):hover {
+      h2 {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1!important;
+      }
+    }
     .palette{
       animation-name: changeWidth;
       animation-delay: 0.8s;
       animation-duration: #{$animationDelayBase}s;
       animation-iteration-count: 1;
       animation-fill-mode: forwards;
+      &.not-transform {
+        transform: scale(1.1);
+      }
+      &--not-active {
+        h2 {
+          transform: translate(-50%, -50%) scale(0.5);
+        }
+        &:not(.not-transform) .palette__content {
+          animation-name: changeColorBackground;
+          animation-duration: 0.7s;
+          animation-iteration-count: 1;
+          animation-fill-mode: forwards;
+        }
+      }
+
       &__content{
         background: $bodyColor;
         h2{
           opacity: 1;
           animation-name: changeOpacity;
-          animation-delay: 0.8s;
-          animation-duration: #{$animationDelayBase}s;
+          animation-duration: 0.1s;
           animation-iteration-count: 1;
           animation-fill-mode: forwards;
         }
@@ -230,6 +251,7 @@
 
 @keyframes changeWidth {
   to {
+    transform: scale(0);
     width: calc((100%/2) - #{$palettePaddingM}px);
     padding: #{$palettePadding}px;
     margin: 2% 3%;
@@ -239,6 +261,7 @@
 @media screen and (max-width: 1090px){
   @keyframes changeWidth {
     to {
+      transform: none;
       width: calc((100%/2) - #{$palettePadding}px);
       padding: #{$palettePadding}px;
       margin: 2% 3%;
@@ -249,6 +272,7 @@
 @media screen and (min-width: 1091px){
   @keyframes changeWidth {
     to {
+      transform: none;
       width: calc((100%/2) - #{$palettePaddingL}px);
       padding: #{$palettePadding}px;
       margin: 2% 3%;
@@ -258,6 +282,7 @@
 @media screen and (min-width: 1500px) and (max-width: 2300px){
   @keyframes changeWidth {
     to {
+      transform: none;
       width: calc((100%/2) - #{$palettePaddingXL}px);
       padding: #{$palettePadding}px;
       margin: 2% 3%;

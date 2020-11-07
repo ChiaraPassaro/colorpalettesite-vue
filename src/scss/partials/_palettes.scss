@@ -101,12 +101,6 @@
     padding: #{$palettePadding}px;
     margin: 2% 3%;
     transition: all 0.5s;
-    &.not-transform .palette__content {
-      animation-name: changeColorBackground;
-      animation-duration: #{$animationDelayBase}s;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards;
-    }
     &--not-active:not(.not-transform):hover{
       cursor: pointer;
       transform: scale(1.1);
