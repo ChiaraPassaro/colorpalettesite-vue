@@ -28,14 +28,44 @@
     ></i>
     <div class="tooltip" :style="activeColor ? isActiveColor : ''">
       <div class="tooltip--element" :style="activeColor ? backgroundColor : ''">
-        <button class="btn" @click="copyColor(activeColor.printHsl())">
-          {{ activeColor ? activeColor.printHsl() : "" }}
+        <button
+          class="btn"
+          @click="copyColor(activeColor.printHsl(), 'hsl')"
+          :style="messageCopy.hsl ? { backgroundColor: 'orange' } : ''"
+        >
+          {{
+            messageCopy.hsl
+              ? messageCopy.hsl
+              : activeColor
+              ? activeColor.printHsl()
+              : ""
+          }}
         </button>
-        <button class="btn" @click="copyColor(activeColor.printRgb())">
-          {{ activeColor ? activeColor.printRgb() : "" }}
+        <button
+          class="btn"
+          @click="copyColor(activeColor.printRgb(), 'rgb')"
+          :style="messageCopy.rgb ? { backgroundColor: 'orange' } : ''"
+        >
+          {{
+            messageCopy.rgb
+              ? messageCopy.rgb
+              : activeColor
+              ? activeColor.printRgb()
+              : ""
+          }}
         </button>
-        <button class="btn" @click="copyColor(activeColor.printHex())">
-          {{ activeColor ? activeColor.printHex() : "" }}
+        <button
+          class="btn"
+          @click="copyColor(activeColor.printHex(), 'hex')"
+          :style="messageCopy.hex ? { backgroundColor: 'orange' } : ''"
+        >
+          {{
+            messageCopy.hex
+              ? messageCopy.hex
+              : activeColor
+              ? activeColor.printHex()
+              : ""
+          }}
         </button>
       </div>
     </div>
@@ -81,6 +111,11 @@ export default {
   props: ["type"],
   data() {
     return {
+      messageCopy: {
+        hex: false,
+        rgb: false,
+        hsl: false
+      },
       feedback: {
         status: this.$store.state.feedback.status,
         message: this.$store.state.feedback.message
@@ -117,7 +152,6 @@ export default {
       return false;
     },
     isPaletteOpen() {
-      console.log(this.$store.state.palettes.open);
       return this.$store.state.palettes.open
         ? "palette__description__list-colors--active"
         : "";
@@ -150,7 +184,7 @@ export default {
     }
   },
   methods: {
-    copyColor(color) {
+    copyColor(color, type) {
       if (!navigator.clipboard) {
         const input = document.createElement("input");
         document.body.appendChild(input);
@@ -158,11 +192,16 @@ export default {
         input.select();
         const copied = document.execCommand("copy", false);
         if (copied) {
+          this.messageCopy[type] = "Copied!";
+          setTimeout(() => {
+            this.messageCopy[type] = false;
+          }, 1000);
+        } else {
           this.$store.dispatch({
             type: "setOpenFeedback",
             mutation: types.SET_OPEN_FEEDBACK,
             status: true,
-            message: "Copying to clipboard was successful!"
+            message: `Could not copy text`
           });
 
           setTimeout(() => {
@@ -178,22 +217,11 @@ export default {
       } else {
         navigator.clipboard.writeText(color).then(
           () => {
-            this.$store.dispatch({
-              type: "setOpenFeedback",
-              mutation: types.SET_OPEN_FEEDBACK,
-              status: true,
-              message: "Copying to clipboard was successful!"
-            });
-
+            //todo message in button
+            this.messageCopy[type] = "Copied!";
             setTimeout(() => {
-              this.$store.dispatch({
-                type: "setOpenFeedback",
-                mutation: types.SET_OPEN_FEEDBACK,
-                status: false,
-                message: ""
-              });
-            }, 2000);
-
+              this.messageCopy[type] = false;
+            }, 1000);
             console.log("Copying to clipboard was successful!");
           },
           err => {

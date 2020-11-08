@@ -75,3 +75,25 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
+
+@mixin animationFadeInAndOut($name, $from, $to){
+
+  @keyframes #{$name} {
+    0% {
+      opacity: $from;
+    }
+    30% {
+      opacity: $to;
+    }
+    100% {
+      opacity: $from;
+    }
+  }
+
+  animation-name: $name;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
