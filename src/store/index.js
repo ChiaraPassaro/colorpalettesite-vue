@@ -1,9 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import actions from "@/store/actions";
-import {
-  mutations
-} from "@/store/mutations";
+import { mutations } from "@/store/mutations";
 
 const ColorPalettesRange = require("@chiarapassaro/color-palettes-range/src/js");
 
@@ -16,12 +14,12 @@ export default new Vuex.Store({
     saturation: 80,
     brightness: 50,
     color: undefined,
-    cssColor: '',
+    cssColor: "",
     generated: false,
     error: {
-      brightness: '',
-      saturation: '',
-      degree: '',
+      brightness: "",
+      saturation: "",
+      degree: ""
     },
     palettes: {
       open: false,
@@ -31,7 +29,11 @@ export default new Vuex.Store({
         percDominant: 50,
         colors: undefined,
         step: undefined
-      },
+      }
+    },
+    feedback: {
+      message: "",
+      status: false
     }
   },
   mutations,
@@ -41,7 +43,7 @@ export default new Vuex.Store({
     getDegree: state => state.degree,
     getSaturation: state => state.saturation,
     getBrightness: state => state.brightness,
-    getCssColor: state => state.cssColor,
+    getCssColor: state => state.cssColor
   },
   modules: {}
 });

@@ -7,8 +7,9 @@ export const types = {
   INIT_STORE: "INIT_STORE",
   GENERATE_PALETTES: "GENERATE",
   SET_RANDOM_DATA: "SET_RANDOM",
-  SET_RANDOM_PALETTE: 'SET_RANDOM_PALETTE',
-  SET_OPEN_PALETTE: 'SET_OPEN_PALETTE'
+  SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
+  SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
+  SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK"
 };
 
 export const mutations = {
@@ -53,10 +54,16 @@ export const mutations = {
       state.saturation,
       state.brightness
     );
-    state.palettes.random.number = localStorage.getItem("random.number") || state.palettes.random.number;
-    state.palettes.random.percDominant = localStorage.getItem("random.percDominant") || state.palettes.random.percDominant;
-    state.palettes.random.step = localStorage.getItem("random.step") || state.palettes.random.step;
-    state.palettes.palette = (state.color) ? new state.ColorPalettesRange.SetColorPalette(state.color) : undefined;
+    state.palettes.random.number =
+      localStorage.getItem("random.number") || state.palettes.random.number;
+    state.palettes.random.percDominant =
+      localStorage.getItem("random.percDominant") ||
+      state.palettes.random.percDominant;
+    state.palettes.random.step =
+      localStorage.getItem("random.step") || state.palettes.random.step;
+    state.palettes.palette = state.color
+      ? new state.ColorPalettesRange.SetColorPalette(state.color)
+      : undefined;
   },
   [types.GENERATE_PALETTES](state, palettes) {
     state.palettes.palette = palettes;
@@ -65,7 +72,10 @@ export const mutations = {
     state.palettes.random.number = payload.number;
     state.palettes.random.percDominant = payload.percDominant;
     localStorage.setItem("random.number", state.palettes.random.number);
-    localStorage.setItem("random.percDominant", state.palettes.random.percDominant);
+    localStorage.setItem(
+      "random.percDominant",
+      state.palettes.random.percDominant
+    );
   },
   [types.SET_RANDOM_PALETTE](state, payload) {
     state.palettes.random.colors = payload.colors;
@@ -75,5 +85,9 @@ export const mutations = {
   },
   [types.SET_OPEN_PALETTE](state, payload) {
     this.state.palettes.open = payload.open;
+  },
+  [types.SET_OPEN_FEEDBACK](state, payload) {
+    this.state.feedback.status = payload.status;
+    this.state.feedback.message = payload.message;
   }
 };

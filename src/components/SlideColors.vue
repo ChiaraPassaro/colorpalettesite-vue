@@ -28,14 +28,14 @@
     ></i>
     <div class="tooltip" :style="activeColor ? isActiveColor : ''">
       <div class="tooltip--element" :style="activeColor ? backgroundColor : ''">
-        <button class="btn">
+        <button class="btn" @click="copyColor(activeColor.printHsl())">
           {{ activeColor ? activeColor.printHsl() : "" }}
         </button>
-        <button class="btn">
-          {{ activeColor ? activeColor.printHsl() : "" }}
+        <button class="btn" @click="copyColor(activeColor.printRgb())">
+          {{ activeColor ? activeColor.printRgb() : "" }}
         </button>
-        <button class="btn">
-          {{ activeColor ? activeColor.printHsl() : "" }}
+        <button class="btn" @click="copyColor(activeColor.printHex())">
+          {{ activeColor ? activeColor.printHex() : "" }}
         </button>
       </div>
     </div>
@@ -74,11 +74,17 @@
 
 <script>
 //TODO click color open/close and only open slide colors, change button css
+import { types } from "@/store/mutations";
+
 export default {
   name: "SlideColors",
   props: ["type"],
   data() {
     return {
+      feedback: {
+        status: this.$store.state.feedback.status,
+        message: this.$store.state.feedback.message
+      },
       activeColor: false,
       element: false,
       open: false,
@@ -145,7 +151,72 @@ export default {
   },
   methods: {
     copyColor(color) {
-      console.log(color.printHsl());
+      if (!navigator.clipboard) {
+        const input = document.createElement("input");
+        document.body.appendChild(input);
+        input.value = color;
+        input.select();
+        const copied = document.execCommand("copy", false);
+        if (copied) {
+          this.$store.dispatch({
+            type: "setOpenFeedback",
+            mutation: types.SET_OPEN_FEEDBACK,
+            status: true,
+            message: "Copying to clipboard was successful!"
+          });
+
+          setTimeout(() => {
+            this.$store.dispatch({
+              type: "setOpenFeedback",
+              mutation: types.SET_OPEN_FEEDBACK,
+              status: false,
+              message: ""
+            });
+          }, 2000);
+        }
+        input.remove();
+      } else {
+        navigator.clipboard.writeText(color).then(
+          () => {
+            this.$store.dispatch({
+              type: "setOpenFeedback",
+              mutation: types.SET_OPEN_FEEDBACK,
+              status: true,
+              message: "Copying to clipboard was successful!"
+            });
+
+            setTimeout(() => {
+              this.$store.dispatch({
+                type: "setOpenFeedback",
+                mutation: types.SET_OPEN_FEEDBACK,
+                status: false,
+                message: ""
+              });
+            }, 2000);
+
+            console.log("Copying to clipboard was successful!");
+          },
+          err => {
+            this.$store.dispatch({
+              type: "setOpenFeedback",
+              mutation: types.SET_OPEN_FEEDBACK,
+              status: true,
+              message: `Could not copy text: ${err}`
+            });
+
+            setTimeout(() => {
+              this.$store.dispatch({
+                type: "setOpenFeedback",
+                mutation: types.SET_OPEN_FEEDBACK,
+                status: false,
+                message: ""
+              });
+            }, 2000);
+
+            console.error("Could not copy text: ", err);
+          }
+        );
+      }
     },
     setColorActive(color, element) {
       this.element = element;
@@ -175,13 +246,13 @@ export default {
 
 <style scoped lang="scss">
 .tooltip {
-  display: none;
   position: absolute;
   bottom: 100%;
   left: 0;
+  display: none;
   width: 60px;
-  height: 200px;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+  height: 250px;
+  filter: drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.5));
   &--element {
     position: absolute;
     top: 0;
@@ -193,6 +264,8 @@ export default {
     align-items: center;
     width: 300px;
     height: 100%;
+    padding: 10px;
+    border: 3px solid white;
     border-radius: 5px;
   }
   &:after {
@@ -203,9 +276,25 @@ export default {
     z-index: -1;
     width: 25px;
     height: 25px;
+    border: 3px solid white;
     border-radius: 2px;
     background-color: var(--background-color);
     transform: translateX(-50%) rotate(45deg);
+  }
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 1;
+    width: 16px;
+    height: 5px;
+    background-color: var(--background-color);
+    transform: translateX(-50%);
+  }
+  .btn {
+    border: 0;
+    width: 80%;
   }
 }
 </style>

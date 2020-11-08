@@ -1,6 +1,10 @@
 <template>
   <div class="container" id="page-palette">
     <div class="inner content">
+      <!--feedback-->
+      <FeedbackComponent v-if="$store.state.feedback.status" />
+      <!--/feedback-->
+
       <!--header-->
       <HeaderPalettesComponent />
       <!--/header-->
@@ -18,6 +22,7 @@
 
 <script>
 import random from "@/components/Random";
+import FeedbackComponent from "@/components/FeedbackComponent";
 import HeaderPalettesComponent from "@/components/HeaderPalettesComponent";
 import Footer from "@/components/FooterComponent";
 import { types } from "@/store/mutations";
@@ -25,13 +30,14 @@ import { types } from "@/store/mutations";
 export default {
   name: "SinglePalette.vue",
   components: {
+    FeedbackComponent,
     random,
     HeaderPalettesComponent,
     Footer
   },
   data() {
     return {
-      component: this.$route.params.type,
+      component: this.$route.params.type
     };
   },
   beforeMount() {
