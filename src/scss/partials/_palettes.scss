@@ -61,7 +61,6 @@
   .row{
     display: flex;
     justify-content: space-between;
-
     align-items: center;
     height: 50%;
     position: relative;
@@ -95,47 +94,47 @@
       $in: ($in + $animationDelayBase);
     }
   }
+  //active animation dopo tot secondi
+  &.active .palette--not-active:not(.not-transform):hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    .palette__content{
+      filter: drop-shadow(2px 6px 5px rgba(0,0,0,0.3));
+      transition: all 0.5s;
+      &:before{
+        content: '';
+        /* 1:1 Aspect Ratio */
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background: rgba(255,255,255,0.3);
+      }
+    }
+    h2{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-weight: 900;
+      background: rgba(255, 255, 255, 0.9);
+      transform: translate(-50%,-50%) scale(1.2);
+      transition: 0.5s;
+    }
+  }
 
   .palette{
     width: calc((100%/4) - #{$palettePaddingL}px);
     padding: #{$palettePadding}px;
     margin: 2% 3%;
     transition: all 0.5s;
-    &--not-active:not(.not-transform):hover{
-      cursor: pointer;
-      transform: scale(1.1);
-      .palette__content{
-        filter: drop-shadow(2px 6px 5px rgba(0,0,0,0.3));
-        transition: all 0.5s;
-        &:before{
-          content: '';
-          display: block;
-          /* 1:1 Aspect Ratio */
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border-radius: 100%;
-          background: rgba(255,255,255,0.3);
-        }
-      }
-      h2{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        font-weight: 900;
-        background: rgba(255, 255, 255, 0.9);
-        transform: translate(-50%,-50%) scale(1.2);
-        transition: 0.5s;
-      }
-    }
     &__content{
       /* 1:1 Aspect Ratio */
       position: relative;
       padding-top: 100%;
       /* / 1:1 Aspect Ratio */
-
       width: 100%;
       border-radius: 100%;
       filter: drop-shadow(1px 1px 2px  rgba(0,0,0,0.6));
@@ -169,7 +168,6 @@
       @media screen and (max-width: $mediaL) {
           font-size: 80%;
       }
-
 
       font-weight: $paletteFontWeight;
       text-transform: uppercase;

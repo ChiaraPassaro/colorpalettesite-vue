@@ -5,7 +5,7 @@
       'palette palette--not-active del-' + (index + 1),
       active ? 'not-transform' : ''
     ]"
-    @click="!active ? generatePalette(id) : false"
+    @click="!active && endedAnimation ? generatePalette(id) : false"
   >
     <div class="palette__content" :style="setBackground">
       <h2>
@@ -29,7 +29,7 @@ import { types } from "@/store/mutations";
 
 export default {
   name: "PaletteComponent",
-  props: ["colors", "index", "id", "name", "active"],
+  props: ["colors", "index", "id", "name", "active", "endedAnimation"],
   computed: {
     setBackground() {
       return { backgroundColor: this.$store.state.cssColor };

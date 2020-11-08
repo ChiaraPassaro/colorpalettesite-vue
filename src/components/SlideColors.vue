@@ -20,19 +20,22 @@
         'fas fa-angle-left palette__description__list__arrow',
         checkNextColors ? 'button-active' : ''
       ]"
-      @click="moveNext"
+      @click="
+        moveNext();
+        setColorActive(false, false);
+      "
       v-if="checkNextColors && open"
     ></i>
     <div class="tooltip" :style="activeColor ? isActiveColor : ''">
       <div class="tooltip--element" :style="activeColor ? backgroundColor : ''">
         <button class="btn">
-          {{ activeColor ? activeColor.printHsl() : '' }}
+          {{ activeColor ? activeColor.printHsl() : "" }}
         </button>
         <button class="btn">
-          {{ activeColor ? activeColor.printHsl() : '' }}
+          {{ activeColor ? activeColor.printHsl() : "" }}
         </button>
         <button class="btn">
-          {{ activeColor ? activeColor.printHsl() : '' }}
+          {{ activeColor ? activeColor.printHsl() : "" }}
         </button>
       </div>
     </div>
@@ -43,7 +46,7 @@
         v-for="(color, index) in generatedColors"
         v-bind:key="color + index"
         :style="{ backgroundColor: color.printHsl() }"
-        @click="setColorActive(color, $refs.element[index])"
+        @click="open ? setColorActive(color, $refs.element[index]) : ''"
       >
         {{ color.position }}
       </li>
@@ -53,7 +56,10 @@
         'fas fa-angle-right palette__description__list__arrow',
         checkPrevColors ? 'button-active' : ''
       ]"
-      @click="movePrev"
+      @click="
+        movePrev();
+        setColorActive(false, false);
+      "
       v-if="open"
     ></i>
     <div
@@ -67,6 +73,7 @@
 </template>
 
 <script>
+//TODO click color open/close and only open slide colors, change button css
 export default {
   name: "SlideColors",
   props: ["type"],
@@ -84,7 +91,9 @@ export default {
   },
   computed: {
     generatedColors() {
-      const lengthColors = this.$store.state.palettes[this.type].colors ? this.$store.state.palettes[this.type].colors.length : 0;
+      const lengthColors = this.$store.state.palettes[this.type].colors
+        ? this.$store.state.palettes[this.type].colors.length
+        : 0;
       const numberOfElement =
         lengthColors > this.numberVisible ? this.numberVisible : lengthColors;
 
@@ -111,7 +120,9 @@ export default {
       return this.open ? "palette__description__list-colors--open" : "";
     },
     checkNextColors() {
-      const lengthColors = (this.$store.state.palettes[this.type].colors) ? this.$store.state.palettes[this.type].colors.length : 0;
+      const lengthColors = this.$store.state.palettes[this.type].colors
+        ? this.$store.state.palettes[this.type].colors.length
+        : 0;
       return this.numberStart + this.numberVisible <= lengthColors;
     },
     checkPrevColors() {
@@ -121,14 +132,16 @@ export default {
       const left = this.element.getBoundingClientRect().left;
 
       return {
-        left: `calc(${left}px - ${this.$refs.paletteContainer.getBoundingClientRect().left}px)`,
+        left: `calc(${left}px - ${
+          this.$refs.paletteContainer.getBoundingClientRect().left
+        }px)`,
         display: "block",
         "--background-color": this.activeColor.printHsl()
       };
     },
     backgroundColor() {
       return { backgroundColor: this.activeColor.printHsl() };
-    },
+    }
   },
   methods: {
     copyColor(color) {

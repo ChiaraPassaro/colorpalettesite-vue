@@ -104,6 +104,7 @@ export default {
   data() {
     return {
       type: 'random',
+      durationAnimation: 2000,
       isActive: false,
       colors: this.$store.state.palettes[this.type]
         ? this.$store.state.palettes[this.type].colors
@@ -229,7 +230,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.isActive = true;
-    }, 2000);
+    }, this.durationAnimation);
   }
 };
 </script>

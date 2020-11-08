@@ -1,5 +1,5 @@
 <template>
-  <section class="palettes">
+  <section :class="['palettes', endedAnimation ? 'active' : '']">
     <div
       v-for="(row, index) in schemas"
       :key="index"
@@ -13,6 +13,7 @@
         :index="index"
         :name="schema.name"
         :active="isActiveSchema(schema)"
+        :endedAnimation="endedAnimation"
       ></PaletteComponent>
     </div>
   </section>
@@ -29,6 +30,8 @@ export default {
   props: ["activeId"],
   data() {
     return {
+      durationAnimation: 800 * 6,
+      isActive: false,
       schemas: [
         [
           {
@@ -125,13 +128,20 @@ export default {
       ]
     };
   },
+  computed: {
+    endedAnimation() {
+      return this.isActive;
+    }
+  },
   methods: {
     isActiveSchema(element) {
       return element.id === this.activeId;
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isActive = true;
+    }, this.durationAnimation);
   }
 };
 </script>
-
-<style scoped>
-</style>
