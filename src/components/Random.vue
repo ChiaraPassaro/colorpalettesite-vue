@@ -67,7 +67,7 @@
 
       <SlideColors
         v-bind:type="type"
-        v-bind:number-start="numberStart"
+        v-bind:number-start.sync="numberStart"
       ></SlideColors>
     </section>
     <!--/palette description-->

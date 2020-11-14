@@ -124,7 +124,6 @@ export default {
   },
   computed: {
     generatedColors() {
-      console.log(this.numberStart);
       const lengthColors = this.$store.state.palettes[this.type].colors
         ? this.$store.state.palettes[this.type].colors.length
         : 0;
@@ -139,6 +138,7 @@ export default {
             )
           : [];
         this.getWidthColorsSlider();
+
         return colors;
       }
 
@@ -203,11 +203,11 @@ export default {
       }, 500);
     },
     moveNext() {
-      this.numberStart = this.numberStart + 1;
+      this.$emit("update:number-start", this.numberStart + 1);
     },
     movePrev() {
       if (this.numberStart - 1 >= 0) {
-        this.numberStart = this.numberStart - 1;
+        this.$emit("update:number-start", this.numberStart - 1);
       }
     },
     copyColor(color, type) {
@@ -349,6 +349,8 @@ export default {
       }
       .colors-square {
         width: 80%;
+        cursor: pointer;
+
         &__item {
           &:hover {
             box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
@@ -403,7 +405,6 @@ export default {
       margin-right: 5px;
       box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
       opacity: 0;
-      cursor: pointer;
       transition: all 1s;
       &__content {
         display: none;
@@ -441,7 +442,7 @@ export default {
 .arrow {
   &--list-colors {
     top: 50%;
-    left: calc(100% - 22px);
+    left: calc(100% - 21px);
     transform: translateY(-50%) rotate(90deg);
     cursor: pointer;
 
