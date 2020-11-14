@@ -7,7 +7,11 @@
     ]"
     ref="paletteContainer"
   >
-    <div class="arrow arrow--list-colors" @click="setOpen">
+    <div
+      class="arrow arrow--list-colors"
+      :style="setBackgroundColorArrow"
+      @click="setOpen"
+    >
       <div class="arrow__inner"></div>
     </div>
     <div class="palette__description__list-colors__actions">
@@ -31,9 +35,20 @@
       "
       v-if="checkNextColors && open"
     ></i>
-    <div class="tooltip" :style="activeColor ? isActiveColor : ''">
-      <div class="tooltip--element" :style="activeColor ? backgroundColor : ''">
-        <div class="tooltip--element--content">
+    <ul class="colors-square" ref="colorsSlider">
+      <li
+        ref="element"
+        class="colors-square__item change-opacity"
+        v-for="(color, index) in generatedColors"
+        v-bind:key="color + index"
+        :style="{ backgroundColor: color.printHsl() }"
+        @mouseover="open ? setColorActive(color, $refs.element[index]) : ''"
+        @mouseleave="open ? setColorActive(false, false) : ''"
+      >
+        <div class="colors-square__item__position">{{ color.position }}</div>
+        <div
+          :class="['colors-square__item__content', activeColor ? 'active' : '']"
+        >
           <button
             class="btn"
             @click="copyColor(activeColor.printHsl(), 'hsl')"
@@ -56,25 +71,6 @@
             {{ messageCopy.hex ? messageCopy.hex : activeColor ? "HEX" : "" }}
           </button>
         </div>
-      </div>
-    </div>
-    <ul class="colors-square" ref="colorsSlider">
-      <li
-        ref="element"
-        class="colors-square__item change-opacity"
-        v-for="(color, index) in generatedColors"
-        v-bind:key="color + index"
-        :style="{ backgroundColor: color.printHsl() }"
-        @click="
-          open
-            ? setColorActive(
-                color === activeColor ? false : color,
-                color === activeColor ? false : $refs.element[index]
-              )
-            : ''
-        "
-      >
-        {{ color.position }}
       </li>
     </ul>
     <i
@@ -91,6 +87,7 @@
     <div
       aria-hidden="true"
       class="arrow arrow--list-colors-left"
+      :style="setBackgroundColorArrow"
       @click="setOpen"
     >
       <div class="arrow__inner"></div>
@@ -175,6 +172,11 @@ export default {
         "--background-color": this.activeColor.printHsl()
       };
     },
+    setBackgroundColorArrow() {
+      return {
+        "--background-color": this.baseColor.printHsl()
+      };
+    },
     backgroundColor() {
       return { backgroundColor: this.activeColor.printHsl() };
     },
@@ -205,10 +207,11 @@ export default {
       this.getWidthColorsSlider();
     },
     getWidthColorsSlider() {
+      this.numberVisible = 0;
       setTimeout(() => {
         this.widthColorsSlider = this.$refs.colorsSlider.clientWidth;
         this.numberVisible = Math.ceil(this.widthColorsSlider / 65);
-      }, 1000);
+      }, 500);
     },
     moveNext() {
       this.numberStart = this.numberStart + 1;
@@ -229,7 +232,7 @@ export default {
           this.messageCopy[type] = "Copied!";
           setTimeout(() => {
             this.messageCopy[type] = false;
-          }, 1000);
+          }, 300);
         } else {
           this.$store.dispatch({
             type: "setOpenFeedback",
@@ -254,7 +257,7 @@ export default {
             this.messageCopy[type] = "Copied!";
             setTimeout(() => {
               this.messageCopy[type] = false;
-            }, 1000);
+            }, 300);
           },
           err => {
             this.$store.dispatch({
@@ -290,6 +293,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../scss/partials/_variables";
+@import "../scss/partials/_mixin";
 
 .tooltip {
   position: absolute;
@@ -348,7 +352,6 @@ export default {
 .btn {
   border: 1px transparent;
   background: white;
-  width: 80%;
   font-weight: bold;
   box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
   transition: all 0.5s;
@@ -387,7 +390,7 @@ export default {
       opacity: 0;
       width: 30%;
       font-size: 0;
-      transition: all 1s;
+      transition: opacity 1s;
     }
     &--open {
       width: 90%;
@@ -411,6 +414,24 @@ export default {
       }
       .colors-square {
         width: 80%;
+        &__item {
+          &:hover {
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
+            width: 50%;
+
+            .colors-square__item__position {
+              display: none;
+            }
+
+            .colors-square__item__content.active {
+              display: flex;
+              .btn {
+                @include animationFadeIn(buttons, 0, 1);
+                animation-delay: 0.5s;
+              }
+            }
+          }
+        }
       }
     }
     &--close {
@@ -440,17 +461,37 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-shrink: 0;
+      flex-shrink: 1;
       width: 60px;
       height: 60px;
+      padding: 10px;
       margin-right: 5px;
-      //border: 2px solid white;
       box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
       opacity: 0;
       cursor: pointer;
       transition: all 1s;
-      &:hover {
-        box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
+      &__content {
+        display: none;
+        justify-content: space-around;
+        align-items: stretch;
+        width: 100%;
+        height: 80%;
+        .btn {
+          flex-basis: calc(100% / 3 - 10px);
+          opacity: 0;
+          border: 1px transparent;
+          box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
+          background: white;
+          font-size: 90%;
+          font-weight: bold;
+          transition: all 0.5s;
+          &:hover,
+          &:active,
+          &:focus {
+            filter: none;
+            box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.7);
+          }
+        }
       }
       &.change-opacity {
         opacity: 1;
@@ -460,6 +501,40 @@ export default {
   &__list__arrow {
     font-size: 60px;
     color: $lightGrey;
+  }
+}
+.arrow {
+  &--list-colors {
+    top: 50%;
+    left: calc(100% - 22px);
+    transform: translateY(-50%) rotate(90deg);
+    cursor: pointer;
+
+    .arrow__inner {
+      &:before {
+        background-color: var(--background-color);
+      }
+    }
+    &:after {
+      background-color: var(--background-color);
+      height: 28px;
+    }
+  }
+  &--list-colors-left {
+    z-index: -1;
+    top: 50%;
+    left: -79px;
+    transform: translateY(-50%) rotate(270deg);
+    cursor: pointer;
+    .arrow__inner {
+      &:before {
+        background-color: var(--background-color);
+      }
+    }
+    &:after {
+      background-color: var(--background-color);
+      height: 28px;
+    }
   }
 }
 </style>

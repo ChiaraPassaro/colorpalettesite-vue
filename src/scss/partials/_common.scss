@@ -155,60 +155,7 @@ body{
       background: $headerColor;
     }
   }
-  &--list-colors{
-    top: 50%;
-    left: calc(100% - 22px);
-    transform: translateY(-50%) rotate(90deg);
-    cursor: pointer;
 
-    .arrow__inner {
-      &:before {
-        background: $mainColor;
-      }
-    }
-    &:after{
-      background: $mainColor;
-      height: 28px;
-    }
-    &:hover,
-    &:focus {
-      .arrow__inner {
-        &:before {
-          background: darken($mainColor, 20);
-        }
-      }
-      &:after{
-        background:  darken($mainColor, 20);
-      }
-    }
-  }
-  &--list-colors-left{
-    z-index: -1;
-    top: 50%;
-    left: -79px;
-    transform: translateY(-50%) rotate(270deg);
-    cursor: pointer;
-    .arrow__inner {
-      &:before {
-        background: $mainColor;
-      }
-    }
-    &:after{
-      background: $mainColor;
-      height: 28px;
-    }
-    &:hover,
-    &:focus {
-      .arrow__inner {
-        &:before {
-          background: darken($mainColor, 20);
-        }
-      }
-      &:after{
-        background:  darken($mainColor, 20);
-      }
-    }
-  }
 }
 
 .display-none{
