@@ -65,7 +65,6 @@
         </form>
       </div>
 
-      <!--TODO generare colori-->
       <SlideColors v-bind:type="type"></SlideColors>
     </section>
     <!--/palette description-->
@@ -93,7 +92,6 @@ import PalettesComponent from "@/components/PalettesComponent";
 import Chart from "@/components/Chart";
 import SlideColors from "@/components/SlideColors";
 
-
 export default {
   name: "Random",
   components: {
@@ -103,7 +101,7 @@ export default {
   },
   data() {
     return {
-      type: 'random',
+      type: "random",
       durationAnimation: 2000,
       isActive: false,
       colors: this.$store.state.palettes[this.type]
@@ -141,7 +139,7 @@ export default {
       );
     },
     buttonColor() {
-      return { backgroundColor: this.$store.state.color.printHsl() }
+      return { backgroundColor: this.$store.state.color.printHsl() };
     }
   },
   methods: {
@@ -176,12 +174,9 @@ export default {
         this.number,
         this.percDominant
       );
-      let colors = randomDominant;
-      colors = colors.map((element, index) => {
-        return {
-          ...element,
-          position: index + 1
-        };
+
+      randomDominant.forEach((element, index) => {
+        element.position = index + 1;
       });
 
       this.stepGenerated = this.step / randomDominant.length;
@@ -189,7 +184,7 @@ export default {
       this.$store.dispatch({
         type: "setRandomPalette",
         mutation: types.SET_RANDOM_PALETTE,
-        colors: colors,
+        colors: randomDominant,
         step: this.stepGenerated
       });
 
@@ -209,10 +204,16 @@ export default {
         colorsLabel.push("hsl(" + i + ", 50%, 50%, 0.2)");
       }
 
-      for (let i = 0; i < this.$store.state.palettes.random.colors.length; i++) {
+      for (
+        let i = 0;
+        i < this.$store.state.palettes.random.colors.length;
+        i++
+      ) {
         const degree = this.$store.state.palettes.random.colors[i].getHue();
         degrees[degree] = this.stepGenerated;
-        colorsLabel[degree] = this.$store.state.palettes.random.colors[i].printHsl();
+        colorsLabel[degree] = this.$store.state.palettes.random.colors[
+          i
+        ].printHsl();
       }
 
       this.datacollection = {

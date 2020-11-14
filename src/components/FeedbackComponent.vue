@@ -5,7 +5,6 @@
 </template>
 
 <script>
-//TODO fade out
 export default {
   name: "FeedbackComponent.vue",
   data() {

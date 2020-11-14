@@ -21,7 +21,6 @@
 </template>
 
 <script>
-//todo errors in labels
 import Footer from "../components/FooterComponent";
 import Form from "../components/FormComponent";
 import HeaderComponent from "../components/HeaderComponent";
@@ -35,4 +34,3 @@ export default {
   }
 };
 </script>
-

@@ -28,10 +28,11 @@
     ></i>
     <div class="tooltip" :style="activeColor ? isActiveColor : ''">
       <div class="tooltip--element" :style="activeColor ? backgroundColor : ''">
+        <!--          :style="messageCopy.hsl ? { backgroundColor: 'orange' } : ''"-->
         <button
           class="btn"
           @click="copyColor(activeColor.printHsl(), 'hsl')"
-          :style="messageCopy.hsl ? { backgroundColor: 'orange' } : ''"
+          :style="messageCopy.hsl ? getComplementarColor : ''"
         >
           {{
             messageCopy.hsl
@@ -181,6 +182,22 @@ export default {
     },
     backgroundColor() {
       return { backgroundColor: this.activeColor.printHsl() };
+    },
+    getComplementarColor() {
+      const complementar = this.$store.state.ColorPalettesRange.SetColorPalette(
+        this.activeColor
+      ).complementar(2, 1)[2];
+
+      const textColor =
+        this.contrastRatio(complementar.getBrightness() / 100, 10) >
+        this.contrastRatio(complementar.getBrightness() / 100, 0)
+          ? "white"
+          : "black";
+
+      return {
+        backgroundColor: complementar.printHsl(),
+        "--button-color": textColor
+      };
     }
   },
   methods: {
@@ -267,6 +284,12 @@ export default {
       if (this.numberStart - 1 >= 0) {
         this.numberStart = this.numberStart - 1;
       }
+    },
+    contrastRatio(brightness1, brightness2) {
+      return (
+        (Math.max(brightness1, brightness2) + 0.05) /
+        (Math.min(brightness1, brightness2) + 0.05)
+      );
     }
   }
 };
@@ -320,9 +343,12 @@ export default {
     background-color: var(--background-color);
     transform: translateX(-50%);
   }
+
   .btn {
     border: 0;
     width: 80%;
+    color: var(--button-color);
+    font-weight: bold;
   }
 }
 </style>
