@@ -101,7 +101,7 @@ import { types } from "@/store/mutations";
 
 export default {
   name: "SlideColors",
-  props: ["type"],
+  props: ["type", "numberStart"],
   data() {
     return {
       messageCopy: {
@@ -119,12 +119,12 @@ export default {
       widthColorsSlider: 0,
       colors: this.$store.state.palettes[this.type].colors,
       numberVisible: 0,
-      numberStart: 0,
       baseColor: this.$store.state.color
     };
   },
   computed: {
     generatedColors() {
+      console.log(this.numberStart);
       const lengthColors = this.$store.state.palettes[this.type].colors
         ? this.$store.state.palettes[this.type].colors.length
         : 0;
@@ -160,17 +160,6 @@ export default {
     },
     checkPrevColors() {
       return this.numberStart - 1 >= 0;
-    },
-    isActiveColor() {
-      const left = this.element.getBoundingClientRect().left;
-
-      return {
-        left: `calc(${left}px - ${
-          this.$refs.paletteContainer.getBoundingClientRect().left
-        }px)`,
-        display: "block",
-        "--background-color": this.activeColor.printHsl()
-      };
     },
     setBackgroundColorArrow() {
       return {
@@ -295,60 +284,6 @@ export default {
 @import "../scss/partials/_variables";
 @import "../scss/partials/_mixin";
 
-.tooltip {
-  position: absolute;
-  z-index: 4;
-  bottom: 85%;
-  left: 0;
-  display: none;
-  width: 60px;
-  height: 150px;
-  font-size: 80%;
-  &--element {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 100%;
-    padding: 10px;
-    border-radius: 3px;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    &--content {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      &:before {
-        content: "";
-        position: absolute;
-        bottom: -5px;
-        left: 50%;
-        z-index: -1;
-        width: 55px;
-        height: 55px;
-        border-radius: 2px;
-        background-color: var(--background-color);
-        transform: translateX(-50%) rotate(45deg);
-      }
-    }
-  }
-  &:after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    z-index: -1;
-    width: 65px;
-    height: 65px;
-    border-radius: 2px;
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.7);
-    background-color: var(--background-color);
-    transform: translateX(-50%) rotate(45deg);
-  }
-}
 .btn {
   border: 1px transparent;
   background: white;
