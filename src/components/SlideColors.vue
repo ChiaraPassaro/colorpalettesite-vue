@@ -11,7 +11,12 @@
       <div class="arrow__inner"></div>
     </div>
     <div class="palette__description__list-colors__actions">
-      <button class="btn" :style="{ borderColor: baseColor, color: baseColor }">
+      <button
+        class="btn"
+        :style="{
+          color: `hsl(${baseColor.getHue()}, ${baseColor.getSaturation()}%, 30%)`
+        }"
+      >
         Get your list colors
       </button>
     </div>
@@ -28,46 +33,29 @@
     ></i>
     <div class="tooltip" :style="activeColor ? isActiveColor : ''">
       <div class="tooltip--element" :style="activeColor ? backgroundColor : ''">
-        <!--          :style="messageCopy.hsl ? { backgroundColor: 'orange' } : ''"-->
-        <button
-          class="btn"
-          @click="copyColor(activeColor.printHsl(), 'hsl')"
-          :style="messageCopy.hsl ? getComplementarColor : ''"
-        >
-          {{
-            messageCopy.hsl
-              ? messageCopy.hsl
-              : activeColor
-              ? activeColor.printHsl()
-              : ""
-          }}
-        </button>
-        <button
-          class="btn"
-          @click="copyColor(activeColor.printRgb(), 'rgb')"
-          :style="messageCopy.rgb ? { backgroundColor: 'orange' } : ''"
-        >
-          {{
-            messageCopy.rgb
-              ? messageCopy.rgb
-              : activeColor
-              ? activeColor.printRgb()
-              : ""
-          }}
-        </button>
-        <button
-          class="btn"
-          @click="copyColor(activeColor.printHex(), 'hex')"
-          :style="messageCopy.hex ? { backgroundColor: 'orange' } : ''"
-        >
-          {{
-            messageCopy.hex
-              ? messageCopy.hex
-              : activeColor
-              ? activeColor.printHex()
-              : ""
-          }}
-        </button>
+        <div class="tooltip--element--content">
+          <button
+            class="btn"
+            @click="copyColor(activeColor.printHsl(), 'hsl')"
+            :style="messageCopy.hsl ? getComplementarColor : ''"
+          >
+            {{ messageCopy.hsl ? messageCopy.hsl : activeColor ? "HSL" : "" }}
+          </button>
+          <button
+            class="btn"
+            @click="copyColor(activeColor.printRgb(), 'rgb')"
+            :style="messageCopy.rgb ? getComplementarColor : ''"
+          >
+            {{ messageCopy.rgb ? messageCopy.rgb : activeColor ? "RGB" : "" }}
+          </button>
+          <button
+            class="btn"
+            @click="copyColor(activeColor.printHex(), 'hex')"
+            :style="messageCopy.hex ? getComplementarColor : ''"
+          >
+            {{ messageCopy.hex ? messageCopy.hex : activeColor ? "HEX" : "" }}
+          </button>
+        </div>
       </div>
     </div>
     <ul class="colors-square" ref="colorsSlider">
@@ -77,7 +65,14 @@
         v-for="(color, index) in generatedColors"
         v-bind:key="color + index"
         :style="{ backgroundColor: color.printHsl() }"
-        @click="open ? setColorActive(color, $refs.element[index]) : ''"
+        @click="
+          open
+            ? setColorActive(
+                color === activeColor ? false : color,
+                color === activeColor ? false : $refs.element[index]
+              )
+            : ''
+        "
       >
         {{ color.position }}
       </li>
@@ -128,7 +123,7 @@ export default {
       colors: this.$store.state.palettes[this.type].colors,
       numberVisible: 0,
       numberStart: 0,
-      baseColor: this.$store.state.cssColor
+      baseColor: this.$store.state.color
     };
   },
   computed: {
@@ -201,6 +196,28 @@ export default {
     }
   },
   methods: {
+    setColorActive(color, element) {
+      this.element = element;
+      this.activeColor = color;
+    },
+    setOpen() {
+      this.open = !this.open;
+      this.getWidthColorsSlider();
+    },
+    getWidthColorsSlider() {
+      setTimeout(() => {
+        this.widthColorsSlider = this.$refs.colorsSlider.clientWidth;
+        this.numberVisible = Math.ceil(this.widthColorsSlider / 65);
+      }, 1000);
+    },
+    moveNext() {
+      this.numberStart = this.numberStart + 1;
+    },
+    movePrev() {
+      if (this.numberStart - 1 >= 0) {
+        this.numberStart = this.numberStart - 1;
+      }
+    },
     copyColor(color, type) {
       if (!navigator.clipboard) {
         const input = document.createElement("input");
@@ -234,12 +251,10 @@ export default {
       } else {
         navigator.clipboard.writeText(color).then(
           () => {
-            //todo message in button
             this.messageCopy[type] = "Copied!";
             setTimeout(() => {
               this.messageCopy[type] = false;
             }, 1000);
-            console.log("Copying to clipboard was successful!");
           },
           err => {
             this.$store.dispatch({
@@ -263,28 +278,6 @@ export default {
         );
       }
     },
-    setColorActive(color, element) {
-      this.element = element;
-      this.activeColor = color;
-    },
-    setOpen() {
-      this.open = !this.open;
-      this.getWidthColorsSlider();
-    },
-    getWidthColorsSlider() {
-      setTimeout(() => {
-        this.widthColorsSlider = this.$refs.colorsSlider.clientWidth;
-        this.numberVisible = Math.ceil(this.widthColorsSlider / 65);
-      }, 1000);
-    },
-    moveNext() {
-      this.numberStart = this.numberStart + 1;
-    },
-    movePrev() {
-      if (this.numberStart - 1 >= 0) {
-        this.numberStart = this.numberStart - 1;
-      }
-    },
     contrastRatio(brightness1, brightness2) {
       return (
         (Math.max(brightness1, brightness2) + 0.05) /
@@ -296,28 +289,47 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../scss/partials/_variables";
+
 .tooltip {
   position: absolute;
-  bottom: 100%;
+  z-index: 4;
+  bottom: 85%;
   left: 0;
   display: none;
   width: 60px;
-  height: 250px;
-  filter: drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.5));
+  height: 150px;
+  font-size: 80%;
   &--element {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    width: 300px;
+    width: 180px;
     height: 100%;
     padding: 10px;
-    border: 3px solid white;
-    border-radius: 5px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    &--content {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      &:before {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        z-index: -1;
+        width: 55px;
+        height: 55px;
+        border-radius: 2px;
+        background-color: var(--background-color);
+        transform: translateX(-50%) rotate(45deg);
+      }
+    }
   }
   &:after {
     content: "";
@@ -325,30 +337,129 @@ export default {
     bottom: -5px;
     left: 50%;
     z-index: -1;
-    width: 25px;
-    height: 25px;
-    border: 3px solid white;
+    width: 65px;
+    height: 65px;
     border-radius: 2px;
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.7);
     background-color: var(--background-color);
     transform: translateX(-50%) rotate(45deg);
   }
-  &:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    z-index: 1;
-    width: 16px;
-    height: 5px;
-    background-color: var(--background-color);
-    transform: translateX(-50%);
+}
+.btn {
+  border: 1px transparent;
+  background: white;
+  width: 80%;
+  font-weight: bold;
+  box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
+  transition: all 0.5s;
+  &:hover,
+  &:active,
+  &:focus {
+    filter: none;
+    box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.7);
   }
+}
+.palette__description {
+  &__list-colors {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 40%;
+    height: 110px;
+    padding-right: 20px;
+    margin-left: calc(-40% - 75px);
+    background: $mainColor;
+    transition: all 0.5s;
 
-  .btn {
-    border: 0;
-    width: 80%;
-    color: var(--button-color);
-    font-weight: bold;
+    &--active {
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      width: 40%;
+      margin-left: 0;
+      padding-left: 2%;
+    }
+    &__actions {
+      opacity: 0;
+      width: 30%;
+      font-size: 0;
+      transition: all 1s;
+    }
+    &--open {
+      width: 90%;
+      left: 10%;
+
+      .palette__description__list-colors__actions {
+        opacity: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90px;
+        margin: 5px 0;
+        font-size: 100%;
+      }
+      .arrow--list-colors-left {
+        animation-name: z-indexChange;
+        animation-delay: 1s;
+        animation-duration: #{$animationDelayBase}s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
+      .colors-square {
+        width: 80%;
+      }
+    }
+    &--close {
+      margin-left: 0;
+      animation-name: listColorsOpen;
+      animation-delay: 1s;
+      animation-duration: #{$animationDelayBase}s;
+      animation-iteration-count: 1;
+      animation-fill-mode: backwards;
+      animation-direction: reverse;
+    }
+  }
+  .colors-square {
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    padding: 10px 10px 10px 15px;
+    margin-left: 10px;
+    list-style-type: none;
+    color: white;
+    &__item {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      margin-right: 5px;
+      //border: 2px solid white;
+      box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      cursor: pointer;
+      transition: all 1s;
+      &:hover {
+        box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
+      }
+      &.change-opacity {
+        opacity: 1;
+      }
+    }
+  }
+  &__list__arrow {
+    font-size: 60px;
+    color: $lightGrey;
   }
 }
 </style>

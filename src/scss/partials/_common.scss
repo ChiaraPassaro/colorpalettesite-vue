@@ -25,6 +25,7 @@ body{
     &:active,
     &:focus {
       filter: brightness(85%);
+      outline: none;
     }
 }
 
