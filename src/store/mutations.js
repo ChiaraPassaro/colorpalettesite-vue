@@ -8,6 +8,7 @@ export const types = {
   GENERATE_PALETTES: "GENERATE",
   SET_RANDOM_DATA: "SET_RANDOM",
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
+  SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
   SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS"
@@ -56,12 +57,12 @@ export const mutations = {
       state.brightness
     );
     state.palettes.random.number =
-      localStorage.getItem("random.number") || state.palettes.random.number;
+      localStorage.getItem("Random.number") || state.palettes.random.number;
     state.palettes.random.percDominant =
-      localStorage.getItem("random.percDominant") ||
+      localStorage.getItem("Random.percDominant") ||
       state.palettes.random.percDominant;
     state.palettes.random.step =
-      localStorage.getItem("random.step") || state.palettes.random.step;
+      localStorage.getItem("Random.step") || state.palettes.random.step;
     state.palettes.palette = state.color
       ? new state.ColorPalettesRange.SetColorPalette(state.color)
       : undefined;
@@ -72,17 +73,24 @@ export const mutations = {
   [types.SET_RANDOM_DATA](state, payload) {
     state.palettes.random.number = payload.number;
     state.palettes.random.percDominant = payload.percDominant;
-    localStorage.setItem("random.number", state.palettes.random.number);
+    localStorage.setItem("Random.number", state.palettes.random.number);
     localStorage.setItem(
-      "random.percDominant",
+      "Random.percDominant",
       state.palettes.random.percDominant
     );
   },
   [types.SET_RANDOM_PALETTE](state, payload) {
     state.palettes.random.colors = payload.colors;
     state.palettes.random.step = payload.step;
-    localStorage.setItem("random.colors", state.palettes.random.colors);
-    localStorage.setItem("random.step", state.palettes.random.step);
+    localStorage.setItem("Random.colors", state.palettes.random.colors);
+    localStorage.setItem("Random.step", state.palettes.random.step);
+  },
+  [types.SET_TRIAD_PALETTE](state, payload) {
+    state.palettes.triad.colors = payload.colors;
+    state.palettes.triad.step = payload.step;
+
+    localStorage.setItem("Triad.colors", state.palettes.triad.colors);
+    localStorage.setItem("Triad.step", state.palettes.triad.step);
   },
   [types.SET_OPEN_PALETTE](state, payload) {
     this.state.palettes.open = payload.open;

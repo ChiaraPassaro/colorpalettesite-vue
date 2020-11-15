@@ -48,12 +48,17 @@ export default {
           palettes
         })
         .then(() => {
-          this.$router.push({
-            name: "Palette",
-            params: {
-              type: id
-            }
-          });
+          console.log(id);
+          this.$router
+            .push({
+              name: "Palette",
+              params: {
+                type: id
+              }
+            })
+            .catch(error => {
+              throw error;
+            });
         });
     }
   }

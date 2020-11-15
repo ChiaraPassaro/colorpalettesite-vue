@@ -52,21 +52,21 @@
           <button
             class="btn"
             @click="copyColor(activeColor.printHsl(), 'hsl')"
-            :style="messageCopy.hsl ? getComplementarColor : ''"
+            :style="messageCopy.hsl ? getComplementaryColor : false"
           >
             {{ messageCopy.hsl ? messageCopy.hsl : activeColor ? "HSL" : "" }}
           </button>
           <button
             class="btn"
             @click="copyColor(activeColor.printRgb(), 'rgb')"
-            :style="messageCopy.rgb ? getComplementarColor : ''"
+            :style="messageCopy.rgb ? getComplementaryColor : false"
           >
             {{ messageCopy.rgb ? messageCopy.rgb : activeColor ? "RGB" : "" }}
           </button>
           <button
             class="btn"
             @click="copyColor(activeColor.printHex(), 'hex')"
-            :style="messageCopy.hex ? getComplementarColor : ''"
+            :style="messageCopy.hex ? getComplementaryColor : false"
           >
             {{ messageCopy.hex ? messageCopy.hex : activeColor ? "HEX" : "" }}
           </button>
@@ -171,10 +171,7 @@ export default {
         "--background-color": this.baseColor.printHsl()
       };
     },
-    backgroundColor() {
-      return { backgroundColor: this.activeColor.printHsl() };
-    },
-    getComplementarColor() {
+    getComplementaryColor() {
       const complementar = this.$store.state.ColorPalettesRange.SetColorPalette(
         this.activeColor
       ).complementar(2, 1)[2];
@@ -192,6 +189,12 @@ export default {
     }
   },
   methods: {
+    contrastRatio(brightness1, brightness2) {
+      return (
+        (Math.max(brightness1, brightness2) + 0.05) /
+        (Math.min(brightness1, brightness2) + 0.05)
+      );
+    },
     setColorActive(color, element) {
       this.element = element;
       this.activeColor = color;
@@ -201,7 +204,6 @@ export default {
       this.getWidthColorsSlider();
     },
     getWidthColorsSlider() {
-      this.numberVisible = 0;
       setTimeout(() => {
         this.widthColorsSlider = this.$refs.colorsSlider.clientWidth;
         this.numberVisible = Math.ceil(this.widthColorsSlider / 65);
@@ -282,12 +284,6 @@ export default {
           }
         );
       }
-    },
-    contrastRatio(brightness1, brightness2) {
-      return (
-        (Math.max(brightness1, brightness2) + 0.05) /
-        (Math.min(brightness1, brightness2) + 0.05)
-      );
     }
   }
 };
@@ -297,6 +293,40 @@ export default {
 @import "../scss/partials/_variables";
 @import "../scss/partials/_mixin";
 
+.arrow {
+  &--list-colors {
+    top: 50%;
+    left: calc(100% - 21px);
+    transform: translateY(-50%) rotate(90deg);
+    cursor: pointer;
+
+    .arrow__inner {
+      &:before {
+        background-color: var(--background-color);
+      }
+    }
+    &:after {
+      background-color: var(--background-color);
+      height: 28px;
+    }
+  }
+  &--list-colors-left {
+    z-index: -1;
+    top: 50%;
+    left: -79px;
+    transform: translateY(-50%) rotate(270deg);
+    cursor: pointer;
+    .arrow__inner {
+      &:before {
+        background-color: var(--background-color);
+      }
+    }
+    &:after {
+      background-color: var(--background-color);
+      height: 28px;
+    }
+  }
+}
 .btn {
   border: 1px transparent;
   background: white;
@@ -366,8 +396,8 @@ export default {
 
         &__item {
           &:hover {
-            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
             width: 50%;
+            box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.7);
 
             .colors-square__item__position {
               display: none;
@@ -407,6 +437,7 @@ export default {
     list-style-type: none;
     color: white;
     &__item {
+      opacity: 0;
       position: relative;
       display: flex;
       justify-content: center;
@@ -417,8 +448,11 @@ export default {
       padding: 10px;
       margin-right: 5px;
       box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
-      opacity: 0;
       transition: all 1s;
+      &.change-opacity {
+        @include animationFadeIn(colors, 0, 1);
+        animation-duration: 0.8s;
+      }
       &__content {
         display: none;
         justify-content: space-around;
@@ -442,48 +476,11 @@ export default {
           }
         }
       }
-      &.change-opacity {
-        opacity: 1;
-      }
     }
   }
   &__list__arrow {
     font-size: 60px;
     color: $lightGrey;
-  }
-}
-.arrow {
-  &--list-colors {
-    top: 50%;
-    left: calc(100% - 21px);
-    transform: translateY(-50%) rotate(90deg);
-    cursor: pointer;
-
-    .arrow__inner {
-      &:before {
-        background-color: var(--background-color);
-      }
-    }
-    &:after {
-      background-color: var(--background-color);
-      height: 28px;
-    }
-  }
-  &--list-colors-left {
-    z-index: -1;
-    top: 50%;
-    left: -79px;
-    transform: translateY(-50%) rotate(270deg);
-    cursor: pointer;
-    .arrow__inner {
-      &:before {
-        background-color: var(--background-color);
-      }
-    }
-    &:after {
-      background-color: var(--background-color);
-      height: 28px;
-    }
   }
 }
 </style>

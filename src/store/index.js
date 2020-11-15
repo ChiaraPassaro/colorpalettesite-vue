@@ -30,6 +30,10 @@ export default new Vuex.Store({
         percDominant: 50,
         colors: undefined,
         step: undefined
+      },
+      triad: {
+        colors: undefined,
+        step: undefined
       }
     },
     feedback: {
