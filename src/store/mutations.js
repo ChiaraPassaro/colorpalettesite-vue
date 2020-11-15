@@ -9,7 +9,8 @@ export const types = {
   SET_RANDOM_DATA: "SET_RANDOM",
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
-  SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK"
+  SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
+  SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS"
 };
 
 export const mutations = {
@@ -89,5 +90,9 @@ export const mutations = {
   [types.SET_OPEN_FEEDBACK](state, payload) {
     this.state.feedback.status = payload.status;
     this.state.feedback.message = payload.message;
+  },
+  [types.SET_NUMBER_START_SQUARE_COLORS](state, payload) {
+    this.state.palettes.numberStartSquareColors =
+      payload.numberStartSquareColors;
   }
 };

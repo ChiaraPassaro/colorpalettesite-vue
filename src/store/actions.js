@@ -35,5 +35,8 @@ export default {
   },
   setOpenFeedback({ commit }, payload) {
     commit(payload.mutation, payload);
+  },
+  setNumberStartSquareColors({ commit }, payload) {
+    commit(payload.mutation, payload);
   }
 };

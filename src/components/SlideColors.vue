@@ -101,7 +101,7 @@ import { types } from "@/store/mutations";
 
 export default {
   name: "SlideColors",
-  props: ["type", "numberStart"],
+  props: ["type"],
   data() {
     return {
       messageCopy: {
@@ -133,8 +133,9 @@ export default {
       if (lengthColors > 0) {
         const colors = this.$store.state.palettes[this.type]
           ? this.$store.state.palettes[this.type].colors.slice(
-              this.numberStart,
-              this.numberStart + numberOfElement
+              this.$store.state.palettes.numberStartSquareColors,
+              this.$store.state.palettes.numberStartSquareColors +
+                numberOfElement
             )
           : [];
         this.getWidthColorsSlider();
@@ -156,10 +157,14 @@ export default {
       const lengthColors = this.$store.state.palettes[this.type].colors
         ? this.$store.state.palettes[this.type].colors.length
         : 0;
-      return this.numberStart + this.numberVisible <= lengthColors;
+      return (
+        this.$store.state.palettes.numberStartSquareColors +
+          this.numberVisible <=
+        lengthColors
+      );
     },
     checkPrevColors() {
-      return this.numberStart - 1 >= 0;
+      return this.$store.state.palettes.numberStartSquareColors - 1 >= 0;
     },
     setBackgroundColorArrow() {
       return {
@@ -203,11 +208,21 @@ export default {
       }, 500);
     },
     moveNext() {
-      this.$emit("update:number-start", this.numberStart + 1);
+      this.$store.dispatch({
+        type: "setNumberStartSquareColors",
+        mutation: types.SET_NUMBER_START_SQUARE_COLORS,
+        numberStartSquareColors:
+          this.$store.state.palettes.numberStartSquareColors + 1
+      });
     },
     movePrev() {
-      if (this.numberStart - 1 >= 0) {
-        this.$emit("update:number-start", this.numberStart - 1);
+      if (this.$store.state.palettes.numberStartSquareColors - 1 >= 0) {
+        this.$store.dispatch({
+          type: "setNumberStartSquareColors",
+          mutation: types.SET_NUMBER_START_SQUARE_COLORS,
+          numberStartSquareColors:
+            this.$store.state.palettes.numberStartSquareColors - 1
+        });
       }
     },
     copyColor(color, type) {
@@ -264,8 +279,6 @@ export default {
                 message: ""
               });
             }, 2000);
-
-            console.error("Could not copy text: ", err);
           }
         );
       }

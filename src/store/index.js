@@ -24,6 +24,7 @@ export default new Vuex.Store({
     palettes: {
       open: false,
       palette: undefined,
+      numberStartSquareColors: 0,
       random: {
         number: 3,
         percDominant: 50,

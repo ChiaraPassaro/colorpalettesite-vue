@@ -65,10 +65,7 @@
         </form>
       </div>
 
-      <SlideColors
-        v-bind:type="type"
-        v-bind:number-start.sync="numberStart"
-      ></SlideColors>
+      <SlideColors v-bind:type="type"></SlideColors>
     </section>
     <!--/palette description-->
 
@@ -113,7 +110,7 @@ export default {
       step: 360,
       stepGenerated: undefined,
       number: this.$store.state.palettes.random.number,
-      numberStart: 0,
+      numberStart: this.$store.state.palettes.numberStartSquareColors,
       percDominant: this.$store.state.palettes.random.percDominant,
       error: {
         percDominant: false,
@@ -148,7 +145,11 @@ export default {
   },
   methods: {
     setValues() {
-      this.numberStart = 0;
+      this.$store.dispatch({
+        type: "setNumberStartSquareColors",
+        mutation: types.SET_NUMBER_START_SQUARE_COLORS,
+        numberStartSquareColors: 0
+      });
       const percDominant = parseInt(this.percDominant);
       const number = parseInt(this.number);
       const isInRangeDegree =
