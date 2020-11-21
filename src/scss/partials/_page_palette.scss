@@ -282,10 +282,12 @@
 @keyframes listColorsOpen {
   from {
     width: 40%;
+    height: 110px;
     margin-left: 0;
   }
   to {
     width: 90%;
+    height: 60%;
     left: 10%;
   }
 }

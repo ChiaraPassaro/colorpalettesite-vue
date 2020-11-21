@@ -27,13 +27,13 @@
     <i
       :class="[
         'fas fa-angle-left palette__description__list__arrow',
-        checkNextColors ? 'button-active' : ''
+        checkPrevColors ? 'button-active' : ''
       ]"
       @click="
-        moveNext();
+        movePrev();
         setColorActive(false, false);
       "
-      v-if="checkNextColors && open"
+      v-if="checkPrevColors && open"
     ></i>
     <ul class="colors-square" ref="colorsSlider">
       <li
@@ -76,10 +76,10 @@
     <i
       :class="[
         'fas fa-angle-right palette__description__list__arrow',
-        checkPrevColors ? 'button-active' : ''
+        checkNextColors ? 'button-active' : ''
       ]"
       @click="
-        movePrev();
+        checkNextColors ? moveNext() : '';
         setColorActive(false, false);
       "
       v-if="open"
@@ -117,7 +117,7 @@ export default {
       open: false,
       widthColorsSlider: 0,
       colors: this.$store.state.palettes[this.type].colors,
-      numberVisible: 0,
+      numberVisible: 3,
       baseColor: this.$store.state.color
     };
   },
@@ -137,7 +137,10 @@ export default {
                 numberOfElement
             )
           : [];
-        this.getWidthColorsSlider();
+
+        if (!this.open) {
+          this.getWidthColorsSlider();
+        }
 
         return colors;
       }
@@ -200,12 +203,27 @@ export default {
     },
     setOpen() {
       this.open = !this.open;
-      this.getWidthColorsSlider();
+
+      setTimeout(() => {
+        console.log("set open");
+        const heightColorsSlider = Math.floor(
+          this.$refs.paletteContainer.clientHeight
+        );
+        const widthColorsSlider = Math.floor(
+          this.$refs.colorsSlider.clientWidth
+        );
+        console.log(heightColorsSlider, widthColorsSlider);
+        this.numberVisible = Math.floor(
+          (widthColorsSlider / 120) * (heightColorsSlider / 120)
+        );
+
+        console.log(this.numberVisible);
+      }, 800);
     },
     getWidthColorsSlider() {
       setTimeout(() => {
         this.widthColorsSlider = this.$refs.colorsSlider.clientWidth;
-        this.numberVisible = Math.ceil(this.widthColorsSlider / 65);
+        this.numberVisible = Math.floor(this.widthColorsSlider / 115);
       }, 500);
     },
     moveNext() {
@@ -294,46 +312,35 @@ export default {
 
 .arrow {
   &--list-colors {
-    top: 50%;
+    bottom: 0;
     left: calc(100% - 21px);
     transform: translateY(-50%) rotate(90deg);
     cursor: pointer;
-    filter: drop-shadow(1px -1px 1px rgba(0, 0, 0, 0.5));
 
     .arrow__inner {
       &:before {
-        background-color: var(--background-color);
+        background-color: $mainColor;
       }
     }
     &:after {
-      background-color: var(--background-color);
+      background-color: $mainColor;
       height: 28px;
-    }
-    &:hover,
-    &:active,
-    &:focus {
-      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
     }
   }
   &--list-colors--left {
     z-index: -1;
-    top: 50%;
     left: -79px;
     transform: translateY(-50%) rotate(270deg);
-    filter: drop-shadow(-1px 0 1px rgba(0, 0, 0, 0.5));
     cursor: pointer;
-    &:hover,
-    &:active,
-    &:focus {
-      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
-    }
     .arrow__inner {
       &:before {
-        background-color: var(--background-color);
+        //background-color: var(--background-color);
+        background-color: $mainColor;
       }
     }
     &:after {
-      background-color: var(--background-color);
+      //background-color: var(--background-color);
+      background-color: $mainColor;
       height: 28px;
     }
   }
@@ -358,13 +365,14 @@ export default {
     left: 0;
     z-index: 1;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 40%;
-    height: 110px;
+    height: 120px;
     padding-right: 20px;
     margin-left: calc(-40% - 75px);
     background: $mainColor;
+    border-radius: 2px;
     transition: all 0.5s;
 
     &--active {
@@ -383,6 +391,7 @@ export default {
     }
     &--open {
       width: 90%;
+      height: 66%;
       left: 10%;
 
       .palette__description__list-colors__actions {
@@ -390,7 +399,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 90px;
+        height: 90%;
         margin: 5px 0;
         font-size: 100%;
       }
@@ -404,6 +413,7 @@ export default {
       .colors-square {
         width: 80%;
         cursor: pointer;
+        flex-wrap: wrap;
 
         &__item {
           &:hover {
@@ -439,10 +449,10 @@ export default {
     overflow: hidden;
     display: flex;
     justify-content: flex-start;
-    flex-direction: row-reverse;
-    align-items: center;
+    //flex-direction: row-reverse;
+    flex-wrap: wrap;
+    align-items: flex-start;
     width: 100%;
-    height: 100px;
     padding: 10px 10px 10px 15px;
     margin-left: 10px;
     list-style-type: none;
@@ -454,11 +464,15 @@ export default {
       justify-content: center;
       align-items: center;
       flex-shrink: 1;
-      width: 60px;
-      height: 60px;
+      width: 95px;
+      height: 95px;
+      //width: 60px;
+      //height: 60px;
       padding: 10px;
       margin-right: 5px;
+      margin-bottom: 10px;
       box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
+      border-radius: 4px;
       transition: all 1s;
       &.change-opacity {
         @include animationFadeIn(colors, 0, 1);

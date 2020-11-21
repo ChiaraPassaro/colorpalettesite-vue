@@ -1,6 +1,6 @@
 <template>
   <div class="palette__description__info">
-    <h2>Complementar</h2>
+    <h2>Complementary Range</h2>
     <p>
       You can choose how many colors you want in a fan of 140 ° with center in
       the complementary color
@@ -97,7 +97,8 @@ export default {
       const step = parseFloat(this.step);
       const number = parseInt(this.number);
       const isInRangeDegree = !isNaN(step) && step > 0 && number * step <= 140;
-      const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
+      const isInRangeNumber =
+        !isNaN(number) && number > 0 && number <= 360 && number % 2 === 0;
 
       if (isInRangeNumber && isInRangeDegree) {
         this.$store.dispatch({
@@ -114,8 +115,13 @@ export default {
       const number = parseInt(this.number);
       const isInRangeDegree = !isNaN(step) && step > 0 && number * step <= 140;
       const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
+      const isEven = number % 2 === 0;
 
-      this.error.number = !isInRangeNumber ? "is out of range" : false;
+      this.error.number = !isInRangeNumber
+        ? "is out of range"
+        : !isEven
+        ? "is odd"
+        : false;
       this.error.step = !isInRangeDegree ? "is out of range" : false;
     },
     generatePalette() {
