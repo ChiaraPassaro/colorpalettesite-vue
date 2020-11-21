@@ -22,6 +22,12 @@ const routes = [
     path: "/palette/:type",
     name: "Palette",
     component: () => import("../views/SinglePalette.vue")
+  },
+  {
+    path: "/404",
+    alias: "*",
+    name: "NotFound",
+    component: () => import("../views/NotFound.vue")
   }
 ];
 

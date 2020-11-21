@@ -40,7 +40,7 @@ export default {
       const palettes = new this.$store.state.ColorPalettesRange.SetColorPalette(
         this.$store.state.color
       );
-
+      //todo creare pagina 404
       this.$store
         .dispatch({
           type: "generatePalettes",
@@ -48,17 +48,24 @@ export default {
           palettes
         })
         .then(() => {
-          console.log(id);
-          this.$router
-            .push({
+          if (this.$store.state.palettes[id]) {
+            this.$store.dispatch({
+              type: "setOpenPalette",
+              mutation: types.SET_OPEN_PALETTE,
+              open: !!this.$store.state.palettes[id].colors
+            });
+
+            this.$router.push({
               name: "Palette",
               params: {
                 type: id
               }
-            })
-            .catch(error => {
-              throw error;
             });
+          } else {
+            this.$router.push({
+              name: "NotFound"
+            });
+          }
         });
     }
   }

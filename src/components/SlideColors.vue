@@ -96,7 +96,6 @@
 </template>
 
 <script>
-//TODO click color open/close and only open slide colors, change button css
 import { types } from "@/store/mutations";
 
 export default {

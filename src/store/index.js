@@ -26,10 +26,10 @@ export default new Vuex.Store({
       palette: undefined,
       numberStartSquareColors: 0,
       random: {
-        number: 3,
-        percDominant: 50,
         colors: undefined,
-        step: undefined
+        step: undefined,
+        number: 3,
+        percDominant: 50
       },
       triad: {
         colors: undefined,

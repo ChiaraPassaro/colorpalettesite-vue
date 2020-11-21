@@ -149,7 +149,6 @@ export default {
       });
     }
   },
-  created() {},
   beforeRouteUpdate(to, from, next) {
     this.component = to.params.type;
     this.isActive = false;
@@ -175,4 +174,5 @@ export default {
   }
   //todo cambiare pagina completamente
 };
+//todo style dei form in common
 </script>

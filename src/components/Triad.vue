@@ -10,7 +10,7 @@
       action=""
     >
       <div class="row">
-        <button type="submit" :style="buttonColor">
+        <button type="submit" class="button" :style="buttonColor">
           Generate
         </button>
       </div>
