@@ -86,7 +86,7 @@
     ></i>
     <div
       aria-hidden="true"
-      class="arrow arrow--list-colors-left"
+      class="arrow arrow--list-colors--left arrow--list-colors"
       :style="setBackgroundColorArrow"
       @click="setOpen"
     >
@@ -298,6 +298,7 @@ export default {
     left: calc(100% - 21px);
     transform: translateY(-50%) rotate(90deg);
     cursor: pointer;
+    filter: drop-shadow(1px -1px 1px rgba(0, 0, 0, 0.5));
 
     .arrow__inner {
       &:before {
@@ -308,13 +309,24 @@ export default {
       background-color: var(--background-color);
       height: 28px;
     }
+    &:hover,
+    &:active,
+    &:focus {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+    }
   }
-  &--list-colors-left {
+  &--list-colors--left {
     z-index: -1;
     top: 50%;
     left: -79px;
     transform: translateY(-50%) rotate(270deg);
+    filter: drop-shadow(-1px 0 1px rgba(0, 0, 0, 0.5));
     cursor: pointer;
+    &:hover,
+    &:active,
+    &:focus {
+      filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.5));
+    }
     .arrow__inner {
       &:before {
         background-color: var(--background-color);
@@ -382,7 +394,7 @@ export default {
         margin: 5px 0;
         font-size: 100%;
       }
-      .arrow--list-colors-left {
+      .arrow--list-colors--left {
         animation-name: z-indexChange;
         animation-delay: 1s;
         animation-duration: #{$animationDelayBase}s;
