@@ -33,6 +33,9 @@ export default {
   setTriadPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
+  setSplitComplementarPalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
   setOpenPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="palette__description__info">
-    <h2>Triadic</h2>
+    <h2>Complementary</h2>
     <p>
       Description
     </p>
@@ -22,10 +22,10 @@
 import { types } from "@/store/mutations";
 
 export default {
-  name: "Triad",
+  name: "splitComplementary",
   data() {
     return {
-      type: "triad",
+      type: "splitComplementary",
       colors: this.$store.state.palettes[this.type]
         ? this.$store.state.palettes[this.type].colors
         : [],
@@ -40,17 +40,17 @@ export default {
   },
   methods: {
     generatePalette() {
-      const triad = this.palette.triad();
-      triad.push(this.$store.state.color);
+      const splitComplementary = this.palette.splitComplementar();
+      splitComplementary.push(this.$store.state.color);
 
-      triad.forEach((element, index) => {
+      splitComplementary.forEach((element, index) => {
         element.position = index + 1;
       });
 
       this.$store.dispatch({
-        type: "setTriadPalette",
-        mutation: types.SET_TRIAD_PALETTE,
-        colors: triad,
+        type: "setSplitComplementarPalette",
+        mutation: types.SET_SPLITCOMPLEMENTAR_PALETTE,
+        colors: splitComplementary,
         step: 30
       });
 

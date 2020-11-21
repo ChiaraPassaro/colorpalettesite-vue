@@ -9,6 +9,7 @@ export const types = {
   SET_RANDOM_DATA: "SET_RANDOM",
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
   SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
+  SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
   SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS"
@@ -91,6 +92,19 @@ export const mutations = {
 
     localStorage.setItem("Triad.colors", state.palettes.triad.colors);
     localStorage.setItem("Triad.step", state.palettes.triad.step);
+  },
+  [types.SET_SPLITCOMPLEMENTAR_PALETTE](state, payload) {
+    state.palettes.splitComplementary.colors = payload.colors;
+    state.palettes.splitComplementary.step = payload.step;
+
+    localStorage.setItem(
+      "SplitComplementary.colors",
+      state.palettes.splitComplementary.colors
+    );
+    localStorage.setItem(
+      "SplitComplementary.step",
+      state.palettes.splitComplementary.step
+    );
   },
   [types.SET_OPEN_PALETTE](state, payload) {
     this.state.palettes.open = payload.open;

@@ -57,6 +57,7 @@ import Chart from "@/components/Chart";
 import SlideColors from "@/components/SlideColors";
 import Random from "@/components/Random";
 import Triad from "@/components/Triad";
+import SplitComplementary from "@/components/SplitComplementary";
 
 export default {
   name: "SinglePalette.vue",
@@ -64,6 +65,7 @@ export default {
     FeedbackComponent,
     Random,
     Triad,
+    SplitComplementary,
     HeaderPalettesComponent,
     Footer,
     PalettesComponent,

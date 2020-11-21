@@ -44,7 +44,7 @@ export default {
             ]
           },
           {
-            id: "split-complementary",
+            id: "splitComplementary",
             name: "Split Complementary",
             colors: [
               { degree: "first" },
@@ -92,7 +92,6 @@ export default {
             id: "tetradic",
             name: "Tetradic",
             colors: [
-              { degree: "first" },
               { degree: "deg30m" },
               { degree: "deg150" },
               { degree: "deg30" },
@@ -103,7 +102,6 @@ export default {
             id: "square",
             name: "Square",
             colors: [
-              { degree: "first" },
               { degree: "deg45" },
               { degree: "deg45m" },
               { degree: "deg130" },

@@ -34,6 +34,10 @@ export default new Vuex.Store({
       triad: {
         colors: undefined,
         step: undefined
+      },
+      splitComplementary: {
+        colors: undefined,
+        step: undefined
       }
     },
     feedback: {
