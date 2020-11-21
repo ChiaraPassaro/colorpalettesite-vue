@@ -73,9 +73,9 @@ export default {
   data() {
     return {
       component: this.$route.params.type,
-      durationAnimation: 2000,
+      durationAnimation: 1500,
       isActive: false,
-      datacollection: null,
+      datacollection: {},
       options: {
         responsive: true,
         maintainAspectRatio: true,
@@ -151,7 +151,6 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     this.component = to.params.type;
-    this.isActive = false;
     if (
       this.$store.state.palettes[this.component] &&
       this.$store.state.palettes[this.component].colors &&
@@ -169,10 +168,13 @@ export default {
         ],
         labels: false
       };
+      this.$store.dispatch({
+        type: "setOpenPalette",
+        mutation: types.SET_OPEN_PALETTE,
+        open: false
+      });
     }
     next();
   }
-  //todo cambiare pagina completamente
 };
-//todo style dei form in common
 </script>
