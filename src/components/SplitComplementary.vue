@@ -1,6 +1,6 @@
 <template>
   <div class="palette__description__info">
-    <h2>Complementary</h2>
+    <h2>Split Complementary</h2>
     <p>
       Description
     </p>
@@ -41,7 +41,7 @@ export default {
   methods: {
     generatePalette() {
       const splitComplementary = this.palette.splitComplementar();
-      splitComplementary.push(this.$store.state.color);
+      splitComplementary.unshift(this.$store.state.color);
 
       splitComplementary.forEach((element, index) => {
         element.position = index + 1;

@@ -10,6 +10,8 @@ export const types = {
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
   SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
   SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
+  SET_COMPLEMENTAR_DATA: "SET_COMPLEMENTAR",
+  SET_COMPLEMENTAR_PALETTE: "SET_COMPLEMENTAR_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
   SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS"
@@ -57,6 +59,7 @@ export const mutations = {
       state.saturation,
       state.brightness
     );
+    //todo add palettes
     state.palettes.random.number =
       localStorage.getItem("Random.number") || state.palettes.random.number;
     state.palettes.random.percDominant =
@@ -64,6 +67,32 @@ export const mutations = {
       state.palettes.random.percDominant;
     state.palettes.random.step =
       localStorage.getItem("Random.step") || state.palettes.random.step;
+
+    state.palettes.complementary.step =
+      localStorage.getItem("Complementary.step") ||
+      state.palettes.complementary.step;
+    state.palettes.complementary.number =
+      localStorage.getItem("Complementary.number") ||
+      state.palettes.complementary.number;
+    state.palettes.complementary.colors =
+      localStorage.getItem("Complementary.colors") ||
+      state.palettes.complementary.colors;
+
+    state.palettes.splitComplementary.step =
+      localStorage.getItem("SplitComplementary.step") ||
+      state.palettes.splitComplementary.step;
+    state.palettes.splitComplementary.number =
+      localStorage.getItem("SplitComplementary.number") ||
+      state.palettes.splitComplementary.number;
+    state.palettes.splitComplementary.colors =
+      localStorage.getItem("SplitComplementary.colors") ||
+      state.palettes.splitComplementary.colors;
+
+    state.palettes.triad.colors =
+      localStorage.getItem("Triad.colors") || state.palettes.triad.colors;
+    state.palettes.triad.step =
+      localStorage.getItem("Triad.step") || state.palettes.triad.step;
+
     state.palettes.palette = state.color
       ? new state.ColorPalettesRange.SetColorPalette(state.color)
       : undefined;
@@ -85,6 +114,26 @@ export const mutations = {
     state.palettes.random.step = payload.step;
     localStorage.setItem("Random.colors", state.palettes.random.colors);
     localStorage.setItem("Random.step", state.palettes.random.step);
+  },
+  [types.SET_COMPLEMENTAR_DATA](state, payload) {
+    state.palettes.complementary.step = parseFloat(payload.step);
+    state.palettes.complementary.number = parseInt(payload.number);
+
+    localStorage.setItem(
+      "Complementary.step",
+      state.palettes.complementary.step
+    );
+    localStorage.setItem(
+      "Complementary.number",
+      state.palettes.complementary.number
+    );
+  },
+  [types.SET_COMPLEMENTAR_PALETTE](state, payload) {
+    state.palettes.complementary.colors = payload.colors;
+    localStorage.setItem(
+      "Complementary.colors",
+      state.palettes.complementary.colors
+    );
   },
   [types.SET_TRIAD_PALETTE](state, payload) {
     state.palettes.triad.colors = payload.colors;

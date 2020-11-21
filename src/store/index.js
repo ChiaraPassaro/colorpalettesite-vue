@@ -38,6 +38,11 @@ export default new Vuex.Store({
       splitComplementary: {
         colors: undefined,
         step: undefined
+      },
+      complementary: {
+        colors: undefined,
+        step: 10,
+        number: 4
       }
     },
     feedback: {

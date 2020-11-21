@@ -41,7 +41,7 @@ export default {
   methods: {
     generatePalette() {
       const triad = this.palette.triad();
-      triad.push(this.$store.state.color);
+      triad.unshift(this.$store.state.color);
 
       triad.forEach((element, index) => {
         element.position = index + 1;

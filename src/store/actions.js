@@ -36,6 +36,12 @@ export default {
   setSplitComplementarPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
+  setComplementarData({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
+  setComplementarPalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
   setOpenPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
