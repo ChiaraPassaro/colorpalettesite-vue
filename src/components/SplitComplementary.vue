@@ -4,17 +4,6 @@
     <p>
       Description
     </p>
-    <form
-      @submit.prevent="generatePalette"
-      id="palette__description__form"
-      action=""
-    >
-      <div class="row">
-        <button type="submit" class="button active" :style="buttonColor">
-          Generate
-        </button>
-      </div>
-    </form>
   </div>
 </template>
 
@@ -37,6 +26,9 @@ export default {
     buttonColor() {
       return { backgroundColor: this.$store.state.color.printHsl() };
     }
+  },
+  mounted() {
+    this.generatePalette();
   },
   methods: {
     generatePalette() {

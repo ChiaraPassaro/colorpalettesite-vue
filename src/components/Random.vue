@@ -5,7 +5,7 @@
       You can choose how many colors you want in a fan of 140 ° with center in
       the complementary color
     </p>
-    <form @submit.prevent="setValues" id="palette__description__form" action="">
+    <div id="palette__description__form">
       <div class="row">
         <div class="input-group">
           <input
@@ -38,6 +38,7 @@
             v-model="percDominant"
             :class="!!error.percDominant.length ? 'error' : ''"
             @keyup="checkValue"
+            @keydown.enter="setValues"
           />
           <label for="percDominant">Dominant percentage: </label>
           <span class="error" v-if="error.percDominant">{{
@@ -45,17 +46,7 @@
           }}</span>
         </div>
       </div>
-      <div class="row">
-        <button
-          :class="['button', checkError ? '' : 'active']"
-          type="submit"
-          :disabled="checkError"
-          :style="buttonColor"
-        >
-          Generate
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 

@@ -40,7 +40,7 @@ export default {
       const palettes = new this.$store.state.ColorPalettesRange.SetColorPalette(
         this.$store.state.color
       );
-      //todo creare pagina 404
+
       this.$store
         .dispatch({
           type: "generatePalettes",
@@ -49,6 +49,7 @@ export default {
         })
         .then(() => {
           if (this.$store.state.palettes[id]) {
+            console.log(!!this.$store.state.palettes[id].colors);
             this.$store.dispatch({
               type: "setOpenPalette",
               mutation: types.SET_OPEN_PALETTE,

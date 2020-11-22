@@ -5,7 +5,7 @@
       You can choose how many colors you want in a fan of 140 ° with center in
       the complementary color
     </p>
-    <form @submit.prevent="setValues" id="palette__description__form" action="">
+    <div id="palette__description__form">
       <div class="row">
         <div class="input-group">
           <input
@@ -38,22 +38,13 @@
             v-model="step"
             :class="!!error.step.length ? 'error' : ''"
             @keyup="checkValue"
+            @keydown.enter="setValues"
           />
           <label for="step">Step: </label>
           <span class="error" v-if="error.step">{{ error.step }}</span>
         </div>
       </div>
-      <div class="row">
-        <button
-          :class="['button', checkError ? '' : 'active']"
-          type="submit"
-          :disabled="checkError"
-          :style="buttonColor"
-        >
-          Generate
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -93,12 +84,11 @@ export default {
   methods: {
     setValues() {
       this.$emit("reset-square-colors");
-
       const step = parseFloat(this.step);
       const number = parseInt(this.number);
       const isInRangeDegree = !isNaN(step) && step > 0 && number * step <= 140;
-      const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
-
+      const isInRangeNumber =
+        !isNaN(number) && number > 0 && number <= 360 && number % 2 === 0;
       if (isInRangeNumber && isInRangeDegree) {
         this.$store.dispatch({
           type: "setComplementarData",
@@ -114,8 +104,12 @@ export default {
       const number = parseInt(this.number);
       const isInRangeDegree = !isNaN(step) && step > 0 && number * step <= 140;
       const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
-
-      this.error.number = !isInRangeNumber ? "is out of range" : false;
+      const isEven = number % 2 === 0;
+      this.error.number = !isInRangeNumber
+        ? "is out of range"
+        : !isEven
+        ? "is odd"
+        : false;
       this.error.step = !isInRangeDegree ? "is out of range" : false;
     },
     generatePalette() {

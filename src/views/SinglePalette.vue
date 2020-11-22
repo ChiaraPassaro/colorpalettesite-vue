@@ -1,4 +1,5 @@
 <template>
+  <!--  :key="$route.fullPath"-->
   <div class="container" id="page-palette">
     <div class="inner content">
       <!--feedback-->
@@ -149,17 +150,20 @@ export default {
       this.$store.dispatch({
         type: "setNumberStartSquareColors",
         mutation: types.SET_NUMBER_START_SQUARE_COLORS,
-        numberStartSquareColors: 0
+        numberStartSquareColors: 0,
+        id: this.component
       });
     }
   },
   beforeRouteUpdate(to, from, next) {
     this.component = to.params.type;
+    console.log(this.$store.state.palettes[this.component]);
     if (
       this.$store.state.palettes[this.component] &&
       this.$store.state.palettes[this.component].colors &&
       this.$store.state.palettes[this.component].colors.length > 0
     ) {
+      console.log(this.$store.state.palettes[this.component].colors);
       this.fillChart();
     } else {
       this.datacollection = {

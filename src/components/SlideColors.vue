@@ -26,7 +26,7 @@
     </div>
     <i
       :class="[
-        'fas fa-angle-left palette__description__list__arrow',
+        'fa  fa-caret-left  palette__description__list__arrow',
         checkNextColors ? 'button-active' : ''
       ]"
       @click="
@@ -75,7 +75,7 @@
     </ul>
     <i
       :class="[
-        'fas fa-angle-right palette__description__list__arrow',
+        'fa  fa-caret-right palette__description__list__arrow',
         checkPrevColors ? 'button-active' : ''
       ]"
       @click="
@@ -123,6 +123,7 @@ export default {
   },
   computed: {
     generatedColors() {
+      console.log("generated colors");
       const lengthColors = this.$store.state.palettes[this.type].colors
         ? this.$store.state.palettes[this.type].colors.length
         : 0;

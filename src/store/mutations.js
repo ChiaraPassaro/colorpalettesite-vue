@@ -59,6 +59,7 @@ export const mutations = {
       state.saturation,
       state.brightness
     );
+
     //todo add palettes
     state.palettes.random.number =
       localStorage.getItem("Random.number") || state.palettes.random.number;
@@ -84,9 +85,6 @@ export const mutations = {
     state.palettes.splitComplementary.number =
       localStorage.getItem("SplitComplementary.number") ||
       state.palettes.splitComplementary.number;
-    state.palettes.splitComplementary.colors =
-      localStorage.getItem("SplitComplementary.colors") ||
-      state.palettes.splitComplementary.colors;
 
     state.palettes.triad.colors =
       localStorage.getItem("Triad.colors") || state.palettes.triad.colors;
@@ -110,6 +108,7 @@ export const mutations = {
     );
   },
   [types.SET_RANDOM_PALETTE](state, payload) {
+    console.log(payload.colors);
     state.palettes.random.colors = payload.colors;
     state.palettes.random.step = payload.step;
     localStorage.setItem("Random.colors", state.palettes.random.colors);
@@ -129,6 +128,8 @@ export const mutations = {
     );
   },
   [types.SET_COMPLEMENTAR_PALETTE](state, payload) {
+    console.log(payload.colors);
+
     state.palettes.complementary.colors = payload.colors;
     localStorage.setItem(
       "Complementary.colors",
@@ -136,6 +137,8 @@ export const mutations = {
     );
   },
   [types.SET_TRIAD_PALETTE](state, payload) {
+    console.log(payload.colors);
+
     state.palettes.triad.colors = payload.colors;
     state.palettes.triad.step = payload.step;
 
@@ -143,6 +146,8 @@ export const mutations = {
     localStorage.setItem("Triad.step", state.palettes.triad.step);
   },
   [types.SET_SPLITCOMPLEMENTAR_PALETTE](state, payload) {
+    console.log(payload.colors);
+
     state.palettes.splitComplementary.colors = payload.colors;
     state.palettes.splitComplementary.step = payload.step;
 
@@ -163,6 +168,7 @@ export const mutations = {
     this.state.feedback.message = payload.message;
   },
   [types.SET_NUMBER_START_SQUARE_COLORS](state, payload) {
+    this.state.palettes[payload.id].colors = undefined;
     this.state.palettes.numberStartSquareColors =
       payload.numberStartSquareColors;
   }

@@ -28,7 +28,7 @@ export default new Vuex.Store({
       random: {
         colors: undefined,
         step: undefined,
-        number: 3,
+        number: 10,
         percDominant: 50
       },
       triad: {
