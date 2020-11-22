@@ -168,7 +168,6 @@ export const mutations = {
     this.state.feedback.message = payload.message;
   },
   [types.SET_NUMBER_START_SQUARE_COLORS](state, payload) {
-    this.state.palettes[payload.id].colors = undefined;
     this.state.palettes.numberStartSquareColors =
       payload.numberStartSquareColors;
   }
