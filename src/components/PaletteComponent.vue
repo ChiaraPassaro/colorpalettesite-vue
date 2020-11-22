@@ -56,6 +56,20 @@ export default {
               open: !!this.$store.state.palettes[id].colors
             });
 
+            this.$store.dispatch({
+              type: "setNumberStartSquareColors",
+              mutation: types.SET_NUMBER_START_SQUARE_COLORS,
+              numberStartSquareColors: 0
+            });
+
+            this.$store.dispatch({
+              type: "setOpenPalette",
+              mutation: types.SET_OPEN_PALETTE,
+              open: false
+            });
+
+            //TODO add emit per chiudere slider
+
             this.$router.push({
               name: "Palette",
               params: {

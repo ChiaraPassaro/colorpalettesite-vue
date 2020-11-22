@@ -82,9 +82,9 @@ export const mutations = {
     state.palettes.splitComplementary.step =
       localStorage.getItem("SplitComplementary.step") ||
       state.palettes.splitComplementary.step;
-    state.palettes.splitComplementary.number =
-      localStorage.getItem("SplitComplementary.number") ||
-      state.palettes.splitComplementary.number;
+    state.palettes.splitComplementary.colors =
+      localStorage.getItem("SplitComplementary.colors") ||
+      state.palettes.splitComplementary.colors;
 
     state.palettes.triad.colors =
       localStorage.getItem("Triad.colors") || state.palettes.triad.colors;
