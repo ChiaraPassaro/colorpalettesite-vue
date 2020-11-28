@@ -23,6 +23,7 @@ export default new Vuex.Store({
     },
     palettes: {
       open: false,
+      totalOpen: false,
       palette: undefined,
       numberStartSquareColors: 0,
       random: {

@@ -49,6 +49,8 @@
 </template>
 
 <script>
+//todo quando la slide è aperta non si possono cliccare le palettes
+//todo rimettere bottone generate
 import { types } from "@/store/mutations";
 import FeedbackComponent from "@/components/FeedbackComponent";
 import HeaderPalettesComponent from "@/components/HeaderPalettesComponent";

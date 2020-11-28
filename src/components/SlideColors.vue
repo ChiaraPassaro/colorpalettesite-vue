@@ -30,10 +30,10 @@
         checkNextColors ? 'button-active' : ''
       ]"
       @click="
-        moveNext();
+        checkNextColors ? moveNext() : '';
         setColorActive(false, false);
       "
-      v-if="checkNextColors && open"
+      v-if="$store.state.palettes.totalOpen"
     ></i>
     <ul class="colors-square" ref="colorsSlider">
       <li
@@ -42,8 +42,10 @@
         v-for="(color, index) in generatedColors"
         v-bind:key="color + index"
         :style="{ backgroundColor: color.printHsl() }"
-        @mouseover="open ? setColorActive(color, $refs.element[index]) : ''"
-        @mouseleave="open ? setColorActive(false, false) : ''"
+        @mouseover="
+          isPaletteTotalOpen ? setColorActive(color, $refs.element[index]) : ''
+        "
+        @mouseleave="isPaletteTotalOpen ? setColorActive(false, false) : ''"
       >
         <div class="colors-square__item__position">{{ color.position }}</div>
         <div
@@ -82,7 +84,7 @@
         movePrev();
         setColorActive(false, false);
       "
-      v-if="open"
+      v-if="$store.state.palettes.totalOpen"
     ></i>
     <div
       aria-hidden="true"
@@ -96,6 +98,7 @@
 </template>
 
 <script>
+//todo TOTALOPEN
 import { types } from "@/store/mutations";
 
 export default {
@@ -114,7 +117,6 @@ export default {
       },
       activeColor: false,
       element: false,
-      open: false,
       widthColorsSlider: 0,
       colors: this.$store.state.palettes[this.type].colors,
       numberVisible: 0,
@@ -123,7 +125,6 @@ export default {
   },
   computed: {
     generatedColors() {
-      console.log("generated colors");
       const lengthColors = this.$store.state.palettes[this.type].colors
         ? this.$store.state.palettes[this.type].colors.length
         : 0;
@@ -151,7 +152,9 @@ export default {
         : "";
     },
     isPaletteTotalOpen() {
-      return this.open ? "palette__description__list-colors--open" : "";
+      return this.$store.state.palettes.totalOpen
+        ? "palette__description__list-colors--open"
+        : "";
     },
     checkNextColors() {
       const lengthColors = this.$store.state.palettes[this.type].colors
@@ -200,8 +203,13 @@ export default {
       this.activeColor = color;
     },
     setOpen() {
-      this.open = !this.open;
-      this.getWidthColorsSlider();
+      this.$store
+        .dispatch({
+          type: "setTotalOpenPalette",
+          mutation: types.SET_TOTAL_OPEN_PALETTE,
+          totalOpen: !this.$store.state.palettes.totalOpen
+        })
+        .then(() => this.getWidthColorsSlider());
     },
     getWidthColorsSlider() {
       setTimeout(() => {
@@ -387,7 +395,7 @@ export default {
         padding: 10px;
         margin-right: 5px;
         box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.6);
-        border-radius: 10px;
+        border-radius: 5px;
         transition: all 1s;
         &.change-opacity {
           @include animationFadeIn(colors, 0, 1);

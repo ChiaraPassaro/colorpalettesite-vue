@@ -13,6 +13,7 @@ export const types = {
   SET_COMPLEMENTAR_DATA: "SET_COMPLEMENTAR",
   SET_COMPLEMENTAR_PALETTE: "SET_COMPLEMENTAR_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
+  SET_TOTAL_OPEN_PALETTE: "SET_TOTAL_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
   SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS"
 };
@@ -162,6 +163,9 @@ export const mutations = {
   },
   [types.SET_OPEN_PALETTE](state, payload) {
     this.state.palettes.open = payload.open;
+  },
+  [types.SET_TOTAL_OPEN_PALETTE](state, payload) {
+    this.state.palettes.totalOpen = payload.totalOpen;
   },
   [types.SET_OPEN_FEEDBACK](state, payload) {
     this.state.feedback.status = payload.status;

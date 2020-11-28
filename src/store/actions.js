@@ -45,6 +45,9 @@ export default {
   setOpenPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
+  setTotalOpenPalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
   setOpenFeedback({ commit }, payload) {
     commit(payload.mutation, payload);
   },
