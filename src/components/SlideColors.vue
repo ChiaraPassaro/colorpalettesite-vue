@@ -33,7 +33,7 @@
         checkNextColors ? moveNext() : '';
         setColorActive(false, false);
       "
-      v-if="$store.state.palettes.totalOpen"
+      v-if="totalOpen"
     ></i>
     <ul class="colors-square" ref="colorsSlider">
       <li
@@ -84,7 +84,7 @@
         movePrev();
         setColorActive(false, false);
       "
-      v-if="$store.state.palettes.totalOpen"
+      v-if="totalOpen"
     ></i>
     <div
       aria-hidden="true"
@@ -118,16 +118,24 @@ export default {
       activeColor: false,
       element: false,
       widthColorsSlider: 0,
-      colors: this.$store.state.palettes[this.type].colors,
-      numberVisible: 0,
-      baseColor: this.$store.state.color
+      numberVisible: 0
     };
   },
   computed: {
+    colors() {
+      return this.$store.state.palettes[this.type].colors;
+    },
+    baseColor() {
+      return this.$store.state.color;
+    },
+    open() {
+      return this.$store.state.palettes.open;
+    },
+    totalOpen() {
+      return this.$store.state.palettes.totalOpen;
+    },
     generatedColors() {
-      const lengthColors = this.$store.state.palettes[this.type].colors
-        ? this.$store.state.palettes[this.type].colors.length
-        : 0;
+      const lengthColors = this.colors ? this.colors.length : 0;
       const numberOfElement =
         lengthColors > this.numberVisible ? this.numberVisible : lengthColors;
 
@@ -143,23 +151,16 @@ export default {
 
         return colors;
       }
-
       return false;
     },
     isPaletteOpen() {
-      return this.$store.state.palettes.open
-        ? "palette__description__list-colors--active"
-        : "";
+      return this.open ? "palette__description__list-colors--active" : "";
     },
     isPaletteTotalOpen() {
-      return this.$store.state.palettes.totalOpen
-        ? "palette__description__list-colors--open"
-        : "";
+      return this.totalOpen ? "palette__description__list-colors--open" : "";
     },
     checkNextColors() {
-      const lengthColors = this.$store.state.palettes[this.type].colors
-        ? this.$store.state.palettes[this.type].colors.length
-        : 0;
+      const lengthColors = this.colors ? this.colors.length : 0;
       return (
         this.$store.state.palettes.numberStartSquareColors +
           this.numberVisible <=
@@ -207,7 +208,7 @@ export default {
         .dispatch({
           type: "setTotalOpenPalette",
           mutation: types.SET_TOTAL_OPEN_PALETTE,
-          totalOpen: !this.$store.state.palettes.totalOpen
+          totalOpen: !this.totalOpen
         })
         .then(() => this.getWidthColorsSlider());
     },

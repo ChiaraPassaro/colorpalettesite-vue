@@ -107,6 +107,16 @@ export default {
       this.isActive = true;
     }, this.durationAnimation);
   },
+  computed: {
+    colors() {
+      return this.$store.state.palettes[this.$route.params.type]
+        ? this.$store.state.palettes[this.$route.params.type].colors
+        : false;
+    },
+    palette() {
+      return this.$store.state.palettes[this.$route.params.type];
+    }
+  },
   methods: {
     fillChart() {
       const degrees = [];
@@ -117,18 +127,10 @@ export default {
         colorsLabel.push("hsl(" + i + ", 50%, 50%, 0.2)");
       }
 
-      for (
-        let i = 0;
-        i < this.$store.state.palettes[this.component].colors.length;
-        i++
-      ) {
-        const degree = this.$store.state.palettes[this.component].colors[
-          i
-        ].getHue();
-        degrees[degree] = this.$store.state.palettes[this.component].step;
-        colorsLabel[degree] = this.$store.state.palettes[this.component].colors[
-          i
-        ].printHsl();
+      for (let i = 0; i < this.colors.length; i++) {
+        const degree = this.colors[i].getHue();
+        degrees[degree] = this.palette.step;
+        colorsLabel[degree] = this.colors[i].printHsl();
       }
 
       this.datacollection = {
@@ -157,15 +159,15 @@ export default {
       });
     }
   },
+  //TODO getters and setters
   beforeRouteUpdate(to, from, next) {
     this.component = to.params.type;
-    console.log(this.$store.state.palettes[this.component]);
     if (
-      this.$store.state.palettes[this.component] &&
-      this.$store.state.palettes[this.component].colors &&
-      this.$store.state.palettes[this.component].colors.length > 0
+      this.$store.state[this.component] &&
+      this.$store.state[this.component].colors &&
+      this.$store.state[this.component].colors.length > 0
     ) {
-      console.log(this.$store.state.palettes[this.component].colors);
+      console.log(this.colors);
       this.fillChart();
     } else {
       this.datacollection = {
@@ -178,9 +180,16 @@ export default {
         ],
         labels: false
       };
+
       this.$store.dispatch({
         type: "setOpenPalette",
         mutation: types.SET_OPEN_PALETTE,
+        open: false
+      });
+
+      this.$store.dispatch({
+        type: "setTotalOpenPalette",
+        mutation: types.SET_TOTAL_OPEN_PALETTE,
         open: false
       });
     }
