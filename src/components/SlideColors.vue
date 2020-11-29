@@ -123,7 +123,7 @@ export default {
   },
   computed: {
     colors() {
-      return this.$store.state.palettes[this.type].colors;
+      return this.$store.getters.getColors(this.type);
     },
     baseColor() {
       return this.$store.state.color;

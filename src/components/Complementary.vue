@@ -50,25 +50,32 @@
 
 <script>
 import { types } from "@/store/mutations";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Complementary",
   data() {
     return {
       type: "complementary",
-      colors: this.$store.state.palettes[this.type]
-        ? this.$store.state.palettes[this.type].colors
-        : [],
-      number: parseInt(this.$store.state.palettes.complementary.number),
-      step: parseFloat(this.$store.state.palettes.complementary.step),
       error: {
         step: false,
         number: false
-      },
-      palette: this.$store.state.palettes.palette
+      }
     };
   },
   computed: {
+    colors() {
+      return this.$store.getters.getColors(this.$route.params.type);
+    },
+    palette() {
+      return this.$store.getters.getPalette(this.$route.params.type);
+    },
+    number() {
+      return this.$store.getters.getNumber(this.$route.params.type);
+    },
+    step() {
+      return this.$store.getters.getStep(this.$route.params.type);
+    },
     checkError() {
       return (
         !!this.error.number.length ||
@@ -79,7 +86,8 @@ export default {
     },
     buttonColor() {
       return { backgroundColor: this.$store.state.color.printHsl() };
-    }
+    },
+    ...mapGetters(["ColorPaletteObject", "basecolor", "PaletteObject"])
   },
   methods: {
     setValues() {
@@ -113,7 +121,7 @@ export default {
       this.error.step = !isInRangeDegree ? "is out of range" : false;
     },
     generatePalette() {
-      const complementary = this.palette.complementar(
+      const complementary = this.PaletteObject.complementar(
         parseInt(this.number),
         parseFloat(this.step)
       );
@@ -124,13 +132,15 @@ export default {
         element.position = index + 1;
       });
 
-      this.$store.dispatch({
-        type: "setComplementarPalette",
-        mutation: types.SET_COMPLEMENTAR_PALETTE,
-        colors: complementary
-      });
-
-      this.$emit("fill-chart");
+      this.$store
+        .dispatch({
+          type: "setComplementarPalette",
+          mutation: types.SET_COMPLEMENTAR_PALETTE,
+          colors: complementary
+        })
+        .then(() => {
+          this.$emit("fill-chart");
+        });
     }
   }
 };

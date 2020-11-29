@@ -218,7 +218,7 @@ export default {
       }
     },
     generatePalette() {
-      this.$router.push({ name: 'Palettes'})
+      this.$router.push({ name: "Palettes" });
     }
   }
 };

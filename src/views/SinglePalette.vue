@@ -103,18 +103,17 @@ export default {
     });
   },
   mounted() {
-    setTimeout(() => {
+    const setActive = setTimeout(() => {
       this.isActive = true;
+      clearTimeout(setActive);
     }, this.durationAnimation);
   },
   computed: {
     colors() {
-      return this.$store.state.palettes[this.$route.params.type]
-        ? this.$store.state.palettes[this.$route.params.type].colors
-        : false;
+      return this.$store.getters.getColors(this.$route.params.type);
     },
     palette() {
-      return this.$store.state.palettes[this.$route.params.type];
+      return this.$store.getters.getPalette(this.$route.params.type);
     }
   },
   methods: {
@@ -163,11 +162,9 @@ export default {
   beforeRouteUpdate(to, from, next) {
     this.component = to.params.type;
     if (
-      this.$store.state[this.component] &&
-      this.$store.state[this.component].colors &&
-      this.$store.state[this.component].colors.length > 0
+      this.$store.getters.getPalette(this.component) &&
+      this.$store.getters.getColors(this.component).length > 0
     ) {
-      console.log(this.colors);
       this.fillChart();
     } else {
       this.datacollection = {

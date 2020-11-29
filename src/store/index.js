@@ -27,21 +27,21 @@ export default new Vuex.Store({
       palette: undefined,
       numberStartSquareColors: 0,
       random: {
-        colors: undefined,
-        step: undefined,
+        colors: {},
+        step: 0,
         number: 10,
         percDominant: 50
       },
       triad: {
-        colors: undefined,
-        step: undefined
+        colors: {},
+        step: 0
       },
       splitComplementary: {
-        colors: undefined,
-        step: undefined
+        colors: {},
+        step: 0
       },
       complementary: {
-        colors: undefined,
+        colors: {},
         step: 10,
         number: 4
       }
@@ -54,11 +54,46 @@ export default new Vuex.Store({
   mutations,
   actions,
   getters: {
-    isColor: state => state.color,
+    baseColor: state => state.color,
     getDegree: state => state.degree,
     getSaturation: state => state.saturation,
     getBrightness: state => state.brightness,
-    getCssColor: state => state.cssColor
+    getCssColor: state => state.cssColor,
+    getColors(state) {
+      return palette => {
+        return Object.prototype.hasOwnProperty.call(state.palettes, palette)
+          ? state.palettes[palette].colors
+          : false;
+      };
+    },
+    getNumber(state) {
+      return palette => {
+        return Object.prototype.hasOwnProperty.call(state.palettes, palette) &&
+          Object.prototype.hasOwnProperty.call(
+            state.palettes[palette],
+            "number"
+          )
+          ? state.palettes[palette].number
+          : false;
+      };
+    },
+    getStep(state) {
+      return palette => {
+        return Object.prototype.hasOwnProperty.call(state.palettes, palette) &&
+          Object.prototype.hasOwnProperty.call(state.palettes[palette], "step")
+          ? state.palettes[palette].step
+          : false;
+      };
+    },
+    getPalette(state) {
+      return palette => {
+        return Object.prototype.hasOwnProperty.call(state.palettes, palette)
+          ? state.palettes[palette]
+          : false;
+      };
+    },
+    ColorPaletteObject: state => state.ColorPalettesRange,
+    PaletteObject: state => state.palettes.palette
   },
   modules: {}
 });

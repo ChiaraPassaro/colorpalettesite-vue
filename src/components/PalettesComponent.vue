@@ -140,6 +140,7 @@ export default {
     setTimeout(() => {
       this.isActive = true;
     }, this.durationAnimation);
+    //todo Cleartimeout
   }
 };
 </script>

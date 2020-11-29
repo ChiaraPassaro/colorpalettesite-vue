@@ -94,7 +94,7 @@ export const mutations = {
 
     state.palettes.palette = state.color
       ? new state.ColorPalettesRange.SetColorPalette(state.color)
-      : undefined;
+      : {};
   },
   [types.GENERATE_PALETTES](state, palettes) {
     state.palettes.palette = palettes;
@@ -109,7 +109,6 @@ export const mutations = {
     );
   },
   [types.SET_RANDOM_PALETTE](state, payload) {
-    console.log(payload.colors);
     state.palettes.random.colors = payload.colors;
     state.palettes.random.step = payload.step;
     localStorage.setItem("Random.colors", state.palettes.random.colors);
@@ -129,8 +128,6 @@ export const mutations = {
     );
   },
   [types.SET_COMPLEMENTAR_PALETTE](state, payload) {
-    console.log(payload.colors);
-
     state.palettes.complementary.colors = payload.colors;
     localStorage.setItem(
       "Complementary.colors",
@@ -138,8 +135,6 @@ export const mutations = {
     );
   },
   [types.SET_TRIAD_PALETTE](state, payload) {
-    console.log(payload.colors);
-
     state.palettes.triad.colors = payload.colors;
     state.palettes.triad.step = payload.step;
 
@@ -147,8 +142,6 @@ export const mutations = {
     localStorage.setItem("Triad.step", state.palettes.triad.step);
   },
   [types.SET_SPLITCOMPLEMENTAR_PALETTE](state, payload) {
-    console.log(payload.colors);
-
     state.palettes.splitComplementary.colors = payload.colors;
     state.palettes.splitComplementary.step = payload.step;
 
