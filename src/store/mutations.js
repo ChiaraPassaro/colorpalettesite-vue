@@ -6,11 +6,14 @@ export const types = {
   ERROR_COLOR: "ERROR_COLOR",
   INIT_STORE: "INIT_STORE",
   GENERATE_PALETTES: "GENERATE_PALETTES",
-  SET_RANDOM_DATA: "SET_RANDOM",
+  SET_RANDOM_STEP: "SET_RANDOM_STEP",
+  SET_RANDOM_NUMBER: "SET_RANDOM_NUMBER",
+  SET_RANDOM_PERCDOMINANT: "SET_RANDOM_PERCDOMINANT",
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
   SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
   SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
-  SET_COMPLEMENTAR_DATA: "SET_COMPLEMENTAR",
+  SET_COMPLEMENTAR_NUMBER: "SET_COMPLEMENTAR_NUMBER",
+  SET_COMPLEMENTAR_STEP: "SET_COMPLEMENTAR_STEP",
   SET_COMPLEMENTAR_PALETTE: "SET_COMPLEMENTAR_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_TOTAL_OPEN_PALETTE: "SET_TOTAL_OPEN_PALETTE",
@@ -99,14 +102,20 @@ export const mutations = {
   [types.GENERATE_PALETTES](state, palettes) {
     state.palettes.palette = palettes;
   },
-  [types.SET_RANDOM_DATA](state, payload) {
-    state.palettes.random.number = payload.number;
+  [types.SET_RANDOM_PERCDOMINANT](state, payload) {
     state.palettes.random.percDominant = payload.percDominant;
-    localStorage.setItem("Random.number", state.palettes.random.number);
     localStorage.setItem(
       "Random.percDominant",
       state.palettes.random.percDominant
     );
+  },
+  [types.SET_RANDOM_STEP](state, payload) {
+    state.palettes.random.step = payload.step;
+    localStorage.setItem("Random.step", state.palettes.random.step);
+  },
+  [types.SET_RANDOM_NUMBER](state, payload) {
+    state.palettes.random.number = payload.number;
+    localStorage.setItem("Random.number", state.palettes.random.number);
   },
   [types.SET_RANDOM_PALETTE](state, payload) {
     state.palettes.random.colors = payload.colors;
@@ -114,17 +123,20 @@ export const mutations = {
     localStorage.setItem("Random.colors", state.palettes.random.colors);
     localStorage.setItem("Random.step", state.palettes.random.step);
   },
-  [types.SET_COMPLEMENTAR_DATA](state, payload) {
-    state.palettes.complementary.step = parseFloat(payload.step);
+  [types.SET_COMPLEMENTAR_NUMBER](state, payload) {
     state.palettes.complementary.number = parseInt(payload.number);
+
+    localStorage.setItem(
+      "Complementary.number",
+      state.palettes.complementary.number
+    );
+  },
+  [types.SET_COMPLEMENTAR_STEP](state, payload) {
+    state.palettes.complementary.step = parseFloat(payload.step);
 
     localStorage.setItem(
       "Complementary.step",
       state.palettes.complementary.step
-    );
-    localStorage.setItem(
-      "Complementary.number",
-      state.palettes.complementary.number
     );
   },
   [types.SET_COMPLEMENTAR_PALETTE](state, payload) {

@@ -52,27 +52,63 @@
 
 <script>
 import { types } from "@/store/mutations";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Random",
   data() {
     return {
       type: "random",
-      colors: this.$store.state.palettes[this.type]
-        ? this.$store.state.palettes[this.type].colors
-        : [],
-      step: 360,
-      stepGenerated: undefined,
-      number: this.$store.state.palettes.random.number,
-      percDominant: this.$store.state.palettes.random.percDominant,
       error: {
         percDominant: false,
         number: false
       },
-      palette: this.$store.state.palettes.palette
+      stepGenerated: undefined
     };
   },
   computed: {
+    colors() {
+      return this.$store.getters.getColors(this.$route.params.type);
+    },
+    palette() {
+      return this.$store.getters.getPalette(this.$route.params.type);
+    },
+    number: {
+      get() {
+        return this.$store.getters.getNumber(this.$route.params.type);
+      },
+      set(number) {
+        this.$store.dispatch({
+          type: "setRandomNumber",
+          mutation: types.SET_RANDOM_NUMBER,
+          number
+        });
+      }
+    },
+    step: {
+      get() {
+        return this.$store.getters.getStep(this.$route.params.type);
+      },
+      set(step) {
+        this.$store.dispatch({
+          type: "setRandomStep",
+          mutation: types.SET_RANDOM_STEP,
+          step
+        });
+      }
+    },
+    percDominant: {
+      get() {
+        return this.$store.getters.getPercDominant(this.$route.params.type);
+      },
+      set(percDominant) {
+        this.$store.dispatch({
+          type: "setRandomPercDominant",
+          mutation: types.SET_RANDOM_PERCDOMINANT,
+          percDominant
+        });
+      }
+    },
     checkError() {
       return (
         !!this.error.number.length ||
@@ -83,7 +119,9 @@ export default {
     },
     buttonColor() {
       return { backgroundColor: this.$store.state.color.printHsl() };
-    }
+    },
+
+    ...mapGetters(["ColorPaletteObject", "basecolor", "PaletteObject"])
   },
   methods: {
     setValues() {
@@ -96,12 +134,6 @@ export default {
       const isInRangeNumber = !isNaN(number) && number > 0 && number <= 360;
 
       if (isInRangeNumber && isInRangeDegree) {
-        this.$store.dispatch({
-          type: "setRandomData",
-          mutation: types.SET_RANDOM_DATA,
-          percDominant,
-          number
-        });
         this.generatePalette();
       }
     },
@@ -115,7 +147,7 @@ export default {
       this.error.percDominant = !isInRangeDegree ? "is out of range" : false;
     },
     generatePalette() {
-      const randomDominant = this.palette.randomDominant(
+      const randomDominant = this.PaletteObject.randomDominant(
         this.number,
         this.percDominant
       );
@@ -124,7 +156,7 @@ export default {
         element.position = index + 1;
       });
 
-      this.stepGenerated = this.step / randomDominant.length;
+      this.stepGenerated = this.number / randomDominant.length;
 
       this.$store.dispatch({
         type: "setRandomPalette",

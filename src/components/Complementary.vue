@@ -70,11 +70,29 @@ export default {
     palette() {
       return this.$store.getters.getPalette(this.$route.params.type);
     },
-    number() {
-      return this.$store.getters.getNumber(this.$route.params.type);
+    number: {
+      get() {
+        return this.$store.getters.getNumber(this.$route.params.type);
+      },
+      set(number) {
+        this.$store.dispatch({
+          type: "setComplementarNumber",
+          mutation: types.SET_COMPLEMENTAR_NUMBER,
+          number
+        });
+      }
     },
-    step() {
-      return this.$store.getters.getStep(this.$route.params.type);
+    step: {
+      get() {
+        return this.$store.getters.getStep(this.$route.params.type);
+      },
+      set(step) {
+        this.$store.dispatch({
+          type: "setComplementarStep",
+          mutation: types.SET_COMPLEMENTAR_STEP,
+          step
+        });
+      }
     },
     checkError() {
       return (
@@ -98,12 +116,6 @@ export default {
       const isInRangeNumber =
         !isNaN(number) && number > 0 && number <= 360 && number % 2 === 0;
       if (isInRangeNumber && isInRangeDegree) {
-        this.$store.dispatch({
-          type: "setComplementarData",
-          mutation: types.SET_COMPLEMENTAR_DATA,
-          step,
-          number
-        });
         this.generatePalette();
       }
     },

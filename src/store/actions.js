@@ -24,7 +24,13 @@ export default {
       reject(new Error("No palettes"));
     });
   },
-  setRandomData({ commit }, payload) {
+  setRandomNumber({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
+  setRandomStep({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
+  setRandomPercDominant({ commit }, payload) {
     commit(payload.mutation, payload);
   },
   setRandomPalette({ commit }, payload) {
@@ -36,7 +42,10 @@ export default {
   setSplitComplementarPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
-  setComplementarData({ commit }, payload) {
+  setComplementarNumber({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
+  setComplementarStep({ commit }, payload) {
     commit(payload.mutation, payload);
   },
   setComplementarPalette({ commit }, payload) {

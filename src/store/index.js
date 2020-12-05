@@ -28,7 +28,7 @@ export default new Vuex.Store({
       numberStartSquareColors: 0,
       random: {
         colors: {},
-        step: 0,
+        step: 360,
         number: 10,
         percDominant: 50
       },
@@ -89,6 +89,17 @@ export default new Vuex.Store({
       return palette => {
         return Object.prototype.hasOwnProperty.call(state.palettes, palette)
           ? state.palettes[palette]
+          : false;
+      };
+    },
+    getPercDominant(state) {
+      return palette => {
+        return Object.prototype.hasOwnProperty.call(state.palettes, palette) &&
+          Object.prototype.hasOwnProperty.call(
+            state.palettes[palette],
+            "percDominant"
+          )
+          ? state.palettes[palette].percDominant
           : false;
       };
     },

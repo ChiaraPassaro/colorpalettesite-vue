@@ -166,6 +166,11 @@ export default {
       this.$store.getters.getColors(this.component).length > 0
     ) {
       this.fillChart();
+      this.$store.dispatch({
+        type: "setTotalOpenPalette",
+        mutation: types.SET_TOTAL_OPEN_PALETTE,
+        open: false
+      });
     } else {
       this.datacollection = {
         datasets: [
