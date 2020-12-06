@@ -6,9 +6,7 @@ export const types = {
   ERROR_COLOR: "ERROR_COLOR",
   INIT_STORE: "INIT_STORE",
   GENERATE_PALETTES: "GENERATE_PALETTES",
-  SET_RANDOM_STEP: "SET_RANDOM_STEP",
-  SET_RANDOM_NUMBER: "SET_RANDOM_NUMBER",
-  SET_RANDOM_PERCDOMINANT: "SET_RANDOM_PERCDOMINANT",
+  SET_DATA_PALETTES: "SET_DATA_PALETTES",
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
   SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
   SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
@@ -102,20 +100,12 @@ export const mutations = {
   [types.GENERATE_PALETTES](state, palettes) {
     state.palettes.palette = palettes;
   },
-  [types.SET_RANDOM_PERCDOMINANT](state, payload) {
-    state.palettes.random.percDominant = payload.percDominant;
+  [types.SET_DATA_PALETTES](state, payload) {
+    state.palettes[payload.data.type][payload.data.name] = payload.data.value;
     localStorage.setItem(
-      "Random.percDominant",
-      state.palettes.random.percDominant
+      `Random.${payload.data.name}`,
+      state.palettes[payload.data.type][payload.data.name]
     );
-  },
-  [types.SET_RANDOM_STEP](state, payload) {
-    state.palettes.random.step = payload.step;
-    localStorage.setItem("Random.step", state.palettes.random.step);
-  },
-  [types.SET_RANDOM_NUMBER](state, payload) {
-    state.palettes.random.number = payload.number;
-    localStorage.setItem("Random.number", state.palettes.random.number);
   },
   [types.SET_RANDOM_PALETTE](state, payload) {
     state.palettes.random.colors = payload.colors;

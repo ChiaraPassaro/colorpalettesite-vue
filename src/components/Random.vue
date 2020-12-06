@@ -79,9 +79,13 @@ export default {
       },
       set(number) {
         this.$store.dispatch({
-          type: "setRandomNumber",
-          mutation: types.SET_RANDOM_NUMBER,
-          number
+          type: "setDataPalettes",
+          mutation: types.SET_DATA_PALETTES,
+          data: {
+            name: "number",
+            value: number,
+            type: this.type
+          }
         });
       }
     },
@@ -91,9 +95,13 @@ export default {
       },
       set(step) {
         this.$store.dispatch({
-          type: "setRandomStep",
-          mutation: types.SET_RANDOM_STEP,
-          step
+          type: "setDataPalettes",
+          mutation: types.SET_DATA_PALETTES,
+          data: {
+            name: "step",
+            value: step,
+            type: this.type
+          }
         });
       }
     },
@@ -103,9 +111,13 @@ export default {
       },
       set(percDominant) {
         this.$store.dispatch({
-          type: "setRandomPercDominant",
-          mutation: types.SET_RANDOM_PERCDOMINANT,
-          percDominant
+          type: "setDataPalettes",
+          mutation: types.SET_DATA_PALETTES,
+          data: {
+            name: "percDominant",
+            value: percDominant,
+            type: this.type
+          }
         });
       }
     },

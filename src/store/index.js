@@ -28,7 +28,7 @@ export default new Vuex.Store({
       numberStartSquareColors: 0,
       random: {
         colors: {},
-        step: 360,
+        step: 360, //all degree
         number: 10,
         percDominant: 50
       },
