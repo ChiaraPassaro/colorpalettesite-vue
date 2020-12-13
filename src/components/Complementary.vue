@@ -24,7 +24,6 @@
           <span class="error" v-if="error.number">{{ error.number }}</span>
         </div>
       </div>
-
       <div class="row">
         <div class="input-group">
           <input
@@ -38,11 +37,13 @@
             v-model="step"
             :class="!!error.step.length ? 'error' : ''"
             @keyup="checkValue"
-            @keydown.enter="setValues"
           />
           <label for="step">Step: </label>
           <span class="error" v-if="error.step">{{ error.step }}</span>
         </div>
+      </div>
+      <div class="row">
+        <button @click="setValues" class="btn">Generate</button>
       </div>
     </div>
   </div>
