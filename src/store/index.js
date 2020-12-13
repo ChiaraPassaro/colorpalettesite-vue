@@ -61,6 +61,10 @@ export default new Vuex.Store({
     getCssColor: state => state.cssColor,
     getColors(state) {
       return palette => {
+        console.log(
+          Object.prototype.hasOwnProperty.call(state.palettes, palette),
+          state.palettes[palette]
+        );
         return Object.prototype.hasOwnProperty.call(state.palettes, palette)
           ? state.palettes[palette].colors
           : false;

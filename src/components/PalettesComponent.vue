@@ -137,10 +137,10 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => {
+    const setActive = setTimeout(() => {
       this.isActive = true;
+      clearTimeout(setActive);
     }, this.durationAnimation);
-    //todo Cleartimeout
   }
 };
 </script>

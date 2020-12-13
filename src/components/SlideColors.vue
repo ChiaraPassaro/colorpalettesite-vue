@@ -98,7 +98,6 @@
 </template>
 
 <script>
-//todo TOTALOPEN
 import { types } from "@/store/mutations";
 
 export default {

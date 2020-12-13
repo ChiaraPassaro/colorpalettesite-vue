@@ -49,7 +49,7 @@ export default {
         })
         .then(() => {
           if (this.$store.state.palettes[id]) {
-            console.log(!!this.$store.state.palettes[id].colors);
+            console.log(id);
             this.$store.dispatch({
               type: "setOpenPalette",
               mutation: types.SET_OPEN_PALETTE,
@@ -68,7 +68,11 @@ export default {
               open: false
             });
 
-            //TODO add emit per chiudere slider
+            this.$store.dispatch({
+              type: "setTotalOpenPalette",
+              mutation: types.SET_TOTAL_OPEN_PALETTE,
+              open: false
+            });
 
             this.$router.push({
               name: "Palette",

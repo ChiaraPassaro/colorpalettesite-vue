@@ -76,9 +76,13 @@ export default {
       },
       set(number) {
         this.$store.dispatch({
-          type: "setComplementarNumber",
-          mutation: types.SET_COMPLEMENTAR_NUMBER,
-          number
+          type: "setDataPalettes",
+          mutation: types.SET_DATA_PALETTES,
+          data: {
+            name: "number",
+            value: number,
+            type: this.type
+          }
         });
       }
     },
@@ -88,9 +92,13 @@ export default {
       },
       set(step) {
         this.$store.dispatch({
-          type: "setComplementarStep",
-          mutation: types.SET_COMPLEMENTAR_STEP,
-          step
+          type: "setDataPalettes",
+          mutation: types.SET_DATA_PALETTES,
+          data: {
+            name: "step",
+            value: step,
+            type: this.type
+          }
         });
       }
     },
@@ -143,6 +151,8 @@ export default {
       complementary.forEach((element, index) => {
         element.position = index + 1;
       });
+
+      console.log(complementary);
 
       this.$store
         .dispatch({

@@ -3,7 +3,7 @@
   <div class="container" id="page-palette">
     <div class="inner content">
       <!--feedback-->
-      <FeedbackComponent v-if="$store.state.feedback.status" />
+      <FeedbackComponent v-if="feedbackStatus" />
       <!--/feedback-->
 
       <!--header-->
@@ -16,6 +16,7 @@
       >
         <!--palette description-->
         <section class="palette__description">
+          <!--dynamic component-->
           <component
             v-bind:is="component"
             v-on:fill-chart="fillChart"
@@ -109,6 +110,9 @@ export default {
     }, this.durationAnimation);
   },
   computed: {
+    feedbackStatus() {
+      return this.$store.state.feedback.status;
+    },
     colors() {
       return this.$store.getters.getColors(this.$route.params.type);
     },
