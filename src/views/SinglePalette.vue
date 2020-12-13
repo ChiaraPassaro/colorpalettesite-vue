@@ -62,6 +62,7 @@ import Random from "@/components/Random";
 import Triad from "@/components/Triad";
 import SplitComplementary from "@/components/SplitComplementary";
 import Complementary from "@/components/Complementary";
+import Analogous from "@/components/Analogous";
 
 export default {
   name: "SinglePalette.vue",
@@ -71,6 +72,7 @@ export default {
     Triad,
     SplitComplementary,
     Complementary,
+    Analogous,
     HeaderPalettesComponent,
     Footer,
     PalettesComponent,

@@ -44,6 +44,12 @@ export default new Vuex.Store({
         colors: {},
         step: 10,
         number: 4
+      },
+      analogous: {
+        colors: {},
+        step: 10,
+        number: 4,
+        typeScheme: "allArch"
       }
     },
     feedback: {
@@ -104,6 +110,17 @@ export default new Vuex.Store({
             "percDominant"
           )
           ? state.palettes[palette].percDominant
+          : false;
+      };
+    },
+    getTypeScheme(state) {
+      return palette => {
+        return Object.prototype.hasOwnProperty.call(state.palettes, palette) &&
+          Object.prototype.hasOwnProperty.call(
+            state.palettes[palette],
+            "typeScheme"
+          )
+          ? state.palettes[palette].typeScheme
           : false;
       };
     },

@@ -54,6 +54,9 @@ export default {
   setComplementarPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
+  setAnalogousPalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
   setOpenPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },

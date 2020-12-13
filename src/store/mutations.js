@@ -11,6 +11,7 @@ export const types = {
   SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
   SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
   SET_COMPLEMENTAR_PALETTE: "SET_COMPLEMENTAR_PALETTE",
+  SET_ANALOGOUS_PALETTE: "SET_ANALOGOUS_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_TOTAL_OPEN_PALETTE: "SET_TOTAL_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
@@ -126,6 +127,9 @@ export const mutations = {
   },
   [types.SET_COMPLEMENTAR_PALETTE](state, payload) {
     state.palettes.complementary.colors = payload.colors;
+  },
+  [types.SET_ANALOGOUS_PALETTE](state, payload) {
+    state.palettes.analogous.colors = payload.colors;
   },
   [types.SET_TRIAD_PALETTE](state, payload) {
     state.palettes.triad.colors = payload.colors;
