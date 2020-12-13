@@ -43,7 +43,15 @@
         </div>
       </div>
       <div class="row">
-        <button @click="setValues" class="btn">Generate</button>
+        <button
+          @click="setValues"
+          :class="['button', checkError ? '' : 'active']"
+          type="submit"
+          :disabled="checkError"
+          :style="buttonColor"
+        >
+          Generate
+        </button>
       </div>
     </div>
   </div>
@@ -164,6 +172,11 @@ export default {
         .then(() => {
           this.$emit("fill-chart");
         });
+    }
+  },
+  mounted() {
+    if (Object.keys(this.colors).length > 0) {
+      this.generatePalette();
     }
   }
 };

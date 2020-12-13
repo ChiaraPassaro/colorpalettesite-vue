@@ -4,35 +4,49 @@
     <p>
       Description
     </p>
+    <button
+      @click="generatePalette"
+      class="button active"
+      type="submit"
+      :style="buttonColor"
+    >
+      Generate
+    </button>
   </div>
 </template>
 
 <script>
 import { types } from "@/store/mutations";
+import { mapGetters } from "vuex";
 
 export default {
   name: "splitComplementary",
   data() {
     return {
       type: "splitComplementary",
-      colors: this.$store.state.palettes[this.type]
-        ? this.$store.state.palettes[this.type].colors
-        : [],
-      step: 360,
-      palette: this.$store.state.palettes.palette
+      step: 360
     };
   },
   computed: {
     buttonColor() {
       return { backgroundColor: this.$store.state.color.printHsl() };
-    }
+    },
+    colors() {
+      return this.$store.getters.getColors(this.$route.params.type);
+    },
+    palette() {
+      return this.$store.getters.getPalette(this.$route.params.type);
+    },
+    ...mapGetters(["ColorPaletteObject", "basecolor", "PaletteObject"])
   },
   mounted() {
-    this.generatePalette();
+    if (Object.keys(this.colors).length > 0) {
+      this.generatePalette();
+    }
   },
   methods: {
     generatePalette() {
-      const splitComplementary = this.palette.splitComplementar();
+      const splitComplementary = this.PaletteObject.splitComplementar();
       splitComplementary.unshift(this.$store.state.color);
 
       splitComplementary.forEach((element, index) => {

@@ -38,13 +38,24 @@
             v-model="percDominant"
             :class="!!error.percDominant.length ? 'error' : ''"
             @keyup="checkValue"
-            @keydown.enter="setValues"
           />
           <label for="percDominant">Dominant percentage: </label>
           <span class="error" v-if="error.percDominant">{{
             error.percDominant
           }}</span>
         </div>
+      </div>
+
+      <div class="row">
+        <button
+          @click="setValues"
+          :class="['button', checkError ? '' : 'active']"
+          type="submit"
+          :disabled="checkError"
+          :style="buttonColor"
+        >
+          Generate
+        </button>
       </div>
     </div>
   </div>
@@ -178,6 +189,11 @@ export default {
       });
 
       this.$emit("fill-chart");
+    }
+  },
+  mounted() {
+    if (Object.keys(this.colors).length > 0) {
+      this.generatePalette();
     }
   }
 };

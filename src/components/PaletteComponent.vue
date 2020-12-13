@@ -50,11 +50,6 @@ export default {
         .then(() => {
           if (this.$store.state.palettes[id]) {
             console.log(id);
-            this.$store.dispatch({
-              type: "setOpenPalette",
-              mutation: types.SET_OPEN_PALETTE,
-              open: !!this.$store.state.palettes[id].colors
-            });
 
             this.$store.dispatch({
               type: "setNumberStartSquareColors",
