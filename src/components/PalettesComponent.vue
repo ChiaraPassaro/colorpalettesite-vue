@@ -65,7 +65,7 @@ export default {
             ]
           },
           {
-            id: "mono",
+            id: "monochrome",
             name: "Monochrome",
             colors: [
               { degree: "first" },

@@ -50,6 +50,12 @@ export default new Vuex.Store({
         step: 10,
         number: 4,
         typeScheme: "allArch"
+      },
+      monochrome: {
+        colors: {},
+        step: 10,
+        number: 4,
+        typeScheme: "saturation"
       }
     },
     feedback: {

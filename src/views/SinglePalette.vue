@@ -63,6 +63,7 @@ import Triad from "@/components/Triad";
 import SplitComplementary from "@/components/SplitComplementary";
 import Complementary from "@/components/Complementary";
 import Analogous from "@/components/Analogous";
+import Monochrome from "@/components/Monochrome";
 
 export default {
   name: "SinglePalette.vue",
@@ -73,6 +74,7 @@ export default {
     SplitComplementary,
     Complementary,
     Analogous,
+    Monochrome,
     HeaderPalettesComponent,
     Footer,
     PalettesComponent,
@@ -123,6 +125,8 @@ export default {
   },
   methods: {
     fillChart() {
+      //todo monochrome chart not generate many colors
+      //dobbiamo cambiare la saturazione o la brightness
       const degrees = [];
       const colorsLabel = [];
 

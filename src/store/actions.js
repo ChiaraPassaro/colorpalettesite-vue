@@ -57,6 +57,9 @@ export default {
   setAnalogousPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },
+  setMonochromePalette({ commit }, payload) {
+    commit(payload.mutation, payload);
+  },
   setOpenPalette({ commit }, payload) {
     commit(payload.mutation, payload);
   },

@@ -12,6 +12,7 @@ export const types = {
   SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
   SET_COMPLEMENTAR_PALETTE: "SET_COMPLEMENTAR_PALETTE",
   SET_ANALOGOUS_PALETTE: "SET_ANALOGOUS_PALETTE",
+  SET_MONOCHROME_PALETTE: "SET_MONOCHROME_PALETTE",
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_TOTAL_OPEN_PALETTE: "SET_TOTAL_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
@@ -104,6 +105,29 @@ export const mutations = {
      */
     state.palettes.triad.step =
       localStorage.getItem("Triad.step") || state.palettes.triad.step;
+
+    /***
+     * Analogous
+     */
+    state.palettes.analogous.step =
+      localStorage.getItem("Analogous.step") || state.palettes.analogous.step;
+    state.palettes.analogous.number =
+      localStorage.getItem("Analogous.number") ||
+      state.palettes.analogous.number;
+    state.palettes.analogous.typeScheme =
+      localStorage.getItem("Analogous.typeScheme") ||
+      state.palettes.analogous.typeScheme;
+    /***
+     * Monochrome
+     */
+    state.palettes.monochrome.step =
+      localStorage.getItem("Monochrome.step") || state.palettes.monochrome.step;
+    state.palettes.monochrome.number =
+      localStorage.getItem("Monochrome.number") ||
+      state.palettes.monochrome.number;
+    state.palettes.monochrome.typeScheme =
+      localStorage.getItem("Monochrome.typeScheme") ||
+      state.palettes.monochrome.typeScheme;
   },
   [types.GENERATE_PALETTES](state, palettes) {
     state.palettes.palette = palettes;
@@ -130,6 +154,9 @@ export const mutations = {
   },
   [types.SET_ANALOGOUS_PALETTE](state, payload) {
     state.palettes.analogous.colors = payload.colors;
+  },
+  [types.SET_MONOCHROME_PALETTE](state, payload) {
+    state.palettes.monochrome.colors = payload.colors;
   },
   [types.SET_TRIAD_PALETTE](state, payload) {
     state.palettes.triad.colors = payload.colors;
