@@ -56,6 +56,14 @@ export default new Vuex.Store({
         step: 10,
         number: 4,
         typeScheme: "saturation"
+      },
+      square: {
+        colors: {},
+        step: 0
+      },
+      tetradic: {
+        colors: {},
+        step: 0
       }
     },
     feedback: {

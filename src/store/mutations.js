@@ -9,6 +9,8 @@ export const types = {
   SET_DATA_PALETTES: "SET_DATA_PALETTES",
   SET_RANDOM_PALETTE: "SET_RANDOM_PALETTE",
   SET_TRIAD_PALETTE: "SET_TRIAD_PALETTE",
+  SET_SQUARE_PALETTE: "SET_SQUARE_PALETTE",
+  SET_TETRADIC_PALETTE: "SET_TETRADIC_PALETTE",
   SET_SPLITCOMPLEMENTAR_PALETTE: "SET_SPLITCOMPLEMENTAR_PALETTE",
   SET_COMPLEMENTAR_PALETTE: "SET_COMPLEMENTAR_PALETTE",
   SET_ANALOGOUS_PALETTE: "SET_ANALOGOUS_PALETTE",
@@ -64,7 +66,6 @@ export const mutations = {
       state.brightness
     );
 
-    //todo add palettes
     /***
      * Object Palette
      */
@@ -105,6 +106,18 @@ export const mutations = {
      */
     state.palettes.triad.step =
       localStorage.getItem("Triad.step") || state.palettes.triad.step;
+
+    /***
+     * Square
+     */
+    state.palettes.square.step =
+      localStorage.getItem("Square.step") || state.palettes.square.step;
+
+    /***
+     * Tetradic
+     */
+    state.palettes.tetradic.step =
+      localStorage.getItem("Tetradic.step") || state.palettes.tetradic.step;
 
     /***
      * Analogous
@@ -161,6 +174,14 @@ export const mutations = {
   [types.SET_TRIAD_PALETTE](state, payload) {
     state.palettes.triad.colors = payload.colors;
     state.palettes.triad.step = payload.step;
+  },
+  [types.SET_SQUARE_PALETTE](state, payload) {
+    state.palettes.square.colors = payload.colors;
+    state.palettes.square.step = payload.step;
+  },
+  [types.SET_TETRADIC_PALETTE](state, payload) {
+    state.palettes.tetradic.colors = payload.colors;
+    state.palettes.tetradic.step = payload.step;
   },
   [types.SET_SPLITCOMPLEMENTAR_PALETTE](state, payload) {
     state.palettes.splitComplementary.colors = payload.colors;

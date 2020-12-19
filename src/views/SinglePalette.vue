@@ -64,6 +64,8 @@ import SplitComplementary from "@/components/SplitComplementary";
 import Complementary from "@/components/Complementary";
 import Analogous from "@/components/Analogous";
 import Monochrome from "@/components/Monochrome";
+import Square from "@/components/Square";
+import Tetradic from "@/components/Tetradic";
 
 export default {
   name: "SinglePalette.vue",
@@ -75,6 +77,8 @@ export default {
     Complementary,
     Analogous,
     Monochrome,
+    Square,
+    Tetradic,
     HeaderPalettesComponent,
     Footer,
     PalettesComponent,
@@ -175,7 +179,6 @@ export default {
       });
     }
   },
-  //TODO getters and setters
   beforeRouteUpdate(to, from, next) {
     this.component = to.params.type;
     if (

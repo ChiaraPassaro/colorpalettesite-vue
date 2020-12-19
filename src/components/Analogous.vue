@@ -208,8 +208,6 @@ export default {
         element.position = index + 1;
       });
 
-      console.log(analogous);
-
       this.$store
         .dispatch({
           type: "setAnalogousPalette",
