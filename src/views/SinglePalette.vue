@@ -121,22 +121,30 @@ export default {
     },
     palette() {
       return this.$store.getters.getPalette(this.$route.params.type);
+    },
+    hue() {
+      return this.$store.getters.getDegree;
     }
   },
   methods: {
     fillChart() {
-      //todo monochrome chart not generate many colors
-      //dobbiamo cambiare la saturazione o la brightness
       const degrees = [];
       const colorsLabel = [];
 
       for (let i = 0; i < 360; i++) {
         degrees.push(1);
-        colorsLabel.push("hsl(" + i + ", 50%, 50%, 0.2)");
+        if (this.$route.params.type === "monochrome") {
+          colorsLabel.push("hsl(" + this.hue + ", 50%, 50%, 0.2)");
+        } else {
+          colorsLabel.push("hsl(" + i + ", 50%, 50%, 0.2)");
+        }
       }
 
       for (let i = 0; i < this.colors.length; i++) {
-        const degree = this.colors[i].getHue();
+        let degree = this.colors[i].getHue();
+        if (this.$route.params.type === "monochrome") {
+          degree = i * 2;
+        }
         degrees[degree] = this.palette.step;
         colorsLabel[degree] = this.colors[i].printHsl();
       }
