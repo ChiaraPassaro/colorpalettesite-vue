@@ -74,7 +74,7 @@ export default new Vuex.Store({
   mutations,
   actions,
   getters: {
-    baseColor: state => state.color,
+    getBaseColor: state => state.color,
     getDegree: state => state.degree,
     getSaturation: state => state.saturation,
     getBrightness: state => state.brightness,
@@ -139,7 +139,8 @@ export default new Vuex.Store({
       };
     },
     ColorPaletteObject: state => state.ColorPalettesRange,
-    PaletteObject: state => state.palettes.palette
+    PaletteObject: state => state.palettes.palette,
+    getGenerated: state => state.generated
   },
   modules: {}
 });

@@ -84,6 +84,8 @@
 </template>
 
 <script>
+//TODO add style select
+//TODO check colors bug
 import { types } from "@/store/mutations";
 import { mapGetters } from "vuex";
 

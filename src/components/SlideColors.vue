@@ -99,7 +99,7 @@
 
 <script>
 import { types } from "@/store/mutations";
-
+//TODO Get all colors
 export default {
   name: "SlideColors",
   props: ["type"],

@@ -13,8 +13,8 @@
       <div class="chart">
         <wheel
           :style="rotate"
-          :brightness="$store.state.brightness"
-          :saturation="$store.state.saturation"
+          :brightness="brightness"
+          :saturation="saturation"
         ></wheel>
       </div>
     </section>
@@ -36,7 +36,6 @@
             placeholder="Insert a number 0-360"
             type="number"
             tabindex="1"
-            @keyup="setDegree"
             v-model="degree"
             :class="!!error.degree.length ? 'error' : ''"
           />
@@ -54,7 +53,6 @@
             placeholder="Insert a number 0-100"
             type="number"
             tabindex="2"
-            @keyup="setSaturation"
             v-model="saturation"
             :class="!!error.saturation.length ? 'error' : ''"
           />
@@ -73,7 +71,6 @@
             placeholder="Insert a number 0-100"
             type="number"
             tabindex="3"
-            @keyup="setBrightness"
             v-model="brightness"
             :class="!!error.brightness.length ? 'error' : ''"
           />
@@ -90,7 +87,9 @@
 <script>
 import { types } from "@/store/mutations";
 import Wheel from "./WheelComponent";
-
+//TODO if change base color reset all palettes
+//TODO add insert RGB or HEX color
+//Two inputs when click convert create paletteColor and set the three values
 export default {
   name: "FormComponent",
   components: {
@@ -98,15 +97,80 @@ export default {
   },
   data() {
     return {
-      isGenerated: this.$store.state.generated,
-      degree: this.$store.state.degree,
-      saturation: this.$store.state.saturation,
-      brightness: this.$store.state.brightness,
-      cssColor: this.$store.state.cssColor,
-      error: this.$store.state.error
+      baseColor: this.$store.getters.getBaseColor,
+      isGenerated: this.$store.getters.getGenerated
     };
   },
   computed: {
+    degree: {
+      get() {
+        return this.$store.getters.getDegree;
+      },
+      set(value) {
+        const settings = {
+          number: parseFloat(value),
+          actionError: "getError",
+          actionUpdate: "updateValue",
+          mutationError: types.ERROR_COLOR,
+          mutationUpdate: types.UPDATE_DEGREE,
+          typeError: "degree",
+          messageError: "is out of range",
+          range: {
+            min: 0,
+            max: 360
+          }
+        };
+        this.setValues(settings);
+      }
+    },
+    saturation: {
+      get() {
+        return this.$store.getters.getSaturation;
+      },
+      set(value) {
+        const settings = {
+          number: parseFloat(value),
+          actionError: "getError",
+          actionUpdate: "updateValue",
+          mutationError: types.ERROR_COLOR,
+          mutationUpdate: types.UPDATE_SATURATION,
+          typeError: "saturation",
+          messageError: "is out of range",
+          range: {
+            min: 0,
+            max: 100
+          }
+        };
+        this.setValues(settings);
+      }
+    },
+    brightness: {
+      get() {
+        return this.$store.getters.getBrightness;
+      },
+      set(value) {
+        const settings = {
+          number: parseFloat(value),
+          actionError: "getError",
+          actionUpdate: "updateValue",
+          mutationError: types.ERROR_COLOR,
+          mutationUpdate: types.UPDATE_BRIGHTNESS,
+          typeError: "brightness",
+          messageError: "is out of range",
+          range: {
+            min: 0,
+            max: 100
+          }
+        };
+        this.setValues(settings);
+      }
+    },
+    cssColor() {
+      return this.$store.getters.getCssColor();
+    },
+    error() {
+      return this.$store.state.error;
+    },
     rotate() {
       return { transform: "rotate(-" + this.degree + "deg)" };
     },
@@ -122,65 +186,6 @@ export default {
     }
   },
   methods: {
-    setGenerated() {
-      if (
-        this.$store.state.color instanceof
-        this.$store.state.ColorPalettesRange.Hsl
-      ) {
-        this.isGenerated = !this.isGenerated
-          ? !this.isGenerated
-          : this.isGenerated;
-        this.cssColor = this.$store.state.cssColor;
-      }
-    },
-    setBrightness() {
-      const settings = {
-        number: parseFloat(this.brightness),
-        actionError: "getError",
-        actionUpdate: "updateValue",
-        mutationError: types.ERROR_COLOR,
-        mutationUpdate: types.UPDATE_BRIGHTNESS,
-        typeError: "brightness",
-        messageError: "is out of range",
-        range: {
-          min: 0,
-          max: 100
-        }
-      };
-      this.setValues(settings);
-    },
-    setSaturation() {
-      const settings = {
-        number: parseFloat(this.saturation),
-        actionError: "getError",
-        actionUpdate: "updateValue",
-        mutationError: types.ERROR_COLOR,
-        mutationUpdate: types.UPDATE_SATURATION,
-        typeError: "saturation",
-        messageError: "is out of range",
-        range: {
-          min: 0,
-          max: 100
-        }
-      };
-      this.setValues(settings);
-    },
-    setDegree() {
-      const settings = {
-        number: parseFloat(this.degree),
-        actionError: "getError",
-        actionUpdate: "updateValue",
-        mutationError: types.ERROR_COLOR,
-        mutationUpdate: types.UPDATE_DEGREE,
-        typeError: "degree",
-        messageError: "is out of range",
-        range: {
-          min: 0,
-          max: 360
-        }
-      };
-      this.setValues(settings);
-    },
     setValues({
       number,
       range: { min, max },
@@ -206,7 +211,6 @@ export default {
           .dispatch({ type: actionUpdate, number, mutation: mutationUpdate })
           .then(() => {
             messageError = "";
-            this.setGenerated();
             this.$store.dispatch({
               type: actionError,
               mutation: mutationError,
@@ -218,7 +222,18 @@ export default {
       }
     },
     generatePalette() {
-      this.$router.push({ name: "Palettes" });
+      if (this.baseColor instanceof this.$store.state.ColorPalettesRange.Hsl) {
+        this.$store
+          .dispatch({
+            type: "setGenerated",
+            mutation: types.SET_GENERATED,
+            payload: true
+          })
+          .then(() => {
+            console.log("Generated");
+            this.$router.push({ name: "Palettes" });
+          });
+      }
     }
   }
 };

@@ -77,5 +77,8 @@ export default {
   },
   setNumberStartSquareColors({ commit }, payload) {
     commit(payload.mutation, payload);
+  },
+  setGenerated({ commit }, payload) {
+    commit(payload.mutation, payload);
   }
 };

@@ -88,6 +88,8 @@
 </template>
 
 <script>
+//TODO add style select
+
 import { types } from "@/store/mutations";
 import { mapGetters } from "vuex";
 
@@ -226,3 +228,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss"></style>

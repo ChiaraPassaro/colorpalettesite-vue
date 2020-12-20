@@ -18,7 +18,8 @@ export const types = {
   SET_OPEN_PALETTE: "SET_OPEN_PALETTE",
   SET_TOTAL_OPEN_PALETTE: "SET_TOTAL_OPEN_PALETTE",
   SET_OPEN_FEEDBACK: "SET_OPEN_FEEDBACK",
-  SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS"
+  SET_NUMBER_START_SQUARE_COLORS: "SET_NUMBER_START_SQUARE_COLORS",
+  SET_GENERATED: "SET_GENERATED"
 };
 
 //todo non si possono salvare funzioni in local storage, conservare solo dati per generare colori eliminare tutti i colors e calcolarli in init
@@ -200,5 +201,8 @@ export const mutations = {
   [types.SET_NUMBER_START_SQUARE_COLORS](state, payload) {
     this.state.palettes.numberStartSquareColors =
       payload.numberStartSquareColors;
+  },
+  [types.SET_GENERATED](state, payload) {
+    this.state.generated = payload;
   }
 };
